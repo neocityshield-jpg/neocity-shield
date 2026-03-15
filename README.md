@@ -87,7 +87,7 @@ npm start
 
 ---
 
-## 🗓️ Cronograma del proyecto
+##  Cronograma del proyecto
 
 | Sprint | Fase | Fechas |
 |---|---|---|
@@ -101,7 +101,7 @@ npm start
 
 ---
 
-## 📐 Normas y estándares aplicados
+##  Normas y estándares aplicados
 
 - **IEEE 830** — Especificación de requerimientos
 - **IEEE 829** — Documentación de pruebas
