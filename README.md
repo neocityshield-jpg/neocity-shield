@@ -1,4 +1,4 @@
-# 🛡️ NeoCity Shield
+#  NeoCity Shield
 
 Sistema de información web para el reporte y gestión de incidentes de seguridad física ocupacional.
 
@@ -10,7 +10,7 @@ Sistema de información web para el reporte y gestión de incidentes de segurida
 
 ---
 
-## 📋 Descripción
+##  Descripción
 
 NeoCity Shield es una plataforma web que reemplaza los procesos manuales e informales de reporte de incidentes de seguridad física en Evidencia Digital S.A.S. por un canal institucional centralizado, trazable y accesible desde cualquier dispositivo.
 
@@ -18,7 +18,7 @@ La solución atiende directamente la problemática identificada: una tasa de rep
 
 ---
 
-## 🚀 Tecnologías
+##  Tecnologías
 
 | Capa | Tecnología |
 |---|---|
@@ -32,17 +32,17 @@ La solución atiende directamente la problemática identificada: una tasa de rep
 
 ---
 
-## 📦 Módulos del sistema
+##  Módulos del sistema
 
-- 🔐 **Autenticación y roles** — Acceso diferenciado para funcionario, SGSST y Gerencia
-- 📋 **Reporte de incidentes** — Formulario con captura opcional de geolocalización GPS/WPS
-- 🔒 **Panel SGSST** — Gestión y seguimiento de casos con alertas automáticas de 48 horas
-- 📊 **Dashboard gerencial** — Indicadores, métricas y tendencias en tiempo real
-- 🤖 **NeoBot** — Chatbot con IA generativa (OpenAI GPT-4o) para orientación ante incidentes
+-  **Autenticación y roles** — Acceso diferenciado para funcionario, SGSST y Gerencia
+-  **Reporte de incidentes** — Formulario con captura opcional de geolocalización GPS/WPS
+-  **Panel SGSST** — Gestión y seguimiento de casos con alertas automáticas de 48 horas
+-  **Dashboard gerencial** — Indicadores, métricas y tendencias en tiempo real
+-  **NeoBot** — Chatbot con IA generativa (OpenAI GPT-4o) para orientación ante incidentes
 
 ---
 
-## 🗂️ Estructura del repositorio
+##  Estructura del repositorio
 ```
 neocity-shield/
 ├── /gestion-proyecto        → Documentación de gestión del proyecto
@@ -68,7 +68,7 @@ neocity-shield/
 
 ---
 
-## 🏃 Cómo ejecutar el proyecto
+##  Cómo ejecutar el proyecto
 
 ### Backend
 ```bash
