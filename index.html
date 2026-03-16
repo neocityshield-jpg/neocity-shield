@@ -3,1171 +3,485 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NeoCity Shield — Demo Interactivo</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>NeoCity Shield</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy:    #0A1628;
-    --navy2:   #0F2040;
-    --blue:    #1A6BFF;
-    --blue2:   #0D4FCC;
-    --cyan:    #00D4FF;
-    --green:   #00E676;
-    --orange:  #FF6B35;
-    --red:     #FF3B30;
-    --white:   #FFFFFF;
-    --gray1:   #F0F4FF;
-    --gray2:   #C8D4EC;
-    --gray3:   #7A8DB5;
-    --card:    rgba(255,255,255,0.04);
-    --border:  rgba(255,255,255,0.08);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--navy);
-    color: var(--white);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  /* ── BACKGROUND ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(26,107,255,0.15) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0,212,255,0.08) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 30% at 50% 50%, rgba(0,230,118,0.04) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 40px;
-    height: 64px;
-    background: rgba(10,22,40,0.85);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-logo {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 1.2rem;
-    letter-spacing: -0.02em;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .nav-logo .shield {
-    width: 32px; height: 32px;
-    background: linear-gradient(135deg, var(--blue), var(--cyan));
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-  }
-
-  .nav-tabs {
-    display: flex;
-    gap: 4px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 4px;
-  }
-
-  .nav-tab {
-    padding: 6px 16px;
-    border-radius: 8px;
-    border: none;
-    background: transparent;
-    color: var(--gray3);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .nav-tab.active {
-    background: var(--blue);
-    color: white;
-    font-weight: 500;
-  }
-
-  .nav-tab:hover:not(.active) { color: var(--white); background: var(--border); }
-
-  .nav-user {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.85rem;
-    color: var(--gray2);
-  }
-
-  .nav-avatar {
-    width: 32px; height: 32px;
-    background: linear-gradient(135deg, var(--blue), var(--cyan));
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 700;
-  }
-
-  /* ── MAIN ── */
-  main {
-    position: relative;
-    z-index: 1;
-    padding-top: 64px;
-  }
-
-  .screen { display: none; }
-  .screen.active { display: block; }
-
-  /* ── LOGIN SCREEN ── */
-  #screen-login {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-  }
-
-  .login-wrap {
-    width: 100%;
-    max-width: 420px;
-    animation: fadeUp 0.6s ease both;
-  }
-
-  .login-hero {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-
-  .login-hero .big-shield {
-    width: 72px; height: 72px;
-    background: linear-gradient(135deg, var(--blue), var(--cyan));
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    margin: 0 auto 20px;
-    box-shadow: 0 20px 60px rgba(26,107,255,0.4);
-  }
-
-  .login-hero h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: 2rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-  }
-
-  .login-hero p {
-    color: var(--gray3);
-    font-size: 0.9rem;
-    margin-top: 8px;
-  }
-
-  .login-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 32px;
-    backdrop-filter: blur(20px);
-  }
-
-  .role-selector {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 24px;
-  }
-
-  .role-btn {
-    padding: 10px 8px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--gray3);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.78rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-  }
-
-  .role-btn .role-icon { font-size: 18px; display: block; margin-bottom: 4px; }
-
-  .role-btn.active {
-    border-color: var(--blue);
-    background: rgba(26,107,255,0.15);
-    color: white;
-  }
-
-  .form-group { margin-bottom: 16px; }
-
-  .form-group label {
-    display: block;
-    font-size: 0.8rem;
-    color: var(--gray3);
-    margin-bottom: 6px;
-    font-weight: 500;
-  }
-
-  .form-group input {
-    width: 100%;
-    padding: 12px 16px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: white;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .form-group input:focus { border-color: var(--blue); }
-
-  .btn-primary {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(135deg, var(--blue), var(--blue2));
-    border: none;
-    border-radius: 12px;
-    color: white;
-    font-family: 'Syne', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.02em;
-    margin-top: 8px;
-    box-shadow: 0 8px 24px rgba(26,107,255,0.3);
-  }
-
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 32px rgba(26,107,255,0.4); }
-  .btn-primary:active { transform: translateY(0); }
-
-  /* ── DASHBOARD SCREEN ── */
-  #screen-dashboard {
-    padding: 32px 40px;
-    max-width: 1400px;
-    margin: 0 auto;
-    animation: fadeUp 0.5s ease both;
-  }
-
-  .page-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 32px;
-  }
-
-  .page-header h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.8rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-  }
-
-  .page-header p { color: var(--gray3); font-size: 0.9rem; margin-top: 4px; }
-
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 28px;
-  }
-
-  .kpi-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s, border-color 0.2s;
-  }
-
-  .kpi-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.15); }
-
-  .kpi-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--blue), var(--cyan));
-  }
-
-  .kpi-card.orange::before { background: linear-gradient(90deg, var(--orange), #FFB347); }
-  .kpi-card.green::before  { background: linear-gradient(90deg, var(--green), #69F0AE); }
-  .kpi-card.red::before    { background: linear-gradient(90deg, var(--red), #FF8A80); }
-
-  .kpi-label { font-size: 0.78rem; color: var(--gray3); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
-  .kpi-number {
-    font-family: 'Syne', sans-serif;
-    font-size: 2.4rem;
-    font-weight: 800;
-    margin: 8px 0 4px;
-    letter-spacing: -0.04em;
-  }
-
-  .kpi-sub { font-size: 0.78rem; color: var(--gray3); }
-  .kpi-badge-up   { color: var(--green); font-size: 0.78rem; }
-  .kpi-badge-down { color: var(--red);   font-size: 0.78rem; }
-
-  .dashboard-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-
-  .dash-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-  }
-
-  .dash-card h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: var(--gray2);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  /* Bar chart */
-  .bar-chart { display: flex; align-items: flex-end; gap: 12px; height: 120px; }
-
-  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-
-  .bar {
-    width: 100%;
-    border-radius: 6px 6px 0 0;
-    background: linear-gradient(180deg, var(--blue), var(--blue2));
-    transition: height 1s cubic-bezier(0.34,1.56,0.64,1);
-    position: relative;
-    cursor: pointer;
-  }
-
-  .bar:hover { background: linear-gradient(180deg, var(--cyan), var(--blue)); }
-  .bar-label { font-size: 0.7rem; color: var(--gray3); }
-  .bar-val   { font-size: 0.78rem; font-weight: 600; color: var(--gray2); }
-
-  /* Donut */
-  .donut-wrap { display: flex; align-items: center; gap: 24px; }
-  .donut-svg  { flex-shrink: 0; }
-
-  .donut-legend { display: flex; flex-direction: column; gap: 10px; }
-
-  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; }
-  .legend-dot  { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-
-  /* Incident list */
-  .incident-list { display: flex; flex-direction: column; gap: 10px; }
-
-  .incident-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .incident-item:hover { border-color: rgba(26,107,255,0.4); background: rgba(26,107,255,0.05); }
-
-  .incident-type-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .incident-info { flex: 1; }
-  .incident-title { font-size: 0.85rem; font-weight: 500; }
-  .incident-meta  { font-size: 0.75rem; color: var(--gray3); margin-top: 2px; }
-
-  .status-badge {
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
-  .status-pendiente  { background: rgba(255,107,53,0.15); color: var(--orange); }
-  .status-en_gestion { background: rgba(26,107,255,0.15); color: #5B9EFF; }
-  .status-cerrado    { background: rgba(0,230,118,0.15);  color: var(--green); }
-
-  /* ── REPORTE SCREEN ── */
-  #screen-reporte {
-    padding: 32px 40px;
-    max-width: 700px;
-    margin: 0 auto;
-    animation: fadeUp 0.5s ease both;
-  }
-
-  .form-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 32px;
-  }
-
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-
-  .form-group select,
-  .form-group textarea {
-    width: 100%;
-    padding: 12px 16px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: white;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .form-group select option { background: var(--navy2); }
-  .form-group select:focus,
-  .form-group textarea:focus { border-color: var(--blue); }
-
-  .form-group textarea { resize: vertical; min-height: 100px; }
-
-  .geo-btn {
-    width: 100%;
-    padding: 12px;
-    background: rgba(0,212,255,0.1);
-    border: 1px solid rgba(0,212,255,0.3);
-    border-radius: 10px;
-    color: var(--cyan);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-
-  .geo-btn:hover { background: rgba(0,212,255,0.18); }
-  .geo-ok { color: var(--green); font-size: 0.82rem; margin-top: 6px; display: none; }
-
-  .success-screen {
-    text-align: center;
-    padding: 40px 20px;
-    display: none;
-  }
-
-  .success-icon {
-    width: 80px; height: 80px;
-    background: rgba(0,230,118,0.15);
-    border: 2px solid var(--green);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 36px;
-    margin: 0 auto 20px;
-    animation: pulse 2s infinite;
-  }
-
-  /* ── PANEL SST ── */
-  #screen-sst {
-    padding: 32px 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-    animation: fadeUp 0.5s ease both;
-  }
-
-  .alert-banner {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 20px;
-    background: rgba(255,107,53,0.1);
-    border: 1px solid rgba(255,107,53,0.3);
-    border-radius: 12px;
-    margin-bottom: 24px;
-    font-size: 0.88rem;
-    color: var(--orange);
-  }
-
-  .sst-grid {
-    display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 20px;
-  }
-
-  .incident-full-list { display: flex; flex-direction: column; gap: 12px; }
-
-  .incident-card-full {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .incident-card-full:hover { border-color: rgba(26,107,255,0.4); }
-  .incident-card-full.selected { border-color: var(--blue); background: rgba(26,107,255,0.06); }
-
-  .incident-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-  .incident-card-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.92rem; }
-  .incident-card-meta  { font-size: 0.78rem; color: var(--gray3); margin-bottom: 10px; }
-  .incident-card-desc  { font-size: 0.82rem; color: var(--gray2); line-height: 1.5; }
-
-  /* Detail panel */
-  .detail-panel {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    position: sticky;
-    top: 88px;
-    height: fit-content;
-  }
-
-  .detail-panel h3 {
-    font-family: 'Syne', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    margin-bottom: 16px;
-  }
-
-  .detail-field { margin-bottom: 14px; }
-  .detail-field label { font-size: 0.72rem; color: var(--gray3); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
-  .detail-field p { font-size: 0.88rem; color: var(--gray2); }
-
-  .btn-secondary {
-    width: 100%;
-    padding: 12px;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--gray2);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.88rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 8px;
-  }
-
-  .btn-secondary:hover { border-color: var(--blue); color: white; }
-
-  /* ── CHATBOT ── */
-  .chatbot-fab {
-    position: fixed;
-    bottom: 28px;
-    right: 28px;
-    width: 56px; height: 56px;
-    background: linear-gradient(135deg, var(--blue), var(--cyan));
-    border: none;
-    border-radius: 50%;
-    font-size: 22px;
-    cursor: pointer;
-    z-index: 200;
-    box-shadow: 0 8px 32px rgba(26,107,255,0.5);
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .chatbot-fab:hover { transform: scale(1.1); }
-
-  .chatbot-window {
-    position: fixed;
-    bottom: 96px;
-    right: 28px;
-    width: 340px;
-    background: var(--navy2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-    z-index: 200;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    display: none;
-    flex-direction: column;
-    animation: slideUp 0.3s ease;
-  }
-
-  .chatbot-window.open { display: flex; }
-
-  .chatbot-header {
-    padding: 16px 20px;
-    background: linear-gradient(135deg, var(--blue), var(--blue2));
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .chatbot-header-info { display: flex; align-items: center; gap: 10px; }
-  .chatbot-avatar { width: 32px; height: 32px; background: rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-  .chatbot-name   { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; }
-  .chatbot-status { font-size: 0.72rem; opacity: 0.8; }
-  .chatbot-close  { background: none; border: none; color: white; font-size: 18px; cursor: pointer; opacity: 0.7; }
-  .chatbot-close:hover { opacity: 1; }
-
-  .chatbot-messages {
-    padding: 16px;
-    height: 280px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .msg {
-    max-width: 85%;
-    padding: 10px 14px;
-    border-radius: 14px;
-    font-size: 0.82rem;
-    line-height: 1.5;
-  }
-
-  .msg.bot  { background: rgba(255,255,255,0.06); border: 1px solid var(--border); align-self: flex-start; border-radius: 4px 14px 14px 14px; }
-  .msg.user { background: var(--blue); align-self: flex-end; border-radius: 14px 4px 14px 14px; }
-
-  .chatbot-input-row {
-    padding: 12px 16px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    gap: 8px;
-  }
-
-  .chatbot-input-row input {
-    flex: 1;
-    padding: 10px 14px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: white;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.82rem;
-    outline: none;
-  }
-
-  .chatbot-input-row input:focus { border-color: var(--blue); }
-
-  .chatbot-send {
-    padding: 10px 14px;
-    background: var(--blue);
-    border: none;
-    border-radius: 10px;
-    color: white;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background 0.2s;
-  }
-
-  .chatbot-send:hover { background: var(--blue2); }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(0,230,118,0.4); }
-    50%       { box-shadow: 0 0 0 16px rgba(0,230,118,0); }
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    .kpi-grid        { grid-template-columns: 1fr 1fr; }
-    .dashboard-grid  { grid-template-columns: 1fr; }
-    .sst-grid        { grid-template-columns: 1fr; }
-    nav              { padding: 0 20px; }
-    #screen-dashboard,
-    #screen-reporte,
-    #screen-sst      { padding: 24px 20px; }
-  }
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#060B14;--bg2:#0A1220;--bg3:#0E1A2E;
+  --blue:#3B82F6;--blue2:#1D4ED8;--cyan:#06B6D4;
+  --emerald:#10B981;--amber:#F59E0B;--rose:#F43F5E;--violet:#8B5CF6;
+  --white:#F8FAFF;--gray1:#94A3B8;--gray2:#475569;--gray3:#1E2D45;
+  --border:rgba(59,130,246,0.12);--border2:rgba(255,255,255,0.06)
+}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--white);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(59,130,246,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,0.03) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 20% 10%,rgba(59,130,246,0.1) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 80%,rgba(6,182,212,0.07) 0%,transparent 60%);pointer-events:none;z-index:0}
+
+/* LOGIN */
+#login-page{position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;background:var(--bg);transition:opacity 0.6s,transform 0.6s}
+#login-page.out{opacity:0;transform:scale(1.04);pointer-events:none}
+.lc{position:relative;z-index:1;width:100%;max-width:430px;padding:20px;animation:up 0.7s ease both}
+.lb{text-align:center;margin-bottom:36px}
+.lmark{display:inline-flex;align-items:center;justify-content:center;width:70px;height:70px;border-radius:18px;background:linear-gradient(135deg,var(--blue),var(--cyan));box-shadow:0 0 40px rgba(59,130,246,0.5),0 0 80px rgba(59,130,246,0.2);font-size:30px;margin-bottom:14px;position:relative}
+.lmark::after{content:'';position:absolute;inset:0;border-radius:18px;background:linear-gradient(135deg,rgba(255,255,255,0.18),transparent)}
+.lb h1{font-size:1.9rem;font-weight:900;letter-spacing:-0.04em;background:linear-gradient(135deg,var(--white),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lb p{color:var(--gray1);font-size:0.83rem;margin-top:4px;font-weight:300}
+.lcard{background:rgba(10,18,32,0.85);border:1px solid var(--border);border-radius:22px;padding:28px;backdrop-filter:blur(40px);box-shadow:0 24px 50px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.05)}
+.hint{background:rgba(59,130,246,0.07);border:1px solid rgba(59,130,246,0.18);border-radius:12px;padding:13px 15px;margin-bottom:22px}
+.hint-title{font-size:0.75rem;font-weight:700;color:var(--gray1);margin-bottom:9px;text-transform:uppercase;letter-spacing:0.06em}
+.crow{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.crow:last-child{margin-bottom:0}
+.crole{display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:20px;font-size:0.72rem;font-weight:700;cursor:pointer;transition:all 0.2s;border:1px solid}
+.crole.f{background:rgba(16,185,129,0.12);color:var(--emerald);border-color:rgba(16,185,129,0.3)}
+.crole.s{background:rgba(59,130,246,0.12);color:#60A5FA;border-color:rgba(59,130,246,0.3)}
+.crole.g{background:rgba(139,92,246,0.12);color:var(--violet);border-color:rgba(139,92,246,0.3)}
+.crole:hover{transform:scale(1.06)}
+.cpass{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--gray2)}
+.hint-tip{font-size:0.68rem;color:var(--gray2);margin-top:8px}
+.fg{margin-bottom:15px}
+.fg label{display:block;font-size:0.72rem;font-weight:700;color:var(--gray1);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px}
+.fg input{width:100%;padding:12px 15px;background:rgba(255,255,255,0.04);border:1px solid var(--border2);border-radius:11px;color:var(--white);font-family:'Outfit',sans-serif;font-size:0.88rem;outline:none;transition:all 0.2s}
+.fg input:focus{border-color:var(--blue);background:rgba(59,130,246,0.06);box-shadow:0 0 0 3px rgba(59,130,246,0.1)}
+.fg input::placeholder{color:var(--gray2)}
+#lerr{display:none;color:var(--rose);font-size:0.8rem;text-align:center;margin-bottom:11px;background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.2);border-radius:8px;padding:8px}
+.btnl{width:100%;padding:13px;border:none;border-radius:13px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:white;font-family:'Outfit',sans-serif;font-size:0.92rem;font-weight:700;cursor:pointer;transition:all 0.3s;box-shadow:0 8px 24px rgba(59,130,246,0.35);position:relative;overflow:hidden}
+.btnl::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);transition:left 0.5s}
+.btnl:hover::before{left:100%}
+.btnl:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(59,130,246,0.45)}
+
+/* APP */
+#app{display:none;min-height:100vh;position:relative;z-index:1}
+#app.on{display:flex;flex-direction:column}
+
+/* TOPBAR */
+.tb{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:58px;background:rgba(6,11,20,0.88);backdrop-filter:blur(30px);border-bottom:1px solid var(--border2)}
+.tb-br{display:flex;align-items:center;gap:9px;font-weight:800;font-size:0.95rem;letter-spacing:-0.02em}
+.tb-sh{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 0 10px rgba(59,130,246,0.4)}
+.tb-nav{display:flex;gap:2px;background:rgba(255,255,255,0.03);border:1px solid var(--border2);border-radius:9px;padding:3px}
+.tbn{padding:5px 13px;border-radius:6px;border:none;background:transparent;color:var(--gray1);font-family:'Outfit',sans-serif;font-size:0.8rem;font-weight:500;cursor:pointer;transition:all 0.2s}
+.tbn.on{background:var(--blue);color:white;box-shadow:0 2px 8px rgba(59,130,246,0.4)}
+.tbn:hover:not(.on){color:white;background:rgba(255,255,255,0.06)}
+.tb-u{display:flex;align-items:center;gap:9px}
+.tb-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:800;border:2px solid var(--border)}
+.tb-inf{font-size:0.78rem}
+.tb-nm{font-weight:700}
+.tb-rl{font-size:0.68rem;color:var(--gray1)}
+.tb-out{padding:4px 11px;border-radius:7px;border:1px solid var(--border2);background:transparent;color:var(--gray1);font-family:'Outfit',sans-serif;font-size:0.75rem;cursor:pointer;transition:all 0.2s}
+.tb-out:hover{border-color:var(--rose);color:var(--rose)}
+
+/* SCREENS */
+.sc{display:none;padding:28px;max-width:1440px;margin:0 auto;width:100%;animation:up 0.4s ease both}
+.sc.on{display:block}
+.ph{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px}
+.ph h2{font-size:1.6rem;font-weight:800;letter-spacing:-0.03em}
+.ph p{color:var(--gray1);font-size:0.83rem;margin-top:3px;font-weight:300}
+.ph-live{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:20px;font-size:0.75rem;font-weight:600;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:var(--emerald)}
+.ph-live::before{content:'●';font-size:7px;animation:blink 2s infinite}
+
+/* KPI */
+.kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.kpi{background:rgba(10,18,32,0.65);border:1px solid var(--border2);border-radius:14px;padding:20px;position:relative;overflow:hidden;transition:all 0.3s;cursor:default}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kb::before{background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.ke::before{background:linear-gradient(90deg,var(--emerald),#34D399)}
+.ka::before{background:linear-gradient(90deg,var(--amber),#FCD34D)}
+.kr::before{background:linear-gradient(90deg,var(--rose),#FB7185)}
+.kpi:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.1)}
+.kl{font-size:0.7rem;font-weight:700;color:var(--gray1);text-transform:uppercase;letter-spacing:0.07em}
+.kv{font-size:2rem;font-weight:900;letter-spacing:-0.05em;margin:5px 0 3px;line-height:1}
+.ks{font-size:0.72rem}
+.kt{font-size:0.72rem;font-weight:700}
+.kt.u{color:var(--emerald)}
+.kt.d{color:var(--rose)}
+
+/* CARDS */
+.card{background:rgba(10,18,32,0.65);border:1px solid var(--border2);border-radius:14px;padding:22px;transition:border-color 0.2s}
+.card:hover{border-color:rgba(59,130,246,0.18)}
+.ct{font-size:0.7rem;font-weight:700;color:var(--gray1);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px}
+.dgrid{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;margin-bottom:18px}
+
+/* BAR CHART */
+.bchart{display:flex;align-items:flex-end;gap:10px;height:120px;padding-top:8px}
+.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px}
+.bb{width:100%;border-radius:5px 5px 0 0;background:linear-gradient(180deg,var(--blue),rgba(59,130,246,0.35));transition:height 1.2s cubic-bezier(0.34,1.56,0.64,1);min-height:4px;cursor:pointer}
+.bb:hover{background:linear-gradient(180deg,var(--cyan),rgba(6,182,212,0.4))}
+.bv{font-size:0.7rem;font-weight:700;color:var(--gray1)}
+.bl{font-size:0.65rem;color:var(--gray2)}
+
+/* DONUT */
+.dw{display:flex;align-items:center;gap:18px}
+.dl{display:flex;flex-direction:column;gap:9px}
+.li{display:flex;align-items:center;gap:7px;font-size:0.78rem}
+.ld{width:7px;height:7px;border-radius:2px;flex-shrink:0}
+.lp{margin-left:auto;font-weight:700;font-size:0.75rem;color:var(--gray1)}
+
+/* INC TABLE */
+.itable{display:flex;flex-direction:column;gap:7px}
+.ir{display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border2);border-radius:10px;cursor:pointer;transition:all 0.2s}
+.ir:hover{border-color:rgba(59,130,246,0.3);background:rgba(59,130,246,0.04)}
+.idot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ii{flex:1}
+.it{font-size:0.84rem;font-weight:600}
+.im{font-size:0.71rem;color:var(--gray1);margin-top:1px}
+.st{padding:3px 9px;border-radius:20px;font-size:0.66rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
+.sp{background:rgba(245,158,11,0.1);color:var(--amber);border:1px solid rgba(245,158,11,0.25)}
+.sm{background:rgba(59,130,246,0.1);color:#60A5FA;border:1px solid rgba(59,130,246,0.25)}
+.sd{background:rgba(16,185,129,0.1);color:var(--emerald);border:1px solid rgba(16,185,129,0.25)}
+
+/* REPORTE */
+.rw{max-width:660px;margin:0 auto}
+.fc{background:rgba(10,18,32,0.75);border:1px solid var(--border2);border-radius:18px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg2{margin-bottom:16px}
+.fg2 label{display:block;font-size:0.7rem;font-weight:700;color:var(--gray1);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px}
+.fg2 input,.fg2 select,.fg2 textarea{width:100%;padding:11px 13px;background:rgba(255,255,255,0.04);border:1px solid var(--border2);border-radius:9px;color:var(--white);font-family:'Outfit',sans-serif;font-size:0.86rem;outline:none;transition:all 0.2s}
+.fg2 input:focus,.fg2 select:focus,.fg2 textarea:focus{border-color:var(--blue);background:rgba(59,130,246,0.05);box-shadow:0 0 0 3px rgba(59,130,246,0.1)}
+.fg2 select option{background:var(--bg2)}
+.fg2 textarea{resize:vertical;min-height:88px}
+.geo{width:100%;padding:10px;border-radius:9px;border:1px dashed rgba(6,182,212,0.38);background:rgba(6,182,212,0.04);color:var(--cyan);font-family:'Outfit',sans-serif;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.geo:hover{background:rgba(6,182,212,0.09);border-color:var(--cyan)}
+.gok{display:none;color:var(--emerald);font-size:0.78rem;margin-top:5px;font-weight:500}
+.btsub{width:100%;padding:13px;border:none;border-radius:11px;background:linear-gradient(135deg,var(--blue),var(--blue2));color:white;font-family:'Outfit',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.3s;margin-top:4px;box-shadow:0 8px 24px rgba(59,130,246,0.3)}
+.btsub:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(59,130,246,0.45)}
+.sw{display:none;text-align:center;padding:44px 20px;flex-direction:column;align-items:center}
+.sr{width:84px;height:84px;border-radius:50%;margin:0 auto 18px;background:rgba(16,185,129,0.1);border:2px solid var(--emerald);display:flex;align-items:center;justify-content:center;font-size:36px;animation:spulse 2s ease infinite}
+.sw h3{font-size:1.3rem;font-weight:800;margin-bottom:7px}
+.sw p{color:var(--gray1);font-size:0.85rem;line-height:1.6}
+.btnw{margin-top:20px;padding:10px 24px;border-radius:9px;border:1px solid var(--border);background:transparent;color:var(--white);font-family:'Outfit',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s}
+.btnw:hover{border-color:var(--blue);color:var(--blue)}
+
+/* SST */
+.sl{display:grid;grid-template-columns:1fr 350px;gap:18px;align-items:start}
+.ab{display:flex;align-items:center;gap:9px;padding:11px 16px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:11px;margin-bottom:18px;font-size:0.83rem;color:var(--amber)}
+.icl{display:flex;flex-direction:column;gap:9px}
+.ic{background:rgba(10,18,32,0.75);border:1px solid var(--border2);border-radius:13px;padding:16px;cursor:pointer;transition:all 0.2s}
+.ic:hover{border-color:rgba(59,130,246,0.3)}
+.ic.sel{border-color:var(--blue);background:rgba(59,130,246,0.06)}
+.ict{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.ictt{font-weight:700;font-size:0.87rem}
+.ics{font-size:0.73rem;color:var(--gray1);margin-bottom:7px}
+.icd{font-size:0.78rem;color:#94A3B8;line-height:1.5}
+.dp{background:rgba(10,18,32,0.85);border:1px solid var(--border2);border-radius:14px;padding:22px;position:sticky;top:74px}
+.dpt{font-weight:800;font-size:0.92rem;margin-bottom:16px;letter-spacing:-0.02em}
+.dpf{margin-bottom:12px}
+.dpf label{font-size:0.66rem;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:0.08em;display:block;margin-bottom:3px}
+.dpf p{font-size:0.81rem;color:var(--gray1)}
+.dpsel{width:100%;padding:9px 11px;margin-bottom:9px;background:rgba(255,255,255,0.04);border:1px solid var(--border2);border-radius:8px;color:var(--white);font-family:'Outfit',sans-serif;font-size:0.8rem;outline:none}
+.dpta{width:100%;padding:9px 11px;margin-bottom:9px;background:rgba(255,255,255,0.04);border:1px solid var(--border2);border-radius:8px;color:var(--white);font-family:'Outfit',sans-serif;font-size:0.77rem;resize:none;outline:none;height:76px}
+.dpsel option{background:var(--bg2)}
+.btr{width:100%;padding:10px;border:none;border-radius:9px;background:var(--blue);color:white;font-family:'Outfit',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;transition:background 0.2s}
+.btr:hover{background:var(--blue2)}
+.bts{width:100%;padding:8px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--gray1);font-family:'Outfit',sans-serif;font-size:0.8rem;cursor:pointer;transition:all 0.2s;margin-top:5px}
+.bts:hover{border-color:var(--blue);color:white}
+
+/* CHATBOT */
+.cfab{position:fixed;bottom:26px;right:26px;z-index:300;width:54px;height:54px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--blue),var(--cyan));font-size:21px;cursor:pointer;box-shadow:0 8px 28px rgba(59,130,246,0.5);transition:all 0.3s;display:none;align-items:center;justify-content:center}
+.cfab:hover{transform:scale(1.12)}
+.cwin{position:fixed;bottom:90px;right:26px;z-index:300;width:330px;background:var(--bg2);border:1px solid rgba(59,130,246,0.2);border-radius:18px;overflow:hidden;display:none;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,0.6)}
+.cwin.open{display:flex;animation:up 0.3s ease}
+.chdr{padding:13px 16px;background:linear-gradient(135deg,rgba(59,130,246,0.28),rgba(6,182,212,0.18));border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between}
+.chl{display:flex;align-items:center;gap:9px}
+.cav{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:15px}
+.cnm{font-weight:700;font-size:0.85rem}
+.cst{font-size:0.66rem;color:var(--emerald);font-weight:600}
+.cx{background:none;border:none;color:var(--gray1);font-size:17px;cursor:pointer}
+.cx:hover{color:white}
+.cms{padding:13px;height:250px;overflow-y:auto;display:flex;flex-direction:column;gap:9px;scrollbar-width:thin;scrollbar-color:var(--gray3) transparent}
+.msg{max-width:83%;padding:9px 12px;font-size:0.78rem;line-height:1.5}
+.msg.bot{background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:4px 13px 13px 13px;align-self:flex-start;color:var(--gray1)}
+.msg.usr{background:linear-gradient(135deg,var(--blue),var(--blue2));border-radius:13px 4px 13px 13px;align-self:flex-end;color:white}
+.cinp{padding:11px 13px;border-top:1px solid var(--border2);display:flex;gap:7px}
+.cinp input{flex:1;padding:8px 11px;background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:8px;color:white;font-family:'Outfit',sans-serif;font-size:0.78rem;outline:none}
+.cinp input:focus{border-color:var(--blue)}
+.csnd{padding:8px 12px;background:var(--blue);border:none;border-radius:8px;color:white;font-size:13px;cursor:pointer;transition:background 0.2s}
+.csnd:hover{background:var(--blue2)}
+
+/* ROLE COLORS */
+.rf .tb-av{background:rgba(16,185,129,0.18);color:var(--emerald);border-color:rgba(16,185,129,0.3)}
+.rs .tb-av{background:rgba(59,130,246,0.18);color:#60A5FA;border-color:rgba(59,130,246,0.3)}
+.rg .tb-av{background:rgba(139,92,246,0.18);color:var(--violet);border-color:rgba(139,92,246,0.3)}
+
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+@keyframes spulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,0.4)}50%{box-shadow:0 0 0 14px rgba(16,185,129,0)}}
+
+@media(max-width:900px){
+  .kgrid{grid-template-columns:1fr 1fr}
+  .dgrid,.sl{grid-template-columns:1fr}
+  .dp{position:static}
+  .sc{padding:18px}
+  .tb{padding:0 16px}
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">
-    <div class="shield">🛡️</div>
-    NeoCity Shield
-  </div>
-  <div class="nav-tabs">
-    <button class="nav-tab active" onclick="showScreen('login')">Login</button>
-    <button class="nav-tab" onclick="showScreen('reporte')">Reporte</button>
-    <button class="nav-tab" onclick="showScreen('sst')">Panel SST</button>
-    <button class="nav-tab" onclick="showScreen('dashboard')">Dashboard</button>
-  </div>
-  <div class="nav-user">
-    <div class="nav-avatar">DM</div>
-    <span>Daniel Moreno</span>
-  </div>
-</nav>
-
-<main>
-
-  <!-- ══════════════════════════════ LOGIN ══════════════════════════════ -->
-  <div id="screen-login" class="screen active">
-    <div class="login-wrap">
-      <div class="login-hero">
-        <div class="big-shield">🛡️</div>
-        <h1>NeoCity Shield</h1>
-        <p>Sistema de reporte y gestión de incidentes<br>Evidencia Digital S.A.S.</p>
-      </div>
-      <div class="login-card">
-        <div class="role-selector">
-          <button class="role-btn active" onclick="selectRole(this,'funcionario')">
-            <span class="role-icon">👷</span>Funcionario
-          </button>
-          <button class="role-btn" onclick="selectRole(this,'sgsst')">
-            <span class="role-icon">🔒</span>SGSST
-          </button>
-          <button class="role-btn" onclick="selectRole(this,'gerencia')">
-            <span class="role-icon">📊</span>Gerencia
-          </button>
-        </div>
-        <div class="form-group">
-          <label>Correo institucional</label>
-          <input type="email" placeholder="usuario@evidenciadigital.com.co" id="login-email">
-        </div>
-        <div class="form-group">
-          <label>Contraseña</label>
-          <input type="password" placeholder="••••••••" id="login-pass">
-        </div>
-        <button class="btn-primary" onclick="doLogin()">Ingresar al sistema</button>
-      </div>
+<!-- LOGIN -->
+<div id="login-page">
+  <div class="lc">
+    <div class="lb">
+      <div class="lmark">🛡️</div>
+      <h1>NeoCity Shield</h1>
+      <p>Seguridad física ocupacional · Evidencia Digital S.A.S.</p>
     </div>
-  </div>
-
-  <!-- ══════════════════════════════ REPORTE ══════════════════════════════ -->
-  <div id="screen-reporte" class="screen">
-    <div style="margin-bottom:28px;">
-      <h2 style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;letter-spacing:-0.03em;">Reportar Incidente</h2>
-      <p style="color:var(--gray3);font-size:0.9rem;margin-top:4px;">Registra un incidente de seguridad física</p>
+    <div class="lcard">
+      <div class="hint">
+        <div class="hint-title">🔑 Accesos demo disponibles</div>
+        <div class="crow"><span class="crole f" onclick="fill('carlos.rodriguez@evidenciadigital.com.co','func2026')">👷 Funcionario</span><span class="cpass">func2026</span></div>
+        <div class="crow"><span class="crole s" onclick="fill('maria.gonzalez@evidenciadigital.com.co','sgsst2026')">🔒 SGSST</span><span class="cpass">sgsst2026</span></div>
+        <div class="crow"><span class="crole g" onclick="fill('gustavo.arana@evidenciadigital.com.co','gerencia2026')">📊 Gerencia</span><span class="cpass">gerencia2026</span></div>
+        <div class="hint-tip">💡 Clic en el rol para autocompletar las credenciales</div>
+      </div>
+      <div class="fg">
+        <label>Correo institucional</label>
+        <input type="email" id="le" placeholder="usuario@evidenciadigital.com.co">
+      </div>
+      <div class="fg">
+        <label>Contraseña</label>
+        <input type="password" id="lp" placeholder="••••••••" onkeydown="if(event.key==='Enter')login()">
+      </div>
+      <div id="lerr">❌ Credenciales incorrectas. Usa los accesos demo.</div>
+      <button class="btnl" onclick="login()">Ingresar al sistema →</button>
     </div>
-    <div class="form-card" id="form-reporte">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Tipo de incidente *</label>
-          <select id="tipo-incidente">
-            <option value="">Selecciona...</option>
-            <option>Hurto / raponazo</option>
-            <option>Intento de hurto</option>
-            <option>Caída en instalaciones</option>
-            <option>Caída en zona periférica</option>
-            <option>Agresión física</option>
-            <option>Amenaza verbal</option>
-            <option>Otro</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Fecha y hora del incidente *</label>
-          <input type="datetime-local" id="fecha-inc">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Descripción del incidente *</label>
-        <textarea placeholder="Describe brevemente qué ocurrió, dónde y cómo..." id="desc-inc"></textarea>
-      </div>
-      <div class="form-group">
-        <label>Ubicación</label>
-        <button class="geo-btn" onclick="captureGeo()">
-          📍 Usar mi ubicación actual (GPS)
-        </button>
-        <p class="geo-ok" id="geo-ok">✅ Ubicación capturada correctamente</p>
-        <input type="text" placeholder="O escribe la dirección manualmente" style="margin-top:8px;" id="dir-manual">
-      </div>
-      <button class="btn-primary" onclick="submitReporte()">Enviar reporte al SGSST</button>
-    </div>
-    <div class="success-screen form-card" id="success-reporte">
-      <div class="success-icon">✅</div>
-      <h3 style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;margin-bottom:10px;">¡Reporte enviado exitosamente!</h3>
-      <p style="color:var(--gray3);font-size:0.9rem;line-height:1.6;">El SGSST fue notificado automáticamente.<br>Tu reporte tiene trazabilidad completa en el sistema.</p>
-      <button class="btn-primary" style="margin-top:24px;max-width:200px;" onclick="resetReporte()">Nuevo reporte</button>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════ PANEL SST ══════════════════════════════ -->
-  <div id="screen-sst" class="screen">
-    <div class="page-header">
-      <div>
-        <h2 style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;letter-spacing:-0.03em;">Panel SGSST</h2>
-        <p style="color:var(--gray3);font-size:0.9rem;margin-top:4px;">Gestión y seguimiento de incidentes</p>
-      </div>
-    </div>
-    <div class="alert-banner">
-      ⚠️ <strong>2 incidentes</strong> sin seguimiento en más de 48 horas — requieren atención inmediata
-    </div>
-    <div class="sst-grid">
-      <div class="incident-full-list">
-
-        <div class="incident-card-full selected" onclick="selectIncident(this,1)">
-          <div class="incident-card-header">
-            <span class="incident-card-title">Hurto / raponazo</span>
-            <span class="status-badge status-pendiente">Pendiente</span>
-          </div>
-          <div class="incident-card-meta">👷 Carlos Rodríguez &nbsp;·&nbsp; 📅 14 mar 2026, 08:42</div>
-          <div class="incident-card-desc">Me arrebataron el celular en la Cra 14A frente a las instalaciones mientras llegaba al trabajo en la mañana.</div>
-        </div>
-
-        <div class="incident-card-full" onclick="selectIncident(this,2)">
-          <div class="incident-card-header">
-            <span class="incident-card-title">Caída en zona periférica</span>
-            <span class="status-badge status-en_gestion">En gestión</span>
-          </div>
-          <div class="incident-card-meta">👷 María González &nbsp;·&nbsp; 📅 13 mar 2026, 17:15</div>
-          <div class="incident-card-desc">Caída en el andén frente a la obra del Metro en inmediaciones de la empresa. Golpe leve en rodilla derecha.</div>
-        </div>
-
-        <div class="incident-card-full" onclick="selectIncident(this,3)">
-          <div class="incident-card-header">
-            <span class="incident-card-title">Amenaza verbal</span>
-            <span class="status-badge status-pendiente">Pendiente</span>
-          </div>
-          <div class="incident-card-meta">👷 Andrés Pérez &nbsp;·&nbsp; 📅 12 mar 2026, 19:30</div>
-          <div class="incident-card-desc">Individuo desconocido amenazó verbalmente al funcionario en la salida del edificio al finalizar la jornada.</div>
-        </div>
-
-        <div class="incident-card-full" onclick="selectIncident(this,4)">
-          <div class="incident-card-header">
-            <span class="incident-card-title">Intento de hurto</span>
-            <span class="status-badge status-cerrado">Cerrado</span>
-          </div>
-          <div class="incident-card-meta">👷 Laura Martínez &nbsp;·&nbsp; 📅 10 mar 2026, 12:05</div>
-          <div class="incident-card-desc">Intento de arrebato de maleta en el parqueadero. El funcionario retuvo sus pertenencias. Sin lesiones.</div>
-        </div>
-
-      </div>
-
-      <div class="detail-panel">
-        <h3>Detalle — Incidente #001</h3>
-        <div class="detail-field">
-          <label>Funcionario</label>
-          <p>Carlos Rodríguez</p>
-        </div>
-        <div class="detail-field">
-          <label>Tipo</label>
-          <p>Hurto / raponazo</p>
-        </div>
-        <div class="detail-field">
-          <label>Fecha de ocurrencia</label>
-          <p>14 mar 2026 — 08:42 a.m.</p>
-        </div>
-        <div class="detail-field">
-          <label>Ubicación</label>
-          <p>Carrera 14A #42-11, frente a instalaciones</p>
-        </div>
-        <div class="detail-field">
-          <label>Descripción</label>
-          <p>Me arrebataron el celular en la Cra 14A frente a las instalaciones mientras llegaba al trabajo en la mañana.</p>
-        </div>
-        <div class="detail-field">
-          <label>Estado actual</label>
-          <span class="status-badge status-pendiente">Pendiente</span>
-        </div>
-        <div style="margin-top:20px;">
-          <div class="form-group">
-            <label style="font-size:0.72rem;color:var(--gray3);text-transform:uppercase;letter-spacing:0.05em;">Nuevo estado</label>
-            <select style="width:100%;padding:10px 14px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;color:white;font-family:'DM Sans',sans-serif;font-size:0.85rem;outline:none;" id="new-estado">
-              <option value="">Selecciona...</option>
-              <option>En gestión</option>
-              <option>Cerrado</option>
-            </select>
-          </div>
-          <div class="form-group" style="margin-top:10px;">
-            <textarea placeholder="Observaciones del seguimiento..." style="width:100%;padding:10px 14px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:10px;color:white;font-family:'DM Sans',sans-serif;font-size:0.82rem;outline:none;resize:none;" rows="3"></textarea>
-          </div>
-          <button class="btn-primary" onclick="saveSeguimiento()">Registrar seguimiento</button>
-          <button class="btn-secondary">Ver historial completo</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════ DASHBOARD ══════════════════════════════ -->
-  <div id="screen-dashboard" class="screen">
-    <div class="page-header">
-      <div>
-        <h2 style="font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;letter-spacing:-0.03em;">Dashboard Gerencial</h2>
-        <p style="color:var(--gray3);font-size:0.9rem;margin-top:4px;">Indicadores y métricas — NeoCity Shield</p>
-      </div>
-      <div style="font-size:0.8rem;color:var(--gray3);">Actualizado: 15 mar 2026, 10:32 a.m.</div>
-    </div>
-
-    <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-label">Total incidentes</div>
-        <div class="kpi-number">12</div>
-        <div class="kpi-sub">Primer mes de operación</div>
-      </div>
-      <div class="kpi-card orange">
-        <div class="kpi-label">Pendientes</div>
-        <div class="kpi-number" style="color:var(--orange);">3</div>
-        <div class="kpi-sub kpi-badge-down">▲ Requieren atención</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Tasa de reporte</div>
-        <div class="kpi-number" style="color:var(--cyan);">83%</div>
-        <div class="kpi-sub kpi-badge-up">▲ vs 50% proceso AS-IS</div>
-      </div>
-      <div class="kpi-card green">
-        <div class="kpi-label">Tiempo prom. registro</div>
-        <div class="kpi-number" style="color:var(--green);">2.4<span style="font-size:1rem;">min</span></div>
-        <div class="kpi-sub kpi-badge-up">▼ vs 15 min AS-IS</div>
-      </div>
-    </div>
-
-    <div class="dashboard-grid">
-      <div class="dash-card">
-        <h3>Incidentes por mes</h3>
-        <div class="bar-chart" id="bar-chart"></div>
-      </div>
-      <div class="dash-card">
-        <h3>Distribución por tipo</h3>
-        <div class="donut-wrap">
-          <svg class="donut-svg" width="120" height="120" viewBox="0 0 120 120">
-            <circle cx="60" cy="60" r="45" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="18"/>
-            <circle cx="60" cy="60" r="45" fill="none" stroke="#1A6BFF" stroke-width="18"
-              stroke-dasharray="113 169" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
-            <circle cx="60" cy="60" r="45" fill="none" stroke="#FF6B35" stroke-width="18"
-              stroke-dasharray="56 226" stroke-dashoffset="-113" transform="rotate(-90 60 60)"/>
-            <circle cx="60" cy="60" r="45" fill="none" stroke="#00D4FF" stroke-width="18"
-              stroke-dasharray="42 240" stroke-dashoffset="-169" transform="rotate(-90 60 60)"/>
-            <circle cx="60" cy="60" r="45" fill="none" stroke="#00E676" stroke-width="18"
-              stroke-dasharray="71 211" stroke-dashoffset="-211" transform="rotate(-90 60 60)"/>
-          </svg>
-          <div class="donut-legend">
-            <div class="legend-item"><div class="legend-dot" style="background:#1A6BFF;"></div>Hurto / raponazo — 40%</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#FF6B35;"></div>Caídas — 20%</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#00D4FF;"></div>Amenaza verbal — 15%</div>
-            <div class="legend-item"><div class="legend-dot" style="background:#00E676;"></div>Otros — 25%</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="dash-card">
-      <h3>Últimos incidentes reportados</h3>
-      <div class="incident-list">
-        <div class="incident-item">
-          <div class="incident-type-dot" style="background:var(--orange);"></div>
-          <div class="incident-info">
-            <div class="incident-title">Hurto / raponazo — Carlos Rodríguez</div>
-            <div class="incident-meta">Cra 14A #42-11 · 14 mar 2026, 08:42</div>
-          </div>
-          <span class="status-badge status-pendiente">Pendiente</span>
-        </div>
-        <div class="incident-item">
-          <div class="incident-type-dot" style="background:var(--blue);"></div>
-          <div class="incident-info">
-            <div class="incident-title">Caída en zona periférica — María González</div>
-            <div class="incident-meta">Andén frente al Metro · 13 mar 2026, 17:15</div>
-          </div>
-          <span class="status-badge status-en_gestion">En gestión</span>
-        </div>
-        <div class="incident-item">
-          <div class="incident-type-dot" style="background:var(--cyan);"></div>
-          <div class="incident-info">
-            <div class="incident-title">Amenaza verbal — Andrés Pérez</div>
-            <div class="incident-meta">Salida del edificio · 12 mar 2026, 19:30</div>
-          </div>
-          <span class="status-badge status-pendiente">Pendiente</span>
-        </div>
-        <div class="incident-item">
-          <div class="incident-type-dot" style="background:var(--green);"></div>
-          <div class="incident-info">
-            <div class="incident-title">Intento de hurto — Laura Martínez</div>
-            <div class="incident-meta">Parqueadero · 10 mar 2026, 12:05</div>
-          </div>
-          <span class="status-badge status-cerrado">Cerrado</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</main>
-
-<!-- CHATBOT -->
-<button class="chatbot-fab" onclick="toggleChat()">🛡️</button>
-
-<div class="chatbot-window" id="chatbot-win">
-  <div class="chatbot-header">
-    <div class="chatbot-header-info">
-      <div class="chatbot-avatar">🤖</div>
-      <div>
-        <div class="chatbot-name">NeoBot</div>
-        <div class="chatbot-status">Asistente de seguridad · En línea</div>
-      </div>
-    </div>
-    <button class="chatbot-close" onclick="toggleChat()">✕</button>
-  </div>
-  <div class="chatbot-messages" id="chat-msgs">
-    <div class="msg bot">¡Hola! Soy NeoBot 🛡️ Tu asistente de seguridad de Evidencia Digital S.A.S. ¿En qué puedo orientarte?</div>
-    <div class="msg bot">Puedes preguntarme qué hacer ante un hurto, una caída u otro incidente de seguridad física.</div>
-  </div>
-  <div class="chatbot-input-row">
-    <input type="text" id="chat-input" placeholder="Escribe tu consulta..." onkeydown="if(event.key==='Enter')sendMsg()">
-    <button class="chatbot-send" onclick="sendMsg()">➤</button>
   </div>
 </div>
 
+<!-- APP -->
+<div id="app">
+  <nav class="tb" id="tb">
+    <div class="tb-br"><div class="tb-sh">🛡️</div>NeoCity Shield</div>
+    <div class="tb-nav" id="tbnav"></div>
+    <div class="tb-u">
+      <div class="tb-av" id="tbav"></div>
+      <div class="tb-inf"><div class="tb-nm" id="tbnm"></div><div class="tb-rl" id="tbrl"></div></div>
+      <button class="tb-out" onclick="logout()">Salir</button>
+    </div>
+  </nav>
+
+  <!-- DASHBOARD -->
+  <div class="sc" id="s-dash">
+    <div class="ph">
+      <div><h2>Dashboard Gerencial</h2><p>Indicadores en tiempo real · NeoCity Shield</p></div>
+      <div class="ph-live">Sistema activo</div>
+    </div>
+    <div class="kgrid">
+      <div class="kpi kb"><div class="kl">Total incidentes</div><div class="kv">12</div><div class="kt u">▲ Primer mes de operación</div></div>
+      <div class="kpi ke"><div class="kl">Tasa de reporte</div><div class="kv" style="color:var(--emerald)">83<span style="font-size:1rem">%</span></div><div class="kt u">▲ +33pp vs proceso AS-IS</div></div>
+      <div class="kpi ka"><div class="kl">Pendientes</div><div class="kv" style="color:var(--amber)">3</div><div class="kt d">▲ Requieren atención</div></div>
+      <div class="kpi kr"><div class="kl">Tiempo prom. registro</div><div class="kv" style="color:#34D399">2.4<span style="font-size:0.9rem">min</span></div><div class="kt u">▼ vs 15 min AS-IS</div></div>
+    </div>
+    <div class="dgrid">
+      <div class="card"><div class="ct">Incidentes por mes</div><div class="bchart" id="bchart"></div></div>
+      <div class="card">
+        <div class="ct">Distribución por tipo</div>
+        <div class="dw">
+          <svg width="108" height="108" viewBox="0 0 108 108" style="flex-shrink:0">
+            <circle cx="54" cy="54" r="38" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="15"/>
+            <circle cx="54" cy="54" r="38" fill="none" stroke="#3B82F6" stroke-width="15" stroke-dasharray="96 143" stroke-dashoffset="0" transform="rotate(-90 54 54)"/>
+            <circle cx="54" cy="54" r="38" fill="none" stroke="#F59E0B" stroke-width="15" stroke-dasharray="48 191" stroke-dashoffset="-96" transform="rotate(-90 54 54)"/>
+            <circle cx="54" cy="54" r="38" fill="none" stroke="#10B981" stroke-width="15" stroke-dasharray="36 203" stroke-dashoffset="-144" transform="rotate(-90 54 54)"/>
+            <circle cx="54" cy="54" r="38" fill="none" stroke="#8B5CF6" stroke-width="15" stroke-dasharray="59 180" stroke-dashoffset="-180" transform="rotate(-90 54 54)"/>
+          </svg>
+          <div class="dl">
+            <div class="li"><div class="ld" style="background:#3B82F6"></div>Hurto / raponazo<span class="lp">40%</span></div>
+            <div class="li"><div class="ld" style="background:#F59E0B"></div>Caídas<span class="lp">20%</span></div>
+            <div class="li"><div class="ld" style="background:#10B981"></div>Amenaza verbal<span class="lp">15%</span></div>
+            <div class="li"><div class="ld" style="background:#8B5CF6"></div>Otros<span class="lp">25%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct">Últimos incidentes reportados</div>
+      <div class="itable">
+        <div class="ir"><div class="idot" style="background:var(--amber)"></div><div class="ii"><div class="it">Hurto / raponazo — Carlos Rodríguez</div><div class="im">Cra 14A #42-11 · 14 mar 2026, 08:42</div></div><span class="st sp">Pendiente</span></div>
+        <div class="ir"><div class="idot" style="background:var(--blue)"></div><div class="ii"><div class="it">Caída en zona periférica — María González</div><div class="im">Andén Metro · 13 mar 2026, 17:15</div></div><span class="st sm">En gestión</span></div>
+        <div class="ir"><div class="idot" style="background:var(--cyan)"></div><div class="ii"><div class="it">Amenaza verbal — Andrés Pérez</div><div class="im">Salida edificio · 12 mar 2026, 19:30</div></div><span class="st sp">Pendiente</span></div>
+        <div class="ir"><div class="idot" style="background:var(--emerald)"></div><div class="ii"><div class="it">Intento de hurto — Laura Martínez</div><div class="im">Parqueadero · 10 mar 2026, 12:05</div></div><span class="st sd">Cerrado</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REPORTE -->
+  <div class="sc" id="s-rep">
+    <div class="ph"><div><h2>Reportar Incidente</h2><p>Registra un incidente de seguridad física</p></div></div>
+    <div class="rw">
+      <div class="fc" id="fm">
+        <div class="fgrid">
+          <div class="fg2"><label>Tipo de incidente *</label><select id="ft"><option value="">Selecciona...</option><option>Hurto / raponazo</option><option>Intento de hurto</option><option>Caída en instalaciones</option><option>Caída en zona periférica</option><option>Agresión física</option><option>Amenaza verbal</option><option>Otro</option></select></div>
+          <div class="fg2"><label>Fecha y hora *</label><input type="datetime-local" id="ff"></div>
+        </div>
+        <div class="fg2"><label>Descripción del incidente *</label><textarea id="fd" placeholder="Describe qué ocurrió, cómo y dónde..."></textarea></div>
+        <div class="fg2">
+          <label>Ubicación</label>
+          <button class="geo" onclick="captGeo()">📍 Capturar ubicación GPS actual</button>
+          <p class="gok" id="gok">✅ Ubicación GPS capturada correctamente</p>
+          <input type="text" id="fdir" placeholder="O escribe la dirección manualmente" style="margin-top:8px">
+        </div>
+        <button class="btsub" onclick="subRep()">Enviar reporte al SGSST →</button>
+      </div>
+      <div class="fc sw" id="fs">
+        <div class="sr">✅</div>
+        <h3>¡Reporte enviado exitosamente!</h3>
+        <p>El SGSST fue notificado de inmediato.<br>Tu reporte tiene trazabilidad completa en NeoCity Shield.</p>
+        <button class="btnw" onclick="resetRep()">+ Nuevo reporte</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL SST -->
+  <div class="sc" id="s-sst">
+    <div class="ph"><div><h2>Panel SGSST</h2><p>Gestión y seguimiento de incidentes</p></div><div class="ph-live">4 casos activos</div></div>
+    <div class="ab">⚠️ <strong>2 incidentes</strong> sin seguimiento en más de 48 horas — atención requerida</div>
+    <div class="sl">
+      <div class="icl">
+        <div class="ic sel" onclick="selI(this,1)"><div class="ict"><span class="ictt">Hurto / raponazo</span><span class="st sp">Pendiente</span></div><div class="ics">👷 Carlos Rodríguez · 📅 14 mar 2026, 08:42</div><div class="icd">Me arrebataron el celular en la Cra 14A frente a las instalaciones mientras llegaba al trabajo.</div></div>
+        <div class="ic" onclick="selI(this,2)"><div class="ict"><span class="ictt">Caída en zona periférica</span><span class="st sm">En gestión</span></div><div class="ics">👷 María González · 📅 13 mar 2026, 17:15</div><div class="icd">Caída en el andén frente a la obra del Metro. Golpe leve en rodilla derecha.</div></div>
+        <div class="ic" onclick="selI(this,3)"><div class="ict"><span class="ictt">Amenaza verbal</span><span class="st sp">Pendiente</span></div><div class="ics">👷 Andrés Pérez · 📅 12 mar 2026, 19:30</div><div class="icd">Individuo desconocido amenazó verbalmente al funcionario en la salida del edificio.</div></div>
+        <div class="ic" onclick="selI(this,4)"><div class="ict"><span class="ictt">Intento de hurto</span><span class="st sd">Cerrado</span></div><div class="ics">👷 Laura Martínez · 📅 10 mar 2026, 12:05</div><div class="icd">Intento de arrebato de maleta en el parqueadero. Sin lesiones. Caso gestionado.</div></div>
+      </div>
+      <div class="dp">
+        <div class="dpt" id="dpt">Incidente #001 — Detalles</div>
+        <div class="dpf"><label>Funcionario</label><p id="dpf">Carlos Rodríguez</p></div>
+        <div class="dpf"><label>Tipo</label><p id="dptipo">Hurto / raponazo</p></div>
+        <div class="dpf"><label>Fecha y hora</label><p id="dpfecha">14 mar 2026 — 08:42 a.m.</p></div>
+        <div class="dpf"><label>Ubicación</label><p id="dploc">Carrera 14A #42-11, frente a instalaciones</p></div>
+        <div class="dpf"><label>Estado actual</label><span class="st sp" id="dpst">Pendiente</span></div>
+        <div style="margin-top:16px;border-top:1px solid var(--border2);padding-top:14px">
+          <div style="font-size:0.66rem;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Registrar seguimiento</div>
+          <select class="dpsel" id="dpsel"><option value="">Nuevo estado...</option><option>En gestión</option><option>Cerrado</option></select>
+          <textarea class="dpta" placeholder="Observaciones del SGSST..."></textarea>
+          <button class="btr" onclick="regS()">Registrar seguimiento</button>
+          <button class="bts">Ver historial completo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHATBOT -->
+<button class="cfab" id="cfab" onclick="tChat()">🛡️</button>
+<div class="cwin" id="cwin">
+  <div class="chdr"><div class="chl"><div class="cav">🤖</div><div><div class="cnm">NeoBot</div><div class="cst">● En línea</div></div></div><button class="cx" onclick="tChat()">✕</button></div>
+  <div class="cms" id="cmsgs">
+    <div class="msg bot">¡Hola! Soy NeoBot 🛡️ Tu asistente de seguridad de Evidencia Digital S.A.S.</div>
+    <div class="msg bot">Pregúntame qué hacer ante un hurto, caída u otro incidente.</div>
+  </div>
+  <div class="cinp"><input type="text" id="cinput" placeholder="Escribe tu consulta..." onkeydown="if(event.key==='Enter')sndMsg()"><button class="csnd" onclick="sndMsg()">➤</button></div>
+</div>
+
 <script>
-  // ── SCREENS ──────────────────────────────────────────────
-  function showScreen(name) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('screen-' + name).classList.add('active');
-    document.querySelectorAll('.nav-tab').forEach((t,i) => {
-      const map = ['login','reporte','sst','dashboard'];
-      t.classList.toggle('active', map[i] === name);
-    });
-    if (name === 'dashboard') buildBarChart();
-  }
+const U={
+  'carlos.rodriguez@evidenciadigital.com.co':{p:'func2026',r:'funcionario',n:'Carlos Rodríguez',i:'CR'},
+  'maria.gonzalez@evidenciadigital.com.co':  {p:'sgsst2026',r:'sgsst',n:'María González',i:'MG'},
+  'gustavo.arana@evidenciadigital.com.co':   {p:'gerencia2026',r:'gerencia',n:'Gustavo Arana',i:'GA'}
+};
+const NAV={
+  funcionario:[{id:'s-rep',l:'📋 Reportar'}],
+  sgsst:      [{id:'s-sst',l:'🔒 Panel SST'},{id:'s-dash',l:'📊 Dashboard'}],
+  gerencia:   [{id:'s-dash',l:'📊 Dashboard'},{id:'s-sst',l:'🔒 Panel SST'}]
+};
+const RC={funcionario:'rf',sgsst:'rs',gerencia:'rg'};
+const RL={funcionario:'Funcionario Operativo',sgsst:'SGSST',gerencia:'Gerencia'};
+let cu=null;
 
-  // ── LOGIN ────────────────────────────────────────────────
-  let selectedRole = 'funcionario';
+function fill(e,p){document.getElementById('le').value=e;document.getElementById('lp').value=p}
 
-  function selectRole(btn, role) {
-    document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    selectedRole = role;
-  }
+function login(){
+  const e=document.getElementById('le').value.trim().toLowerCase();
+  const p=document.getElementById('lp').value;
+  const er=document.getElementById('lerr');
+  const u=U[e];
+  if(!u||u.p!==p){er.style.display='block';return}
+  er.style.display='none';cu={...u,e};
+  setupApp();
+  const lp=document.getElementById('login-page');
+  lp.classList.add('out');
+  setTimeout(()=>{
+    lp.style.display='none';
+    document.getElementById('app').classList.add('on');
+    document.getElementById('cfab').style.display='flex';
+  },600);
+}
 
-  function doLogin() {
-    const email = document.getElementById('login-email').value;
-    const pass  = document.getElementById('login-pass').value;
-    if (!email || !pass) { alert('Completa todos los campos'); return; }
-    const routes = { funcionario: 'reporte', sgsst: 'sst', gerencia: 'dashboard' };
-    showScreen(routes[selectedRole]);
-  }
+function setupApp(){
+  const tb=document.getElementById('tb');
+  tb.className='tb '+RC[cu.r];
+  document.getElementById('tbav').textContent=cu.i;
+  document.getElementById('tbnm').textContent=cu.n;
+  document.getElementById('tbrl').textContent=RL[cu.r];
+  const nav=document.getElementById('tbnav');nav.innerHTML='';
+  NAV[cu.r].forEach((t,i)=>{
+    const b=document.createElement('button');
+    b.className='tbn'+(i===0?' on':'');b.textContent=t.l;
+    b.onclick=()=>showSc(t.id,b);nav.appendChild(b);
+  });
+  showSc(NAV[cu.r][0].id,nav.firstChild);
+  buildChart();
+}
 
-  // ── REPORTE ──────────────────────────────────────────────
-  function captureGeo() {
-    document.getElementById('geo-ok').style.display = 'block';
-  }
+function showSc(id,btn){
+  document.querySelectorAll('.sc').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  if(btn){document.querySelectorAll('.tbn').forEach(b=>b.classList.remove('on'));btn.classList.add('on')}
+}
 
-  function submitReporte() {
-    const tipo = document.getElementById('tipo-incidente').value;
-    const desc = document.getElementById('desc-inc').value;
-    const fecha = document.getElementById('fecha-inc').value;
-    if (!tipo || !desc || !fecha) { alert('Completa los campos obligatorios (*)'); return; }
-    document.getElementById('form-reporte').style.display = 'none';
-    const s = document.getElementById('success-reporte');
-    s.style.display = 'flex';
-    s.style.flexDirection = 'column';
-    s.style.alignItems = 'center';
-  }
+function logout(){
+  cu=null;
+  document.getElementById('app').classList.remove('on');
+  document.getElementById('app').style.display='none';
+  document.getElementById('cfab').style.display='none';
+  document.getElementById('cwin').classList.remove('open');
+  const lp=document.getElementById('login-page');
+  lp.style.display='flex';lp.classList.remove('out');
+  document.getElementById('le').value='';document.getElementById('lp').value='';
+}
 
-  function resetReporte() {
-    document.getElementById('form-reporte').style.display = 'block';
-    document.getElementById('success-reporte').style.display = 'none';
-    document.getElementById('tipo-incidente').value = '';
-    document.getElementById('desc-inc').value = '';
-    document.getElementById('fecha-inc').value = '';
-    document.getElementById('dir-manual').value = '';
-    document.getElementById('geo-ok').style.display = 'none';
-  }
+function buildChart(){
+  const d=[{m:'Oct',v:0},{m:'Nov',v:0},{m:'Dic',v:0},{m:'Ene',v:0},{m:'Feb',v:3},{m:'Mar',v:9}];
+  const mx=Math.max(...d.map(x=>x.v),1);
+  const el=document.getElementById('bchart');if(!el)return;
+  el.innerHTML=d.map(x=>`<div class="bc"><div class="bv">${x.v||''}</div><div class="bb" style="height:${Math.max((x.v/mx)*105,4)}px"></div><div class="bl">${x.m}</div></div>`).join('');
+}
 
-  // ── SST ──────────────────────────────────────────────────
-  function selectIncident(card, id) {
-    document.querySelectorAll('.incident-card-full').forEach(c => c.classList.remove('selected'));
-    card.classList.add('selected');
-  }
+function captGeo(){document.getElementById('gok').style.display='block'}
+function subRep(){
+  if(!document.getElementById('ft').value||!document.getElementById('fd').value||!document.getElementById('ff').value){alert('Completa los campos obligatorios (*)');return}
+  document.getElementById('fm').style.display='none';
+  const sw=document.getElementById('fs');sw.style.display='flex';sw.style.flexDirection='column';sw.style.alignItems='center';
+}
+function resetRep(){
+  document.getElementById('fm').style.display='block';document.getElementById('fs').style.display='none';
+  ['ft','fd','ff','fdir'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});
+  document.getElementById('gok').style.display='none';
+}
 
-  function saveSeguimiento() {
-    const estado = document.getElementById('new-estado').value;
-    if (!estado) { alert('Selecciona un nuevo estado'); return; }
-    alert('✅ Seguimiento registrado exitosamente');
-  }
+const ID={
+  1:{f:'Carlos Rodríguez',t:'Hurto / raponazo',fe:'14 mar 2026 — 08:42 a.m.',l:'Carrera 14A #42-11, frente a instalaciones',sc:'st sp',st:'Pendiente',id:'#001'},
+  2:{f:'María González',t:'Caída en zona periférica',fe:'13 mar 2026 — 05:15 p.m.',l:'Andén frente al Metro',sc:'st sm',st:'En gestión',id:'#002'},
+  3:{f:'Andrés Pérez',t:'Amenaza verbal',fe:'12 mar 2026 — 07:30 p.m.',l:'Salida principal del edificio',sc:'st sp',st:'Pendiente',id:'#003'},
+  4:{f:'Laura Martínez',t:'Intento de hurto',fe:'10 mar 2026 — 12:05 p.m.',l:'Parqueadero de las instalaciones',sc:'st sd',st:'Cerrado',id:'#004'}
+};
+function selI(c,id){
+  document.querySelectorAll('.ic').forEach(x=>x.classList.remove('sel'));c.classList.add('sel');
+  const d=ID[id];
+  document.getElementById('dpt').textContent='Incidente '+d.id+' — Detalles';
+  document.getElementById('dpf').textContent=d.f;document.getElementById('dptipo').textContent=d.t;
+  document.getElementById('dpfecha').textContent=d.fe;document.getElementById('dploc').textContent=d.l;
+  const s=document.getElementById('dpst');s.className=d.sc;s.textContent=d.st;
+}
+function regS(){const e=document.getElementById('dpsel').value;if(!e){alert('Selecciona un nuevo estado');return}alert('✅ Seguimiento registrado correctamente');document.getElementById('dpsel').value=''}
 
-  // ── DASHBOARD BAR CHART ──────────────────────────────────
-  function buildBarChart() {
-    const data = [
-      { mes: 'Oct', val: 0 }, { mes: 'Nov', val: 0 },
-      { mes: 'Dic', val: 0 }, { mes: 'Ene', val: 0 },
-      { mes: 'Feb', val: 3 }, { mes: 'Mar', val: 9 }
-    ];
-    const max = Math.max(...data.map(d => d.val)) || 1;
-    const chart = document.getElementById('bar-chart');
-    chart.innerHTML = '';
-    data.forEach(d => {
-      const pct = (d.val / max) * 100;
-      chart.innerHTML += `
-        <div class="bar-col">
-          <div class="bar-val">${d.val > 0 ? d.val : ''}</div>
-          <div class="bar" style="height:${Math.max(pct,4)}px;"></div>
-          <div class="bar-label">${d.mes}</div>
-        </div>`;
-    });
-  }
-
-  // ── CHATBOT ──────────────────────────────────────────────
-  const botReplies = [
-    'Si sufriste un hurto, primero asegúrate de estar en un lugar seguro. Luego reporta el incidente aquí en NeoCity Shield y contacta al SGSST.',
-    'Ante una caída, evalúa si necesitas atención médica inmediata. Si el dolor es intenso, llama al 123. Recuerda registrar el incidente en el sistema.',
-    'Para cualquier amenaza verbal, retírate del lugar de forma calmada y segura. Registra la situación en NeoCity Shield con la mayor cantidad de detalles posible.',
-    'Si estás en peligro inmediato, llama al 123 primero. Tu seguridad es lo más importante. Después registra el incidente aquí.',
-    'Recuerda que todos los incidentes deben ser reportados en NeoCity Shield para que el SGSST pueda hacer seguimiento y tomar las medidas correspondientes.'
-  ];
-  let replyIdx = 0;
-
-  function toggleChat() {
-    document.getElementById('chatbot-win').classList.toggle('open');
-  }
-
-  function sendMsg() {
-    const input = document.getElementById('chat-input');
-    const msgs  = document.getElementById('chat-msgs');
-    const text  = input.value.trim();
-    if (!text) return;
-    msgs.innerHTML += `<div class="msg user">${text}</div>`;
-    input.value = '';
-    setTimeout(() => {
-      const reply = botReplies[replyIdx % botReplies.length];
-      replyIdx++;
-      msgs.innerHTML += `<div class="msg bot">${reply}</div>`;
-      msgs.scrollTop = msgs.scrollHeight;
-    }, 800);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-
-  // Init bar chart if dashboard is default
-  buildBarChart();
+const BR=['Si sufriste un hurto, primero asegúrate de estar en lugar seguro. Llama al 123 si hay peligro. Luego registra el incidente en NeoCity Shield.','Ante una caída, evalúa si necesitas atención médica urgente. Si el dolor es intenso, busca ayuda médica. Registra el incidente en el sistema.','Para amenazas verbales, retírate del lugar de forma calmada. Documenta lo ocurrido y regístralo en NeoCity Shield con detalle.','Recuerda: todos los incidentes deben reportarse en NeoCity Shield para que el SGSST pueda hacer seguimiento y tomar medidas preventivas.','Si estás en peligro inmediato, llama al 123 primero. Tu seguridad es la prioridad. Luego registra el incidente en el sistema.'];
+let ri=0;
+function tChat(){document.getElementById('cwin').classList.toggle('open')}
+function sndMsg(){
+  const i=document.getElementById('cinput'),m=document.getElementById('cmsgs'),t=i.value.trim();
+  if(!t)return;m.innerHTML+=`<div class="msg usr">${t}</div>`;i.value='';
+  setTimeout(()=>{m.innerHTML+=`<div class="msg bot">${BR[ri++%BR.length]}</div>`;m.scrollTop=m.scrollHeight},700);
+  m.scrollTop=m.scrollHeight;
+}
 </script>
 </body>
 </html>
