@@ -17,15 +17,22 @@ app.use('/api/chatbot',    require('./routes/chatbotRoutes'));
 app.get('/api/health', (req, res) => res.json({ status: 'OK', app: 'NeoCity Shield' }));
 
 // RUTA TEMPORAL
-app.get('/api/crear-admin', async (req, res) => {
+app.get('/api/crear-usuarios', async (req, res) => {
   const pool = require('./config/db');
-  const hash = await bcrypt.hash('Admin2026', 10);
-  await pool.query('DELETE FROM usuarios WHERE email = $1', ['admin@evidenciadigital.com']);
-  await pool.query(
-    `INSERT INTO usuarios (nombre, email, password, rol) VALUES ($1,$2,$3,$4)`,
-    ['Administrador', 'admin@evidenciadigital.com', hash, 'gerencia']
-  );
-  res.json({ ok: true, hash });
+  const usuarios = [
+    { nombre: 'Administrador', email: 'admin@evidenciadigital.com', password: 'Admin2026', rol: 'gerencia' },
+    { nombre: 'Funcionario Demo', email: 'funcionario@evidenciadigital.com', password: 'Admin2026', rol: 'funcionario' },
+    { nombre: 'SGSST Demo', email: 'sgsst@evidenciadigital.com', password: 'Admin2026', rol: 'sgsst' }
+  ];
+  for (const u of usuarios) {
+    const hash = await bcrypt.hash(u.password, 10);
+    await pool.query('DELETE FROM usuarios WHERE email = $1', [u.email]);
+    await pool.query(
+      `INSERT INTO usuarios (nombre, email, password, rol) VALUES ($1,$2,$3,$4)`,
+      [u.nombre, u.email, hash, u.rol]
+    );
+  }
+  res.json({ ok: true, mensaje: 'Usuarios creados exitosamente' });
 });
 
 app.use((err, req, res, next) => {
