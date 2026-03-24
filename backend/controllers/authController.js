@@ -28,7 +28,7 @@ const authController = {
     }
   },
 
-  async registro(req, res) {
+async registro(req, res) {
   try {
     const { nombre, email, password, rol } = req.body;
     const usuario = await Usuario.crear({ nombre, email, password, rol });
