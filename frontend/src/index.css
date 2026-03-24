@@ -75,7 +75,7 @@ body {
     letter-spacing: -0.01em;
 }
 
-/* Animated Cosmic Background */
+/* Animated Cosmic Background with Moving Particles */
 body::before {
     content: '';
     position: fixed;
@@ -84,10 +84,10 @@ body::before {
     right: 0;
     bottom: 0;
     background: 
-        radial-gradient(ellipse at 20% 30%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 70%, rgba(118, 75, 162, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 40% 80%, rgba(240, 147, 251, 0.05) 0%, transparent 50%),
-        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.01) 0px, rgba(255, 255, 255, 0.01) 1px, transparent 1px, transparent 30px);
+        radial-gradient(ellipse at 20% 30%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(118, 75, 162, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 40% 80%, rgba(240, 147, 251, 0.1) 0%, transparent 50%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 30px);
     pointer-events: none;
     z-index: 0;
     animation: cosmicShift 20s ease infinite;
@@ -98,7 +98,7 @@ body::before {
     50% { opacity: 1; transform: scale(1.05); }
 }
 
-/* Animated Stars */
+/* Animated Floating Particles - MOVING BACKGROUND */
 body::after {
     content: '';
     position: fixed;
@@ -107,23 +107,43 @@ body::after {
     right: 0;
     bottom: 0;
     background-image: 
-        radial-gradient(2px 2px at 15px 40px, rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0)),
-        radial-gradient(1px 1px at 70px 120px, rgba(102, 126, 234, 0.5), rgba(0, 0, 0, 0)),
-        radial-gradient(3px 3px at 150px 250px, rgba(118, 75, 162, 0.4), rgba(0, 0, 0, 0)),
-        radial-gradient(2px 2px at 300px 450px, rgba(240, 147, 251, 0.3), rgba(0, 0, 0, 0)),
-        radial-gradient(1px 1px at 500px 200px, rgba(79, 172, 254, 0.4), rgba(0, 0, 0, 0)),
-        radial-gradient(2px 2px at 800px 600px, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0)),
-        radial-gradient(3px 3px at 1100px 300px, rgba(102, 126, 234, 0.4), rgba(0, 0, 0, 0));
-    background-size: 1200px 1200px;
+        radial-gradient(3px 3px at 15% 40%, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 25% 60%, rgba(102, 126, 234, 0.7), rgba(0, 0, 0, 0)),
+        radial-gradient(4px 4px at 35% 20%, rgba(118, 75, 162, 0.6), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 45% 80%, rgba(240, 147, 251, 0.5), rgba(0, 0, 0, 0)),
+        radial-gradient(3px 3px at 55% 45%, rgba(79, 172, 254, 0.6), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 65% 70%, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0)),
+        radial-gradient(4px 4px at 75% 30%, rgba(102, 126, 234, 0.6), rgba(0, 0, 0, 0)),
+        radial-gradient(3px 3px at 85% 55%, rgba(118, 75, 162, 0.5), rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 95% 85%, rgba(240, 147, 251, 0.4), rgba(0, 0, 0, 0));
+    background-size: 200% 200%;
     background-repeat: no-repeat;
-    opacity: 0.5;
+    opacity: 0.6;
     pointer-events: none;
-    animation: starsFloat 40s linear infinite;
+    animation: particlesMove 30s linear infinite;
 }
 
-@keyframes starsFloat {
-    from { transform: translateY(0px) translateX(0px); }
-    to { transform: translateY(-400px) translateX(200px); }
+@keyframes particlesMove {
+    0% {
+        background-position: 0% 0%;
+        opacity: 0.4;
+    }
+    25% {
+        background-position: 50% 25%;
+        opacity: 0.7;
+    }
+    50% {
+        background-position: 100% 50%;
+        opacity: 0.5;
+    }
+    75% {
+        background-position: 50% 75%;
+        opacity: 0.7;
+    }
+    100% {
+        background-position: 0% 100%;
+        opacity: 0.4;
+    }
 }
 
 /* Premium Scrollbar */
@@ -266,8 +286,32 @@ p, span, li, a {
     }
 }
 
+@keyframes inputGlow {
+    0% {
+        border-color: rgba(102, 126, 234, 0.3);
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.2);
+    }
+    50% {
+        border-color: rgba(102, 126, 234, 0.8);
+        box-shadow: 0 0 15px 5px rgba(102, 126, 234, 0.3);
+    }
+    100% {
+        border-color: rgba(102, 126, 234, 0.3);
+        box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.2);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
 /* ============================================
-   LOGIN PAGE - CINEMATIC POSITIONING
+   LOGIN PAGE - IMPROVED INPUTS
 ============================================ */
 .login-container {
     min-height: 100vh;
@@ -307,7 +351,7 @@ p, span, li, a {
 }
 
 .login-card {
-    background: rgba(1, 1, 12, 0.7);
+    background: rgba(1, 1, 12, 0.75);
     backdrop-filter: blur(24px);
     border: 1px solid var(--glass-border);
     padding: var(--space-3xl) var(--space-2xl);
@@ -378,31 +422,61 @@ p, span, li, a {
     letter-spacing: -0.2px;
 }
 
+/* IMPROVED INPUTS - BEAUTIFUL TYPOGRAPHY & INTERACTIVE */
 .login-card input {
     width: 100%;
     padding: 18px 24px;
     margin-bottom: var(--space-md);
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.08);
     border-radius: var(--radius-lg);
     font-size: 16px;
     color: #fff;
     font-weight: 500;
     transition: all 0.3s ease;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'DM Sans', 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.2px;
+    position: relative;
 }
 
 .login-card input::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.35);
     font-weight: 400;
+    font-size: 15px;
+    letter-spacing: -0.2px;
+    transition: all 0.3s ease;
+}
+
+.login-card input:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(102, 126, 234, 0.5);
+    transform: translateY(-1px);
 }
 
 .login-card input:focus {
     outline: none;
     border-color: #667eea;
     background: rgba(102, 126, 234, 0.08);
-    box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.15);
+    box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.2), 0 0 20px rgba(102, 126, 234, 0.3);
     transform: translateY(-2px);
+    animation: inputGlow 1.5s ease infinite;
+}
+
+/* Input Icons Enhancement */
+.login-card input[type="text"] {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="rgba(102,126,234,0.5)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>');
+    background-repeat: no-repeat;
+    background-position: 20px center;
+    background-size: 20px;
+    padding-left: 52px;
+}
+
+.login-card input[type="password"] {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="rgba(102,126,234,0.5)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6-4h12a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6a2 2 0 012-2zm10-4V6a4 4 0 00-8 0v4h8z" /></svg>');
+    background-repeat: no-repeat;
+    background-position: 20px center;
+    background-size: 20px;
+    padding-left: 52px;
 }
 
 .login-card button {
@@ -453,6 +527,18 @@ p, span, li, a {
     border-radius: var(--radius-md);
     border: 1px solid rgba(255, 8, 68, 0.2);
     font-weight: 600;
+    backdrop-filter: blur(4px);
+}
+
+/* Input Auto-fill Styles */
+.login-card input:-webkit-autofill,
+.login-card input:-webkit-autofill:hover,
+.login-card input:-webkit-autofill:focus,
+.login-card input:-webkit-autofill:active {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 0px 1000px rgba(102, 126, 234, 0.1);
 }
 
 /* ============================================
@@ -521,7 +607,7 @@ p, span, li, a {
 }
 
 /* ============================================
-   FORM CONTAINER - PERFECT SPACING
+   FORM CONTAINER - IMPROVED INPUTS
 ============================================ */
 .form-container {
     max-width: 760px;
@@ -593,7 +679,7 @@ p, span, li, a {
     width: 100%;
     padding: 18px 24px;
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.08);
     border-radius: var(--radius-lg);
     font-size: 16px;
     color: #fff;
@@ -603,13 +689,19 @@ p, span, li, a {
     font-weight: 500;
 }
 
+.form-container input::placeholder,
+.form-container textarea::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 400;
+}
+
 .form-container input:focus,
 .form-container select:focus,
 .form-container textarea:focus {
     outline: none;
     border-color: #667eea;
     background: rgba(102, 126, 234, 0.08);
-    box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.12);
+    box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.2), 0 0 20px rgba(102, 126, 234, 0.3);
     transform: translateY(-2px);
 }
 
@@ -901,7 +993,7 @@ p, span, li, a {
     width: 100%;
     padding: 16px 22px;
     background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.08);
     border-radius: var(--radius-lg);
     font-size: 15px;
     color: #fff;
@@ -914,7 +1006,7 @@ p, span, li, a {
 .modal textarea:focus {
     outline: none;
     border-color: #667eea;
-    box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.12);
+    box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.2);
 }
 
 .modal button[type="submit"] {
@@ -1257,7 +1349,7 @@ p, span, li, a {
     flex: 1;
     padding: 14px 20px;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.08);
     border-radius: var(--radius-full);
     font-size: 14px;
     color: #fff;
@@ -1269,6 +1361,7 @@ p, span, li, a {
     outline: none;
     border-color: #667eea;
     background: rgba(102, 126, 234, 0.08);
+    box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.2);
 }
 
 .chatbot-input button {
@@ -1287,6 +1380,29 @@ p, span, li, a {
 .chatbot-input button:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* ============================================
+   SECURITY ENHANCEMENTS - MOVING BACKGROUND
+============================================ */
+/* Additional security indicator */
+.login-card::after {
+    content: '🔒';
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    font-size: 20px;
+    opacity: 0.3;
+    transition: opacity 0.3s ease;
+}
+
+.login-card:hover::after {
+    opacity: 0.6;
+}
+
+/* Input security glow effect */
+.login-card input:focus {
+    animation: inputGlow 1.5s ease infinite;
 }
 
 /* ============================================
@@ -1311,6 +1427,10 @@ p, span, li, a {
     .exito-container {
         margin: var(--space-lg);
         padding: var(--space-xl);
+    }
+    
+    .login-card h1 {
+        font-size: 36px;
     }
     
     .panel-sst h2,
@@ -1340,4 +1460,32 @@ p, span, li, a {
     .chart-barra {
         width: 40px;
     }
+    
+    /* Adjust input icons for mobile */
+    .login-card input[type="text"],
+    .login-card input[type="password"] {
+        padding-left: 48px;
+        background-size: 18px;
+        background-position: 16px center;
+    }
+}
+
+/* Loading animation for better UX */
+@keyframes loadingPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
 }
