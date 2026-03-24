@@ -28,18 +28,19 @@ const authController = {
     }
   },
 
-async registro(req, res) {
-  try {
-    const { nombre, email, password, rol } = req.body;
-    const usuario = await Usuario.crear({ nombre, email, password, rol });
-    res.status(201).json({ mensaje: 'Usuario creado exitosamente', usuario });
-  } catch (error) {
-    if (error.code === '23505') {
-      return res.status(400).json({ error: 'El correo ya está registrado' });
+  async registro(req, res) {
+    try {
+      const { nombre, email, password, rol } = req.body;
+      const usuario = await Usuario.crear({ nombre, email, password, rol });
+      res.status(201).json({ mensaje: 'Usuario creado exitosamente', usuario });
+    } catch (error) {
+      if (error.code === '23505') {
+        return res.status(400).json({ error: 'El correo ya está registrado' });
+      }
+      res.status(500).json({ error: 'Error al crear usuario' });
     }
-    res.status(500).json({ error: 'Error al crear usuario' });
-  }
-}
+  },
+
   async perfil(req, res) {
     try {
       const usuario = await Usuario.buscarPorId(req.usuario.id);
