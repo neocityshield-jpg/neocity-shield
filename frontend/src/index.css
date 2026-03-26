@@ -553,9 +553,18 @@ body.light .navbar { background: rgba(255, 255, 255, 0.8); }
 }
 
 .dashboard h2 {
-    font-size: 42px;
+    font-size: 38px;
     margin-bottom: var(--space-xl);
     font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    line-height: 1.3;
+    flex-wrap: wrap;
+    background: linear-gradient(135deg, #fff 30%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 /* KPIs Grid (Tarjetas Flotantes) */
@@ -1070,28 +1079,61 @@ form select option {
     padding: 15px;
 }
 
-/* Botón de Ubicación */
+/* Contenedor Principal para el Formulario (Reportar Incidente) */
+.form-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-2xl);
+    box-shadow: var(--shadow-xl);
+    margin-bottom: var(--space-2xl);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-container h2 {
+    font-size: 32px;
+    margin-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #fff, var(--primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Botón de Ubicación Premium */
 .btn-location {
-    background: rgba(0, 230, 118, 0.1);
+    background: linear-gradient(135deg, rgba(0, 230, 118, 0.15), rgba(0, 230, 118, 0.05));
     color: var(--success);
-    border: 1px solid rgba(0, 230, 118, 0.3);
-    padding: 12px 24px;
-    border-radius: var(--radius-md);
-    font-weight: 700;
+    border: 1px solid rgba(0, 230, 118, 0.4);
+    padding: 16px 28px;
+    border-radius: var(--radius-full);
+    font-size: 16px;
+    font-weight: 800;
     cursor: pointer;
-    transition: var(--transition-base);
+    transition: var(--transition-smooth);
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: var(--space-md);
-    margin-top: -10px; /* Para acercarlo al campo anterior */
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: var(--space-lg);
+    box-shadow: 0 4px 15px rgba(0, 230, 118, 0.15);
+    width: auto;
 }
 
 .btn-location:hover {
-    background: var(--success);
+    background: var(--gradient-success);
     color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 230, 118, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0, 230, 118, 0.4);
+    border-color: transparent;
 }
 
 /* Botón Principal de Submit ("Enviar reporte") */
