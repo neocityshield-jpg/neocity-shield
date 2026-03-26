@@ -1,10 +1,16 @@
 require('dotenv').config();
 const express = require('express');
 const cors    = require('cors');
-const bcrypt  = require('bcryptjs');
 const app     = express();
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    'https://neocity-shield.vercel.app',
+    'http://localhost:3000'
+  ],
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
