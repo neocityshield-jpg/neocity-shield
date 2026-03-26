@@ -1009,3 +1009,113 @@ body.light .chatbot-input input { background: rgba(255, 255, 255, 0.5); }
         grid-template-columns: 1fr !important;
     }
 }
+
+/* ============================================
+   FORMS & REPORTES (Reportar Incidente, etc)
+============================================ */
+form label {
+    display: block;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
+}
+
+form select, 
+form input[type="datetime-local"], 
+form input[type="date"], 
+form input[type="time"], 
+form textarea,
+form input[type="text"] {
+    width: 100%;
+    padding: 16px 20px;
+    background: rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    transition: var(--transition-smooth);
+    outline: none;
+    margin-bottom: var(--space-lg);
+}
+
+body.light form select, 
+body.light form input[type="datetime-local"], 
+body.light form textarea,
+body.light form input[type="text"] {
+    background: rgba(255, 255, 255, 0.5);
+    color: var(--text-primary);
+}
+
+form select:focus, 
+form input:focus, 
+form textarea:focus {
+    border-color: var(--primary);
+    background: rgba(91, 106, 240, 0.05);
+    box-shadow: 0 0 0 4px rgba(91, 106, 240, 0.1);
+    transform: translateY(-2px);
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 140px;
+    line-height: 1.5;
+}
+
+form select option {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 15px;
+}
+
+/* Botón de Ubicación */
+.btn-location {
+    background: rgba(0, 230, 118, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(0, 230, 118, 0.3);
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-base);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: var(--space-md);
+    margin-top: -10px; /* Para acercarlo al campo anterior */
+}
+
+.btn-location:hover {
+    background: var(--success);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 230, 118, 0.3);
+}
+
+/* Botón Principal de Submit ("Enviar reporte") */
+form button[type="submit"], form .submit-btn {
+    width: 100%;
+    padding: 18px;
+    background: var(--gradient-primary);
+    border: none;
+    border-radius: var(--radius-lg);
+    color: white;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: var(--transition-base);
+    box-shadow: 0 10px 30px var(--primary-glow);
+    margin-top: var(--space-sm);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+form button[type="submit"]:hover, form .submit-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px var(--secondary-glow);
+    background-size: 200% auto;
+    background-position: right center;
+}
