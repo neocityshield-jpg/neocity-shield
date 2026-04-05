@@ -1,7 +1,9 @@
-const OpenAI = require('openai');
-const pool = require('../config/db');
+const OpenAI = require("openai").default;
+const pool = require("../config/db");
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 const SYSTEM_PROMPT = `
 Eres NeoBot, el asistente de seguridad física ocupacional de Evidencia Digital S.A.S.
@@ -19,31 +21,51 @@ const chatbotController = {
     try {
       const { mensaje, historial = [] } = req.body;
 
+      // 🔒 Validación básica
+      if (!mensaje) {
+        return res.status(400).json({ error: "El mensaje es obligatorio" });
+      }
+
       const mensajes = [
-        { role: 'system', content: SYSTEM_PROMPT },
+        { role: "system", content: SYSTEM_PROMPT },
         ...historial,
-        { role: 'user', content: mensaje }
+        { role: "user", content: mensaje }
       ];
 
+      // 🤖 Llamada a OpenAI
       const respuesta = await openai.chat.completions.create({
-        model:       'gpt-4o',
-        messages:    mensajes,
-        max_tokens:  500,
+        model: "gpt-4.1-mini",
+        messages: mensajes,
+        max_tokens: 500,
         temperature: 0.7
       });
 
       const textoRespuesta = respuesta.choices[0].message.content;
 
-      await pool.query(
-        `INSERT INTO chatbot_sesiones (usuario_id, mensaje, respuesta)
-         VALUES ($1, $2, $3)`,
-        [req.usuario.id, mensaje, textoRespuesta]
-      );
+      // 🧠 Verifica si existe usuario antes de guardar
+      let usuarioId = null;
+
+      if (req.usuario && req.usuario.id) {
+        usuarioId = req.usuario.id;
+
+        await pool.query(
+          `INSERT INTO chatbot_sesiones (usuario_id, mensaje, respuesta)
+           VALUES ($1, $2, $3)`,
+          [usuarioId, mensaje, textoRespuesta]
+        );
+      } else {
+        console.warn("⚠️ No hay usuario autenticado, no se guarda en BD");
+      }
 
       res.json({ respuesta: textoRespuesta });
 
     } catch (error) {
-      res.status(500).json({ error: 'Error al procesar mensaje del chatbot' });
+      console.error("🔥 ERROR OPENAI:", error);
+
+      res.status(500).json({
+        error: "Error al procesar mensaje del chatbot",
+        detalle: error.message
+      });
     }
   }
 };
