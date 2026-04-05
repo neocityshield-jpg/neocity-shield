@@ -21,7 +21,7 @@ const chatbotController = {
     try {
       const { mensaje, historial = [] } = req.body;
 
-      // 🔒 Validación básica
+      // 🔒 Validación
       if (!mensaje) {
         return res.status(400).json({ error: "El mensaje es obligatorio" });
       }
@@ -40,21 +40,22 @@ const chatbotController = {
         temperature: 0.7
       });
 
-      const textoRespuesta = respuesta.choices[0].message.content;
+      const textoRespuesta = respuesta?.choices?.[0]?.message?.content || "No se pudo generar respuesta.";
 
-      // 🧠 Verifica si existe usuario antes de guardar
-      let usuarioId = null;
-
-      if (req.usuario && req.usuario.id) {
-        usuarioId = req.usuario.id;
-
-        await pool.query(
-          `INSERT INTO chatbot_sesiones (usuario_id, mensaje, respuesta)
-           VALUES ($1, $2, $3)`,
-          [usuarioId, mensaje, textoRespuesta]
-        );
-      } else {
-        console.warn("⚠️ No hay usuario autenticado, no se guarda en BD");
+      // 💾 Guardar en BD SOLO si hay usuario
+      try {
+        if (req.usuario && req.usuario.id) {
+          await pool.query(
+            `INSERT INTO chatbot_sesiones (usuario_id, mensaje, respuesta)
+             VALUES ($1, $2, $3)`,
+            [req.usuario.id, mensaje, textoRespuesta]
+          );
+        } else {
+          console.warn("⚠️ No hay usuario autenticado, no se guarda en BD");
+        }
+      } catch (dbError) {
+        console.error("🔥 ERROR BD:", dbError.message);
+        // 👉 No rompemos la app si falla la BD
       }
 
       res.json({ respuesta: textoRespuesta });
