@@ -537,3 +537,49 @@ html,body{
   .incidentes-lista{grid-template-columns:1fr}
   .navbar{padding:0 20px}
 }
+
+/* ══════════════════════════════════
+   RESPONSIVO MÓVIL
+══════════════════════════════════ */
+@media(max-width:768px){
+  .login-wrap{
+    flex-direction:column;
+    max-width:100%;
+    min-height:100vh;
+    border-radius:0;
+    border:none;
+  }
+  .login-left{ display:none }
+  .login-right{
+    width:100%;
+    padding:48px 28px;
+    min-height:100vh;
+    justify-content:center;
+  }
+  .form-container{
+    margin:20px 16px;
+    padding:28px 20px;
+    border-radius:20px;
+  }
+  .panel-sst{ padding:0 16px }
+  .incidentes-lista{ grid-template-columns:1fr }
+  .dashboard{ padding:0 16px }
+  .kpis-grid{ grid-template-columns:repeat(2,1fr) }
+  .navbar{ padding:0 16px }
+  .nav-links{ display:none }
+  .nav-brand{ font-size:15px }
+  .chatbot-ventana{
+    width:calc(100vw - 32px);
+    right:16px;
+    bottom:90px;
+  }
+  .modal{ margin:16px; max-width:calc(100vw - 32px) }
+  .ll-stats{ flex-direction:column }
+}
+
+@media(max-width:480px){
+  .login-right{ padding:36px 20px }
+  .kpis-grid{ grid-template-columns:1fr 1fr }
+  .chart-barras{ gap:10px }
+  .chart-barra{ width:32px }
+}
