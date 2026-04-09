@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const RUTAS_POR_ROL = {
   funcionario: '/reportar',
@@ -8,17 +8,10 @@ const RUTAS_POR_ROL = {
   gerencia: '/dashboard'
 };
 
-const USERS_DEMO = [
-  { init: 'CR', name: 'Carlos Rodríguez', role: '👷 Funcionario Operativo', cred: 'func2026', bg: 'rgba(62,207,181,0.15)', color: '#3ecfb5' },
-  { init: 'MG', name: 'María González', role: '🔒 Responsable SGSST', cred: 'sgsst2026', bg: 'rgba(201,184,120,0.15)', color: '#c9b878' },
-  { init: 'GA', name: 'Gustavo Arana', role: '📊 Gerencia General', cred: 'gerencia2026', bg: 'rgba(224,92,58,0.15)', color: '#e8d89a' }
-];
-
 export default function Login() {
   const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
-  const [selUser, setSelUser]   = useState(null);
   const [error, setError]       = useState('');
   const [loading, setLoading]   = useState(false);
   const [pwdLen, setPwdLen]     = useState(0);
@@ -100,60 +93,57 @@ export default function Login() {
                   className="pwd-input"
                   placeholder="••••••••••"
                   value={password}
-                  onChange={e => { setPassword(e.target.value); setPwdLen(e.target.value.length) }}
+                  onChange={e => {
+                    setPassword(e.target.value);
+                    setPwdLen(e.target.value.length);
+                  }}
                   required
                 />
-                <button type="button" className="pwd-eye" onClick={() => setShowPass(!showPass)}>
+                <button
+                  type="button"
+                  className="pwd-eye"
+                  onClick={() => setShowPass(!showPass)}
+                >
                   {showPass ? '🙈' : '👁'}
                 </button>
               </div>
               <div className="pwd-bars">
                 {[0,1,2,3].map(i => (
-                  <div key={i} className="pbar" style={{ background: i < pwdStrength ? strengthColors[pwdStrength] : 'var(--rim)' }} />
+                  <div
+                    key={i}
+                    className="pbar"
+                    style={{
+                      background: i < pwdStrength
+                        ? strengthColors[pwdStrength]
+                        : 'var(--rim)'
+                    }}
+                  />
                 ))}
               </div>
-              {password && <div className="pwd-hint" style={{ color: strengthColors[pwdStrength] }}>{strengthLabels[pwdStrength]}</div>}
+              {password && (
+                <div
+                  className="pwd-hint"
+                  style={{ color: strengthColors[pwdStrength] }}
+                >
+                  {strengthLabels[pwdStrength]}
+                </div>
+              )}
             </div>
 
             {error && <div className="login-error">{error}</div>}
 
-            <button type="submit" className="login-cta" disabled={loading}>
+            <button
+              type="submit"
+              className="login-cta"
+              disabled={loading}
+            >
               {loading ? 'Ingresando...' : 'Ingresar al sistema →'}
             </button>
           </form>
 
-          <div className="login-divider">
-            <span>ACCESO RÁPIDO DEMO</span>
+          <div className="login-hint">
+            Entorno seguro · Evidencia Digital S.A.S. v1.0
           </div>
-
-          <div className="user-cards">
-            {USERS_DEMO.map((u, i) => (
-              <div
-                key={i}
-                className={`uc${selUser === i ? ' selected' : ''}`}
-                onClick={() => {
-                  setSelUser(i);
-                  const emails = ['carlos.rodriguez@evidenciadigital.com', 'maria.gonzalez@evidenciadigital.com', 'gustavo.arana@evidenciadigital.com'];
-                  setEmail(emails[i]);
-                  setPassword('password123');
-                  setPwdLen(11);
-                }}
-              >
-                <div className="uc-av" style={{ background: u.bg, color: u.color }}>{u.init}</div>
-                <div className="uc-info">
-                  <div className="uc-name">{u.name}</div>
-                  <div className="uc-role">{u.role}</div>
-                  <div className="uc-cred">{u.cred}</div>
-                </div>
-                <div className="uc-check">{selUser === i ? '✓' : ''}</div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ textAlign: 'center', marginTop: '14px' }}>
-            <Link to="/registro" className="login-link">¿No tienes cuenta? Regístrate aquí</Link>
-          </div>
-          <div className="login-hint">Entorno seguro · Evidencia Digital S.A.S. v1.0</div>
         </div>
       </div>
     </div>
