@@ -2,25 +2,24 @@ import { useState, useEffect, useRef } from 'react';
 import { incidenteService } from '../services/api';
 
 const TIPOS_INCIDENTE = [
-  'Hurto / raponazo','Intento de hurto','Caída en instalaciones',
-  'Caída en zona periférica','Agresión física','Amenaza verbal','Otro'
+  'Hurto / raponazo', 'Intento de hurto', 'Caída en instalaciones',
+  'Caída en zona periférica', 'Agresión física', 'Amenaza verbal', 'Otro'
 ];
 
 export default function FormReporte() {
   const [form, setForm] = useState({
-    tipo_incidente:'', descripcion:'', fecha_ocurrencia:'',
-    direccion_manual:'', latitud:null, longitud:null
+    tipo_incidente: '', descripcion: '', fecha_ocurrencia: '',
+    direccion_manual: '', latitud: null, longitud: null
   });
-  const [geoStatus, setGeoStatus]   = useState('idle'); // idle | loading | ok | error
+  const [geoStatus, setGeoStatus]       = useState('idle');
   const [direccionGPS, setDireccionGPS] = useState('');
-  const [enviando, setEnviando]     = useState(false);
-  const [exito, setExito]           = useState(false);
-  const [error, setError]           = useState('');
-  const mapRef                      = useRef(null);
-  const markerRef                   = useRef(null);
-  const mapInstanceRef              = useRef(null);
+  const [enviando, setEnviando]         = useState(false);
+  const [exito, setExito]               = useState(false);
+  const [error, setError]               = useState('');
+  const mapRef                          = useRef(null);
+  const mapInstanceRef                  = useRef(null);
+  const markerRef                       = useRef(null);
 
-  // Cargar Leaflet dinámicamente
   useEffect(() => {
     if (!document.getElementById('leaflet-css')) {
       const link = document.createElement('link');
@@ -29,34 +28,30 @@ export default function FormReporte() {
       link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
       document.head.appendChild(link);
     }
-    const script = document.createElement('script');
-    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-    script.onload = () => initMap(4.7110, -74.0721);
+    const script    = document.createElement('script');
+    script.src      = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.onload   = () => initMap(4.7110, -74.0721);
     document.body.appendChild(script);
-    return () => { document.body.removeChild(script); };
+    return () => {
+      if (document.body.contains(script)) document.body.removeChild(script);
+    };
   }, []);
 
   const initMap = (lat, lng) => {
-    if (mapInstanceRef.current) return;
-    const L = window.L;
-    const map = L.map(mapRef.current, { zoomControl: true }).setView([lat, lng], 15);
+    if (mapInstanceRef.current || !mapRef.current) return;
+    const L   = window.L;
+    const map = L.map(mapRef.current, { zoomControl: true }).setView([lat, lng], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap'
     }).addTo(map);
     mapInstanceRef.current = map;
   };
 
-  const updateMapMarker = (lat, lng) => {
+  const updateMarker = (lat, lng) => {
     const L = window.L;
     if (!mapInstanceRef.current || !L) return;
     if (markerRef.current) markerRef.current.remove();
-    markerRef.current = L.marker([lat, lng], {
-      icon: L.divIcon({
-        className: '',
-        html: '<div style="font-size:28px;transform:translate(-50%,-100%)">📍</div>',
-        iconSize: [0,0]
-      })
-    }).addTo(mapInstanceRef.current);
+    markerRef.current = L.marker([lat, lng]).addTo(mapInstanceRef.current);
     mapInstanceRef.current.setView([lat, lng], 17);
   };
 
@@ -69,30 +64,55 @@ export default function FormReporte() {
     setGeoStatus('loading');
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
-        const { latitude: lat, longitude: lng } = pos.coords;
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
         setForm(f => ({ ...f, latitud: lat, longitud: lng }));
-        updateMapMarker(lat, lng);
+        updateMarker(lat, lng);
 
-        // Reverse geocoding con Nominatim (gratuito)
         try {
-          const res = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1`,
-            { headers: { 'Accept-Language': 'es' } }
+          // Usar coordenadas reales — NO hardcodeadas
+          const res  = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&addressdetails=1&zoom=16`,
+            {
+              headers: {
+                'Accept-Language': 'es',
+                'User-Agent': 'NeoCity-Shield/1.0'
+              }
+            }
           );
           const data = await res.json();
-          const dir = data.display_name || `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-          setDireccionGPS(dir);
-          setForm(f => ({ ...f, direccion_manual: dir }));
+
+          // Construir dirección corta y legible
+          const addr = data.address || {};
+          const partes = [
+            addr.road || addr.pedestrian || addr.footway,
+            addr.house_number,
+            addr.suburb || addr.neighbourhood || addr.quarter,
+            addr.city || addr.town || addr.municipality
+          ].filter(Boolean);
+
+          const dirCorta = partes.length > 0
+            ? partes.join(', ')
+            : `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+
+          setDireccionGPS(dirCorta);
+          setForm(f => ({ ...f, direccion_manual: dirCorta }));
         } catch {
-          setDireccionGPS(`${lat.toFixed(6)}, ${lng.toFixed(6)}`);
+          const fallback = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+          setDireccionGPS(fallback);
+          setForm(f => ({ ...f, direccion_manual: fallback }));
         }
         setGeoStatus('ok');
       },
-      () => {
+      (err) => {
         setGeoStatus('error');
-        setError('No se pudo obtener la ubicación.');
+        setError(
+          err.code === 1
+            ? 'Permiso de ubicación denegado. Ingresa la dirección manualmente.'
+            : 'No se pudo obtener la ubicación. Intenta de nuevo.'
+        );
       },
-      { enableHighAccuracy: true }
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
     );
   };
 
@@ -103,8 +123,10 @@ export default function FormReporte() {
     try {
       await incidenteService.crear(form);
       setExito(true);
-      setForm({ tipo_incidente:'', descripcion:'', fecha_ocurrencia:'',
-                direccion_manual:'', latitud:null, longitud:null });
+      setForm({
+        tipo_incidente: '', descripcion: '', fecha_ocurrencia: '',
+        direccion_manual: '', latitud: null, longitud: null
+      });
       setDireccionGPS('');
       setGeoStatus('idle');
     } catch {
@@ -117,8 +139,9 @@ export default function FormReporte() {
   if (exito) return (
     <div className="page-bg">
       <div className="exito-container">
-        <h2>✅ Reporte enviado exitosamente</h2>
-        <p>El SGSST ha sido notificado. Tu reporte tiene trazabilidad completa.</p>
+        <div style={{ fontSize: '52px', marginBottom: '16px' }}>✅</div>
+        <h2>¡Reporte enviado!</h2>
+        <p>El SGSST fue notificado de inmediato. Tu reporte tiene trazabilidad completa en NeoCity Shield.</p>
         <button onClick={() => setExito(false)}>Nuevo reporte</button>
       </div>
     </div>
@@ -127,19 +150,21 @@ export default function FormReporte() {
   return (
     <div className="page-bg">
       <div className="form-container">
-        <h2>📋 Reportar Incidente de Seguridad</h2>
+        <h2>📋 Reportar Incidente</h2>
 
         <form onSubmit={handleSubmit}>
           <label>Tipo de incidente *</label>
-          <select
-            className="fc-select"
-            value={form.tipo_incidente}
-            onChange={e => setForm({ ...form, tipo_incidente: e.target.value })}
-            required
-          >
-            <option value="">Selecciona...</option>
-            {TIPOS_INCIDENTE.map(t => <option key={t} value={t}>{t}</option>)}
-          </select>
+          <div className="type-chips">
+            {TIPOS_INCIDENTE.map(t => (
+              <div
+                key={t}
+                className={`tchip${form.tipo_incidente === t ? ' on' : ''}`}
+                onClick={() => setForm({ ...form, tipo_incidente: t })}
+              >
+                {t}
+              </div>
+            ))}
+          </div>
 
           <label>Fecha y hora del incidente *</label>
           <input
@@ -162,30 +187,51 @@ export default function FormReporte() {
 
           <label>Ubicación</label>
 
-          {/* Mapa en tiempo real */}
           <div
             ref={mapRef}
             style={{
-              height:'220px', borderRadius:'12px', marginBottom:'12px',
-              border:'1px solid rgba(255,255,255,0.1)', overflow:'hidden'
+              height: '200px', borderRadius: '14px', marginBottom: '12px',
+              border: '1px solid var(--rim)', overflow: 'hidden'
             }}
           />
 
-          <button type="button" className="geo-btn" onClick={captGeo} disabled={geoStatus==='loading'}>
-            {geoStatus==='loading' ? '⏳ Obteniendo ubicación...' : '📍 Usar mi ubicación actual'}
+          <button
+            type="button"
+            className="geo-btn"
+            onClick={captGeo}
+            disabled={geoStatus === 'loading'}
+          >
+            {geoStatus === 'loading'
+              ? '⏳ Obteniendo ubicación...'
+              : '📍 Usar mi ubicación actual'}
           </button>
 
           {geoStatus === 'ok' && (
             <div className="geo-resultado">
               <span>✅</span>
               <div>
-                <div style={{fontWeight:600,fontSize:'13px',color:'#00e676'}}>Ubicación capturada</div>
-                <div style={{fontSize:'12px',color:'rgba(255,255,255,0.6)',marginTop:'3px'}}>{direccionGPS}</div>
+                <div style={{
+                  fontWeight: 700, fontSize: '13px',
+                  color: 'var(--teal)', marginBottom: '3px'
+                }}>
+                  Ubicación capturada
+                </div>
+                <div style={{ fontSize: '12px', color: 'rgba(240,232,210,0.6)' }}>
+                  {direccionGPS}
+                </div>
               </div>
             </div>
           )}
 
-          <label style={{marginTop:'10px'}}>O ingresa la dirección manualmente</label>
+          {geoStatus === 'error' && (
+            <div className="login-error" style={{ marginBottom: '12px' }}>
+              {error}
+            </div>
+          )}
+
+          <label style={{ marginTop: '8px' }}>
+            O ingresa la dirección manualmente
+          </label>
           <input
             type="text"
             className="fc-input"
@@ -194,9 +240,15 @@ export default function FormReporte() {
             onChange={e => setForm({ ...form, direccion_manual: e.target.value })}
           />
 
-          {error && <p className="login-error">{error}</p>}
+          {error && geoStatus !== 'error' && (
+            <div className="login-error">{error}</div>
+          )}
 
-          <button type="submit" className="login-btn" disabled={enviando}>
+          <button
+            type="submit"
+            className="submit-btn"
+            disabled={enviando}
+          >
             {enviando ? 'Enviando...' : 'Enviar reporte al SGSST →'}
           </button>
         </form>
