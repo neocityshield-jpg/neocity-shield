@@ -23,6 +23,7 @@ app.use('/api/incidentes', require('./routes/incidenteRoutes'));
 app.use('/api/sst',        require('./routes/sstRoutes'));
 app.use('/api/dashboard',  require('./routes/dashboardRoutes'));
 app.use('/api/chatbot',    require('./routes/chatbotRoutes'));
+app.use('/api/notificaciones', require('./routes/notificacionRoutes'));
 
 app.get('/api/health', (req, res) => res.json({ status: 'OK', app: 'NeoCity Shield' }));
 
