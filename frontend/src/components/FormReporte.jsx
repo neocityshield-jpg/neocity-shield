@@ -8,7 +8,7 @@ const TIPOS_INCIDENTE = [
 
 const LAT_OFICINA = 4.6590;
 const LNG_OFICINA = -74.0930;
-const RADIO_MAX_KM = 0.1; // 100 metros
+const RADIO_MAX_KM = 0.1; // 100 metros del radio de la empresa 
 
 const distanciaKm = (lat1, lon1, lat2, lon2) => {
   const R = 6371;
@@ -81,7 +81,7 @@ export default function FormReporte() {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
 
-        // ✅ Validación de perímetro 100m
+        // Validación del perímetro de 100m
         const dist = distanciaKm(lat, lng, LAT_OFICINA, LNG_OFICINA);
         if (dist > RADIO_MAX_KM) {
           setGeoStatus('error');
@@ -160,7 +160,7 @@ export default function FormReporte() {
   return (
     <div className="page-bg">
       <div className="form-container">
-        <h2>📋 Reportar Incidente</h2>
+        <h2>📋Reportar Incidente</h2>
 
         <form onSubmit={handleSubmit}>
           <label>Tipo de incidente *</label>
