@@ -291,26 +291,78 @@ export default function FormReporte() {
           </div>
 
           {/* PASO 2 — Detalles */}
-          <div style={{ marginBottom: '24px' }}>
-            <label>Paso 2 — Fecha y hora *</label>
-            <input
-              type="datetime-local"
-              className="fc-input"
-              value={form.fecha_ocurrencia}
-              onChange={e => setForm({ ...form, fecha_ocurrencia: e.target.value })}
-              required
-            />
+<div style={{ marginBottom: '24px' }}>
+  <label>Paso 2 — ¿Cuándo ocurrió? *</label>
 
-            <label>Descripción del incidente *</label>
-            <textarea
-              className="fc-textarea"
-              placeholder="Describe qué ocurrió, cómo sucedió y qué consecuencias tuvo..."
-              value={form.descripcion}
-              onChange={e => setForm({ ...form, descripcion: e.target.value })}
-              rows={4}
-              required
-            />
-          </div>
+  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
+    {/* Fecha */}
+    <div>
+      <div style={{
+        fontSize: '10px', fontWeight: 700, color: 'rgba(240,232,210,0.3)',
+        textTransform: 'uppercase', letterSpacing: '1px',
+        fontFamily: 'var(--font-b)', marginBottom: '8px'
+      }}>
+        📅 Fecha
+      </div>
+      <input
+        type="date"
+        className="fc-input"
+        style={{ marginBottom: 0 }}
+        value={form.fecha_ocurrencia ? form.fecha_ocurrencia.split('T')[0] : ''}
+        max={new Date().toISOString().split('T')[0]}
+        onChange={e => {
+          const hora = form.fecha_ocurrencia ? form.fecha_ocurrencia.split('T')[1] : '00:00';
+          setForm({ ...form, fecha_ocurrencia: `${e.target.value}T${hora}` });
+        }}
+        required
+      />
+    </div>
+
+    {/* Hora */}
+    <div>
+      <div style={{
+        fontSize: '10px', fontWeight: 700, color: 'rgba(240,232,210,0.3)',
+        textTransform: 'uppercase', letterSpacing: '1px',
+        fontFamily: 'var(--font-b)', marginBottom: '8px'
+      }}>
+        🕐 Hora
+      </div>
+      <input
+        type="time"
+        className="fc-input"
+        style={{ marginBottom: 0 }}
+        value={form.fecha_ocurrencia ? form.fecha_ocurrencia.split('T')[1] || '' : ''}
+        onChange={e => {
+          const fecha = form.fecha_ocurrencia ? form.fecha_ocurrencia.split('T')[0] : new Date().toISOString().split('T')[0];
+          setForm({ ...form, fecha_ocurrencia: `${fecha}T${e.target.value}` });
+        }}
+        required
+      />
+    </div>
+  </div>
+
+  {/* Botón "ahora" */}
+  <button
+    type="button"
+    onClick={() => {
+      const now = new Date();
+      const fecha = now.toISOString().split('T')[0];
+      const hora  = now.toTimeString().slice(0, 5);
+      setForm({ ...form, fecha_ocurrencia: `${fecha}T${hora}` });
+    }}
+    style={{
+      display: 'flex', alignItems: 'center', gap: '8px',
+      padding: '10px 16px', borderRadius: '10px',
+      background: 'var(--surface-2)', border: '1px solid var(--rim)',
+      color: 'rgba(240,232,210,0.5)', fontSize: '13px', fontWeight: 600,
+      cursor: 'pointer', fontFamily: 'var(--font-b)', transition: 'all .2s',
+      marginBottom: '20px'
+    }}
+    onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--gold)'; e.currentTarget.style.color = 'var(--gold)'; }}
+    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--rim)'; e.currentTarget.style.color = 'rgba(240,232,210,0.5)'; }}
+  >
+    ⚡ Usar fecha y hora actual
+  </button>
 
           {/* PASO 3 — Ubicación */}
           <div style={{ marginBottom: '24px' }}>
