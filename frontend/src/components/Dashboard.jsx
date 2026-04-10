@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { dashboardService } from '../services/api';
+import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
   const [datos, setDatos]           = useState(null);
   const [cargando, setCargando]     = useState(true);
   const [exportando, setExportando] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     dashboardService.indicadores()
@@ -14,7 +17,7 @@ export default function Dashboard() {
 
   const exportarPDF = async () => {
     setExportando(true);
-    // Cargar jsPDF dinámicamente
+
     if (!window.jspdf) {
       await new Promise((res, rej) => {
         const s = document.createElement('script');
@@ -31,28 +34,31 @@ export default function Dashboard() {
     }
 
     const { jsPDF } = window.jspdf;
-    const doc       = new jsPDF();
-    const fecha     = new Date().toLocaleDateString('es-CO', { year:'numeric', month:'long', day:'numeric' });
+    const doc = new jsPDF();
+    const fecha = new Date().toLocaleDateString('es-CO', {
+      year:'numeric', month:'long', day:'numeric'
+    });
 
-    // Header
     doc.setFillColor(8, 12, 31);
     doc.rect(0, 0, 210, 40, 'F');
+
     doc.setTextColor(201, 184, 120);
     doc.setFontSize(20);
     doc.setFont('helvetica', 'bold');
     doc.text('NeoCity Shield', 15, 18);
+
     doc.setFontSize(11);
     doc.setTextColor(200, 200, 200);
     doc.text('Reporte mensual de incidentes — Evidencia Digital S.A.S.', 15, 28);
     doc.text(`Generado: ${fecha}`, 15, 36);
 
-    // KPIs
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(13);
     doc.setFont('helvetica', 'bold');
     doc.text('Indicadores del período', 15, 55);
 
     const { totales, tiempo_promedio } = datos;
+
     doc.autoTable({
       startY: 60,
       head: [['Indicador', 'Valor']],
@@ -69,10 +75,9 @@ export default function Dashboard() {
       styles: { fontSize: 11 }
     });
 
-    // Por tipo
     doc.setFontSize(13);
-    doc.setFont('helvetica', 'bold');
     doc.text('Incidentes por tipo', 15, doc.lastAutoTable.finalY + 16);
+
     doc.autoTable({
       startY: doc.lastAutoTable.finalY + 20,
       head: [['Tipo de incidente', 'Cantidad']],
@@ -82,10 +87,9 @@ export default function Dashboard() {
       styles: { fontSize: 11 }
     });
 
-    // Por mes
     doc.setFontSize(13);
-    doc.setFont('helvetica', 'bold');
     doc.text('Tendencia por mes', 15, doc.lastAutoTable.finalY + 16);
+
     doc.autoTable({
       startY: doc.lastAutoTable.finalY + 20,
       head: [['Mes', 'Incidentes']],
@@ -95,8 +99,8 @@ export default function Dashboard() {
       styles: { fontSize: 11 }
     });
 
-    // Footer
     const pageCount = doc.internal.getNumberOfPages();
+
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
       doc.setFontSize(9);
@@ -109,37 +113,67 @@ export default function Dashboard() {
   };
 
   if (cargando) return <div style={{color:'var(--cream)',padding:'40px'}}>Cargando...</div>;
-  if (!datos)   return <div style={{color:'var(--cream)',padding:'40px'}}>Error al cargar datos</div>;
+  if (!datos) return <div style={{color:'var(--cream)',padding:'40px'}}>Error al cargar datos</div>;
 
   const { totales, por_tipo, por_mes, tiempo_promedio } = datos;
 
   return (
     <div className="page-bg">
       <div className="dashboard">
+
+        {/* HEADER */}
         <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', marginBottom:'4px' }}>
           <h2>📊 Dashboard Gerencial</h2>
-          <button
-            onClick={exportarPDF}
-            disabled={exportando}
-            style={{
-              padding:'10px 20px', borderRadius:'12px',
-              background:'linear-gradient(135deg,var(--gold),var(--gold-light))',
-              color:'#1a1400', border:'none', fontWeight:800,
-              fontFamily:'var(--font-d)', fontSize:'13px',
-              cursor:'pointer', transition:'all .2s',
-              letterSpacing:'.3px', whiteSpace:'nowrap',
-              boxShadow:'0 4px 16px rgba(201,184,120,0.3)'
-            }}
-          >
-            {exportando ? '⏳ Generando...' : '⬇️ Exportar PDF'}
-          </button>
+
+          <div style={{ display:'flex', gap:'10px' }}>
+            <button
+              onClick={() => navigate('/mapa')}
+              style={{
+                padding:'10px 20px', borderRadius:'12px',
+                background:'var(--teal-dim)',
+                border:'1px solid rgba(62,207,181,0.25)',
+                color:'var(--teal)',
+                fontWeight:700,
+                fontFamily:'var(--font-d)',
+                fontSize:'13px',
+                cursor:'pointer',
+                transition:'all .2s'
+              }}
+            >
+              🗺️ Ver mapa
+            </button>
+
+            <button
+              onClick={exportarPDF}
+              disabled={exportando}
+              style={{
+                padding:'10px 20px',
+                borderRadius:'12px',
+                background:'linear-gradient(135deg,var(--gold),var(--gold-light))',
+                color:'#1a1400',
+                border:'none',
+                fontWeight:800,
+                fontFamily:'var(--font-d)',
+                fontSize:'13px',
+                cursor:'pointer',
+                transition:'all .2s',
+                letterSpacing:'.3px',
+                whiteSpace:'nowrap',
+                boxShadow:'0 4px 16px rgba(201,184,120,0.3)'
+              }}
+            >
+              {exportando ? '⏳ Generando...' : '⬇️ Exportar PDF'}
+            </button>
+          </div>
         </div>
 
+        {/* INFO */}
         <div className="dash-live">
           <div className="live-dot"></div>
           Datos en tiempo real · {new Date().toLocaleDateString('es-CO', {month:'long', year:'numeric'})}
         </div>
 
+        {/* KPIs */}
         <div className="kpis-grid">
           <div className="kpi-card"><span className="kpi-numero">{totales.total}</span><span className="kpi-label">Total incidentes</span></div>
           <div className="kpi-card alerta"><span className="kpi-numero">{totales.pendientes}</span><span className="kpi-label">Pendientes</span></div>
@@ -149,6 +183,7 @@ export default function Dashboard() {
           <div className="kpi-card"><span className="kpi-numero">{totales.ultimo_mes}</span><span className="kpi-label">Último mes</span></div>
         </div>
 
+        {/* POR TIPO */}
         <div className="seccion">
           <h3>Incidentes por tipo</h3>
           {por_tipo.map(t => (
@@ -160,6 +195,7 @@ export default function Dashboard() {
           ))}
         </div>
 
+        {/* POR MES */}
         <div className="seccion">
           <h3>Tendencia últimos 6 meses</h3>
           <div className="chart-barras">
@@ -172,6 +208,7 @@ export default function Dashboard() {
             ))}
           </div>
         </div>
+
       </div>
     </div>
   );
