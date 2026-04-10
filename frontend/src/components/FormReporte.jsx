@@ -2,8 +2,30 @@ import { useState, useEffect, useRef } from 'react';
 import { incidenteService } from '../services/api';
 
 const TIPOS_INCIDENTE = [
-  'Hurto / raponazo', 'Intento de hurto', 'Caída en instalaciones',
-  'Caída en zona periférica', 'Agresión física', 'Amenaza verbal', 'Otro'
+  // Accidentes de trabajo
+  'Accidente de trabajo — caída de altura',
+  'Accidente de trabajo — caída al mismo nivel',
+  'Accidente de trabajo — golpe o choque con objeto',
+  'Accidente de trabajo — atrapamiento',
+  'Accidente de trabajo — sobreesfuerzo físico',
+  'Accidente de trabajo — contacto con electricidad',
+  'Accidente de trabajo — quemadura',
+  'Accidente de trabajo — herida o corte',
+  'Accidente de trabajo — accidente de tránsito',
+  // Incidentes de seguridad física
+  'Incidente de seguridad — hurto / raponazo',
+  'Incidente de seguridad — intento de hurto',
+  'Incidente de seguridad — agresión física',
+  'Incidente de seguridad — amenaza verbal',
+  'Incidente de seguridad — presencia de persona sospechosa',
+  // Enfermedades laborales
+  'Enfermedad laboral — estrés o fatiga',
+  'Enfermedad laboral — lesión por movimiento repetitivo',
+  'Enfermedad laboral — dolor lumbar o muscular',
+  // Otros
+  'Incidente sin lesión — casi accidente',
+  'Daño a equipos o instalaciones',
+  'Otro'
 ];
 
 const LAT_OFICINA = 4.6590;
