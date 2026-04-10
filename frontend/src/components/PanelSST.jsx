@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { incidenteService, sstService } from '../services/api';
+import Investigacion from './Investigacion'; // 🔥 NUEVO
 
 const ESTADOS = ['pendiente', 'en_gestion', 'cerrado'];
 
@@ -46,6 +47,9 @@ export default function PanelSST() {
     }
   };
 
+  // 🔥 NUEVO — función para cerrar modal (como pide tu instrucción)
+  const closeSheet = () => setSeleccionado(null);
+
   if (cargando) return <div>Cargando panel SGSST...</div>;
 
   return (
@@ -78,6 +82,7 @@ export default function PanelSST() {
           <div className="modal">
             <h3>Seguimiento — Incidente #{seleccionado.id}</h3>
             <p><strong>Tipo:</strong> {seleccionado.tipo_incidente}</p>
+
             <form onSubmit={registrarSeguimiento}>
               <select
                 value={seguimiento.estado_nuevo}
@@ -87,6 +92,7 @@ export default function PanelSST() {
                 <option value="">Nuevo estado...</option>
                 {ESTADOS.map(e => <option key={e} value={e}>{e}</option>)}
               </select>
+
               <textarea
                 placeholder="Observaciones del seguimiento..."
                 value={seguimiento.observacion}
@@ -94,9 +100,22 @@ export default function PanelSST() {
                 rows={3}
                 required
               />
+
               <button type="submit">Registrar seguimiento</button>
-              <button type="button" onClick={() => setSeleccionado(null)}>Cancelar</button>
+              <button type="button" onClick={closeSheet}>Cancelar</button>
             </form>
+
+            {/* 🔥 NUEVO — INVESTIGACIÓN SOLO SI ESTÁ CERRADO */}
+            {seleccionado?.estado === 'cerrado' && (
+              <Investigacion
+                incidenteId={seleccionado.id}
+                onCerrar={() => {
+                  closeSheet();
+                  cargarDatos();
+                }}
+              />
+            )}
+
           </div>
         </div>
       )}
