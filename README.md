@@ -101,6 +101,7 @@ NeoCity Shield reemplaza los procesos manuales e informales de reporte de incide
 ---
 
 ## Estructura del repositorio
+
 neocity-shield/
 ├── backend/
 │   ├── config/
@@ -180,7 +181,7 @@ REACT_APP_API_URL = https://neocity-shield-production.up.railway.app/api
 ```bash
 cd backend
 npm install
-cp .env.example .env   # Configura tus variables
+cp .env.example .env  
 npm start
 ```
 
