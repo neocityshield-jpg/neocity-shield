@@ -102,22 +102,29 @@ NeoCity Shield reemplaza los procesos manuales e informales de reporte de incide
 
 ## Estructura del repositorio
 
+## 📁 Estructura del Repositorio - NeoCity Shield
+
+```bash
 neocity-shield/
 ├── backend/
 │   ├── config/
-│   │   └── db.js → Conexión PostgreSQL con SSL
+│   │   └── db.js                  # Conexión PostgreSQL con SSL
+│   │
 │   ├── models/
 │   │   ├── Usuario.js
 │   │   ├── Incidente.js
 │   │   └── Seguimiento.js
+│   │
 │   ├── controllers/
 │   │   ├── authController.js
 │   │   ├── incidenteController.js
 │   │   ├── sstController.js
 │   │   ├── dashboardController.js
 │   │   └── chatbotController.js
+│   │
 │   ├── middleware/
 │   │   └── authMiddleware.js
+│   │
 │   ├── routes/
 │   │   ├── authRoutes.js
 │   │   ├── incidenteRoutes.js
@@ -126,33 +133,38 @@ neocity-shield/
 │   │   ├── chatbotRoutes.js
 │   │   ├── notificacionRoutes.js
 │   │   └── investigacionRoutes.js
+│   │
 │   ├── server.js
 │   └── package.json
 │
 └── frontend/
-├── public/
-│   ├── index.html
-│   └── sw.js → Service Worker (modo offline)
-└── src/
-├── index.js
-├── index.css → Sistema de diseño completo
-├── App.jsx   → Rutas y control de acceso
-├── context/
-│   └── AuthContext.jsx
-├── services/
-│   └── api.js
-└── components/
-├── Login.jsx
-├── Registro.jsx
-├── FormReporte.jsx
-├── PanelSST.jsx
-├── Dashboard.jsx
-├── MapaCalor.jsx
-├── Chatbot.jsx
-├── Notificaciones.jsx
-├── MiPerfil.jsx
-└── Investigacion.jsx
----
+    ├── public/
+    │   ├── index.html
+    │   └── sw.js                  # Service Worker (modo offline)
+    │
+    └── src/
+        ├── index.js
+        ├── index.css              # Sistema de diseño completo
+        ├── App.jsx                # Rutas y control de acceso
+        │
+        ├── context/
+        │   └── AuthContext.jsx
+        │
+        ├── services/
+        │   └── api.js
+        │
+        └── components/
+            ├── Login.jsx
+            ├── Registro.jsx
+            ├── FormReporte.jsx
+            ├── PanelSST.jsx
+            ├── Dashboard.jsx
+            ├── MapaCalor.jsx
+            ├── Chatbot.jsx
+            ├── Notificaciones.jsx
+            ├── MiPerfil.jsx
+            └── Investigacion.jsx
+```
 
 ## Variables de entorno
 
