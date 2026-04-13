@@ -249,21 +249,34 @@ npm start
 
 ---
 
-## Estado actual del sistema
-✅ Backend desplegado y funcionando en Railway
-✅ Base de datos PostgreSQL en producción con datos de prueba
-✅ Frontend desplegado en Vercel
-✅ Login con 3 roles funcionando
-✅ Formulario de reporte con GPS y mapa interactivo
-✅ Panel SGSST con buscador, filtros e historial
-✅ Dashboard con KPIs y exportación a PDF
-✅ Mapa de calor de incidentes en Bogotá
-✅ Chatbot NeoBot con OpenAI GPT-4o
-✅ Módulo de investigación de incidentes
-✅ Perfil personalizado del funcionario
-✅ Modo offline con Service Worker
-✅ Diseño responsivo móvil y desktop
+## Estado Actual del Sistema
 
+El sistema **NeoCity Shield** se encuentra en un entorno productivo, con los siguientes módulos implementados:
+
+### Infraestructura y Despliegue
+- Backend desplegado en Railway
+- Base de datos PostgreSQL en producción (con datos de prueba)
+- Frontend desplegado en Vercel
+
+### Autenticación y Usuarios
+- Sistema de login con 3 roles funcionales
+- Perfil personalizado del funcionario
+
+### Gestión de Incidentes
+- Formulario de reporte con GPS y mapa interactivo
+- Panel SGSST con buscador, filtros e historial
+- Módulo de investigación de incidentes
+
+### Analítica y Visualización
+- Dashboard con KPIs y exportación a PDF
+- Mapa de calor de incidentes en Bogotá
+
+### Inteligencia Artificial
+- Chatbot NeoBot integrado con OpenAI (GPT-4o)
+
+### Experiencia de Usuario
+- Modo offline (Service Worker - PWA)
+- Diseño responsivo (móvil y desktop)
 ---
 
 *NeoCity Shield — Evidencia Digital S.A.S. — Universidad El Bosque — 2026*
