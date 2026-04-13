@@ -104,7 +104,7 @@ NeoCity Shield reemplaza los procesos manuales e informales de reporte de incide
 neocity-shield/
 ├── backend/
 │   ├── config/
-│   │   └── db.js                  → Conexión PostgreSQL con SSL
+│   │   └── db.js → Conexión PostgreSQL con SSL
 │   ├── models/
 │   │   ├── Usuario.js
 │   │   ├── Incidente.js
@@ -131,11 +131,11 @@ neocity-shield/
 └── frontend/
 ├── public/
 │   ├── index.html
-│   └── sw.js                  → Service Worker (modo offline)
+│   └── sw.js → Service Worker (modo offline)
 └── src/
 ├── index.js
-├── index.css              → Sistema de diseño completo
-├── App.jsx                → Rutas y control de acceso
+├── index.css → Sistema de diseño completo
+├── App.jsx   → Rutas y control de acceso
 ├── context/
 │   └── AuthContext.jsx
 ├── services/
@@ -151,7 +151,6 @@ neocity-shield/
 ├── Notificaciones.jsx
 ├── MiPerfil.jsx
 └── Investigacion.jsx
-
 ---
 
 ## Variables de entorno
