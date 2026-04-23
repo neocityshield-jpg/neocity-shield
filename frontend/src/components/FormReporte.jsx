@@ -59,17 +59,24 @@ const distanciaKm = (lat1, lon1, lat2, lon2) => {
   return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
 };
 
+const PASOS = [
+  { n:1, label:'Tipo',        desc:'Categoría del incidente' },
+  { n:2, label:'Cuándo',      desc:'Fecha y hora'            },
+  { n:3, label:'Ubicación',   desc:'Lugar del evento'        },
+  { n:4, label:'Descripción', desc:'Detalle del incidente'   },
+];
+
 export default function FormReporte() {
   const [form, setForm] = useState({
     tipo_incidente:'', descripcion:'', fecha_ocurrencia:'',
     direccion_manual:'', latitud:null, longitud:null
   });
   const [categoriaAbierta, setCategoriaAbierta] = useState(null);
-  const [geoStatus, setGeoStatus]     = useState('idle');
+  const [geoStatus, setGeoStatus]       = useState('idle');
   const [direccionGPS, setDireccionGPS] = useState('');
-  const [enviando, setEnviando]       = useState(false);
-  const [exito, setExito]             = useState(false);
-  const [error, setError]             = useState('');
+  const [enviando, setEnviando]         = useState(false);
+  const [exito, setExito]               = useState(false);
+  const [error, setError]               = useState('');
   const mapRef         = useRef(null);
   const mapInstanceRef = useRef(null);
   const markerRef      = useRef(null);
@@ -196,105 +203,75 @@ export default function FormReporte() {
     form.tipo_incidente.startsWith(c.label.replace(/^.{3}/,''))
   );
 
-  const stepStyle = (activo) => ({
-    display:'flex', alignItems:'center', gap:'10px',
-    padding:'14px 18px', marginBottom:'6px',
-    background: activo ? 'var(--surface-2)' : 'transparent',
-    borderRadius:'12px', border: activo ? '1px solid var(--rim-2)' : '1px solid transparent',
-  });
-
-  const stepNum = (n, done) => ({
-    width:'28px', height:'28px', borderRadius:'50%', flexShrink:0,
-    display:'flex', alignItems:'center', justifyContent:'center',
-    fontSize:'12px', fontWeight:800, fontFamily:'var(--font-d)',
-    background: done ? 'var(--teal)' : 'var(--surface-3)',
-    color: done ? '#041a15' : 'rgba(240,232,210,0.4)',
-    border: done ? '1px solid var(--teal)' : '1px solid var(--rim)',
-  });
-
-  const paso1Done = !!form.tipo_incidente;
-  const paso2Done = !!form.fecha_ocurrencia;
-  const paso3Done = !!(form.latitud || form.direccion_manual);
+  const pasosDone = [
+    !!form.tipo_incidente,
+    !!form.fecha_ocurrencia,
+    !!(form.latitud || form.direccion_manual),
+    !!form.descripcion,
+  ];
+  const totalDone = pasosDone.filter(Boolean).length;
+  const progreso  = (totalDone / 4) * 100;
 
   return (
-    <div className="page-bg">
-      <div className="form-container">
+    <div className="page-bg form-page">
+      <div className="form-layout">
 
-        {/* Header con progreso */}
-        <div style={{ marginBottom:'28px' }}>
-          <h2 style={{ marginBottom:'16px' }}>📋 Reportar Incidente</h2>
-          <div style={{ display:'flex', gap:'8px', alignItems:'center' }}>
-            {[
-              { n:1, label:'Tipo', done:paso1Done },
-              { n:2, label:'Cuándo', done:paso2Done },
-              { n:3, label:'Ubicación', done:paso3Done },
-              { n:4, label:'Descripción', done:!!form.descripcion },
-            ].map((p, i) => (
-              <div key={p.n} style={{ display:'flex', alignItems:'center', gap:'8px' }}>
-                <div style={{ display:'flex', alignItems:'center', gap:'6px' }}>
-                  <div style={{
-                    width:'24px', height:'24px', borderRadius:'50%',
-                    display:'flex', alignItems:'center', justifyContent:'center',
-                    fontSize:'11px', fontWeight:800,
-                    background: p.done ? 'var(--teal)' : 'var(--surface-3)',
-                    color: p.done ? '#041a15' : 'rgba(240,232,210,0.35)',
-                    border: p.done ? '1px solid var(--teal)' : '1px solid var(--rim)',
-                    transition:'all .3s'
-                  }}>
-                    {p.done ? '✓' : p.n}
-                  </div>
-                  <span style={{ fontSize:'11px', color: p.done ? 'var(--teal)' : 'rgba(240,232,210,0.3)', fontWeight:600 }}>
-                    {p.label}
-                  </span>
+        {/* ══ SIDEBAR ══ */}
+        <aside className="form-sidebar">
+          <div className="form-sidebar-title">📋 Nuevo reporte</div>
+          <div className="form-sidebar-sub">
+            Completa los 4 pasos para enviar el incidente al SGSST
+          </div>
+
+          <div className="sidebar-steps">
+            {PASOS.map((p, i) => (
+              <div key={p.n} className={`sidebar-step ${pasosDone[i] ? 'done' : 'pending'}`}>
+                <div className="sidebar-step-num">
+                  {pasosDone[i] ? '✓' : p.n}
                 </div>
-                {i < 3 && <div style={{ width:'20px', height:'1px', background:'var(--rim)' }} />}
+                <div>
+                  <div className="sidebar-step-label">{p.label}</div>
+                  <div className="sidebar-step-desc">{p.desc}</div>
+                </div>
               </div>
             ))}
           </div>
-        </div>
 
-        <form onSubmit={handleSubmit}>
+          <div className="sidebar-progress">
+            <div className="sidebar-progress-label">Progreso — {totalDone}/4 pasos</div>
+            <div className="sidebar-progress-bar">
+              <div className="sidebar-progress-fill" style={{ width:`${progreso}%` }} />
+            </div>
+          </div>
+        </aside>
 
-          {/* ══ PASO 1 — TIPO ══ */}
-          <div style={{
-            background:'var(--surface)', border:'1px solid var(--rim)',
-            borderRadius:'16px', padding:'20px', marginBottom:'16px'
-          }}>
-            <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'16px' }}>
-              <div style={{
-                width:'28px', height:'28px', borderRadius:'50%',
-                display:'flex', alignItems:'center', justifyContent:'center',
-                fontSize:'12px', fontWeight:800, fontFamily:'var(--font-d)',
-                background: paso1Done ? 'var(--teal)' : 'var(--gold-dim)',
-                color: paso1Done ? '#041a15' : 'var(--gold)',
-                border: paso1Done ? '1px solid var(--teal)' : '1px solid var(--rim-accent)',
-              }}>
-                {paso1Done ? '✓' : '1'}
+        {/* ══ FORMULARIO PRINCIPAL ══ */}
+        <form className="form-main" onSubmit={handleSubmit}>
+
+          {/* PASO 1 — TIPO */}
+          <div className="form-step-card">
+            <div className="form-step-header">
+              <div className={`form-step-icon ${pasosDone[0] ? 'done' : 'pending'}`}>
+                {pasosDone[0] ? '✓' : '1'}
               </div>
-              <span style={{ fontSize:'14px', fontWeight:700, color:'var(--cream)', fontFamily:'var(--font-d)' }}>
-                Tipo de incidente *
-              </span>
+              <span className="form-step-title">Tipo de incidente *</span>
             </div>
 
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'8px', marginBottom:'12px' }}>
+            <div className="cat-grid">
               {CATEGORIAS.map(cat => (
                 <button
                   key={cat.id}
                   type="button"
+                  className="cat-btn"
                   onClick={() => setCategoriaAbierta(categoriaAbierta===cat.id ? null : cat.id)}
                   style={{
-                    padding:'11px 13px', borderRadius:'12px',
                     border:`1px solid ${categoriaAbierta===cat.id || catSeleccionada?.id===cat.id ? cat.colorBorder : 'var(--rim)'}`,
                     background: categoriaAbierta===cat.id || catSeleccionada?.id===cat.id ? cat.colorDim : 'var(--surface-2)',
                     color: categoriaAbierta===cat.id || catSeleccionada?.id===cat.id ? cat.color : 'rgba(240,232,210,0.45)',
-                    fontWeight:700, fontSize:'12px', cursor:'pointer',
-                    fontFamily:'var(--font-b)', textAlign:'left',
-                    transition:'all .2s', display:'flex', alignItems:'center',
-                    justifyContent:'space-between', gap:'6px'
                   }}
                 >
                   <span>{cat.label}</span>
-                  <span style={{ fontSize:'9px', opacity:0.6 }}>
+                  <span style={{ fontSize:'9px', opacity:0.5 }}>
                     {categoriaAbierta===cat.id ? '▲' : '▼'}
                   </span>
                 </button>
@@ -306,9 +283,9 @@ export default function FormReporte() {
               return (
                 <div style={{
                   background:'var(--surface-2)', border:`1px solid ${cat.colorBorder}`,
-                  borderRadius:'12px', padding:'12px', display:'flex',
-                  flexWrap:'wrap', gap:'7px', animation:'fadeUp .2s ease',
-                  marginBottom:'8px'
+                  borderRadius:'12px', padding:'14px',
+                  display:'flex', flexWrap:'wrap', gap:'8px',
+                  animation:'fadeUp .2s ease', marginBottom:'10px'
                 }}>
                   {cat.tipos.map(tipo => (
                     <button
@@ -316,11 +293,11 @@ export default function FormReporte() {
                       type="button"
                       onClick={() => selTipo(cat, tipo)}
                       style={{
-                        padding:'6px 13px', borderRadius:'20px',
+                        padding:'7px 14px', borderRadius:'20px',
                         border:`1px solid ${cat.colorBorder}`,
                         background: form.tipo_incidente.includes(tipo) ? cat.colorDim : 'transparent',
                         color: form.tipo_incidente.includes(tipo) ? cat.color : 'rgba(240,232,210,0.55)',
-                        fontSize:'12px', fontWeight:600, cursor:'pointer',
+                        fontSize:'13px', fontWeight:600, cursor:'pointer',
                         fontFamily:'var(--font-b)', transition:'all .15s'
                       }}
                     >
@@ -333,10 +310,10 @@ export default function FormReporte() {
 
             {form.tipo_incidente && (
               <div style={{
-                padding:'10px 14px', borderRadius:'10px',
+                padding:'11px 16px', borderRadius:'10px',
                 background: catSeleccionada?.colorDim || 'var(--surface-2)',
                 border:`1px solid ${catSeleccionada?.colorBorder || 'var(--rim)'}`,
-                fontSize:'13px', color: catSeleccionada?.color || 'var(--cream)',
+                fontSize:'14px', color: catSeleccionada?.color || 'var(--cream)',
                 fontWeight:600, display:'flex', alignItems:'center',
                 justifyContent:'space-between'
               }}>
@@ -344,60 +321,40 @@ export default function FormReporte() {
                 <button
                   type="button"
                   onClick={() => setForm(f => ({ ...f, tipo_incidente:'' }))}
-                  style={{ background:'none', border:'none', color:'inherit', cursor:'pointer', fontSize:'14px', opacity:0.5 }}
+                  style={{ background:'none', border:'none', color:'inherit', cursor:'pointer', fontSize:'16px', opacity:0.5 }}
                 >✕</button>
               </div>
             )}
           </div>
 
-          {/* ══ PASO 2 — CUÁNDO ══ */}
-          <div style={{
-            background:'var(--surface)', border:'1px solid var(--rim)',
-            borderRadius:'16px', padding:'20px', marginBottom:'16px'
-          }}>
-            <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'16px' }}>
-              <div style={{
-                width:'28px', height:'28px', borderRadius:'50%',
-                display:'flex', alignItems:'center', justifyContent:'center',
-                fontSize:'12px', fontWeight:800, fontFamily:'var(--font-d)',
-                background: paso2Done ? 'var(--teal)' : 'var(--surface-3)',
-                color: paso2Done ? '#041a15' : 'rgba(240,232,210,0.4)',
-                border: paso2Done ? '1px solid var(--teal)' : '1px solid var(--rim)',
-              }}>
-                {paso2Done ? '✓' : '2'}
+          {/* PASO 2 — CUÁNDO */}
+          <div className="form-step-card">
+            <div className="form-step-header">
+              <div className={`form-step-icon ${pasosDone[1] ? 'done' : 'pending'}`}>
+                {pasosDone[1] ? '✓' : '2'}
               </div>
-              <span style={{ fontSize:'14px', fontWeight:700, color:'var(--cream)', fontFamily:'var(--font-d)' }}>
-                ¿Cuándo ocurrió? *
-              </span>
+              <span className="form-step-title">¿Cuándo ocurrió? *</span>
             </div>
 
-            {/* Botón ahora */}
             <button
               type="button"
               onClick={usarAhora}
               style={{
                 width:'100%', display:'flex', alignItems:'center',
                 justifyContent:'center', gap:'8px',
-                padding:'11px 16px', borderRadius:'10px',
-                background: 'var(--gold-dim)', border:'1px solid var(--rim-accent)',
-                color:'var(--gold-light)', fontSize:'13px', fontWeight:700,
+                padding:'12px 16px', borderRadius:'10px',
+                background:'var(--gold-dim)', border:'1px solid var(--rim-accent)',
+                color:'var(--gold-light)', fontSize:'14px', fontWeight:700,
                 cursor:'pointer', fontFamily:'var(--font-b)',
-                transition:'all .2s', marginBottom:'14px',
-                letterSpacing:'.2px'
+                transition:'all .2s', marginBottom:'16px', letterSpacing:'.2px'
               }}
             >
               ⚡ El incidente ocurrió ahora mismo
             </button>
 
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'10px' }}>
+            <div className="datetime-grid">
               <div>
-                <div style={{
-                  fontSize:'10px', fontWeight:700, color:'rgba(240,232,210,0.3)',
-                  textTransform:'uppercase', letterSpacing:'1px',
-                  fontFamily:'var(--font-b)', marginBottom:'8px'
-                }}>
-                  📅 Fecha
-                </div>
+                <div className="datetime-label">📅 Fecha</div>
                 <input
                   type="date"
                   className="fc-input"
@@ -412,13 +369,7 @@ export default function FormReporte() {
                 />
               </div>
               <div>
-                <div style={{
-                  fontSize:'10px', fontWeight:700, color:'rgba(240,232,210,0.3)',
-                  textTransform:'uppercase', letterSpacing:'1px',
-                  fontFamily:'var(--font-b)', marginBottom:'8px'
-                }}>
-                  🕐 Hora
-                </div>
+                <div className="datetime-label">🕐 Hora</div>
                 <input
                   type="time"
                   className="fc-input"
@@ -436,29 +387,17 @@ export default function FormReporte() {
             </div>
           </div>
 
-          {/* ══ PASO 3 — UBICACIÓN ══ */}
-          <div style={{
-            background:'var(--surface)', border:'1px solid var(--rim)',
-            borderRadius:'16px', padding:'20px', marginBottom:'16px'
-          }}>
-            <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'16px' }}>
-              <div style={{
-                width:'28px', height:'28px', borderRadius:'50%',
-                display:'flex', alignItems:'center', justifyContent:'center',
-                fontSize:'12px', fontWeight:800, fontFamily:'var(--font-d)',
-                background: paso3Done ? 'var(--teal)' : 'var(--surface-3)',
-                color: paso3Done ? '#041a15' : 'rgba(240,232,210,0.4)',
-                border: paso3Done ? '1px solid var(--teal)' : '1px solid var(--rim)',
-              }}>
-                {paso3Done ? '✓' : '3'}
+          {/* PASO 3 — UBICACIÓN */}
+          <div className="form-step-card">
+            <div className="form-step-header">
+              <div className={`form-step-icon ${pasosDone[2] ? 'done' : 'pending'}`}>
+                {pasosDone[2] ? '✓' : '3'}
               </div>
-              <span style={{ fontSize:'14px', fontWeight:700, color:'var(--cream)', fontFamily:'var(--font-d)' }}>
-                Ubicación del incidente
-              </span>
+              <span className="form-step-title">Ubicación del incidente</span>
             </div>
 
             <div ref={mapRef} style={{
-              height:'180px', borderRadius:'12px', marginBottom:'12px',
+              height:'200px', borderRadius:'12px', marginBottom:'14px',
               border:'1px solid var(--rim)', overflow:'hidden'
             }} />
 
@@ -482,11 +421,7 @@ export default function FormReporte() {
               <div className="login-error" style={{ marginBottom:'12px' }}>{error}</div>
             )}
 
-            <div style={{
-              fontSize:'10px', fontWeight:700, color:'rgba(240,232,210,0.3)',
-              textTransform:'uppercase', letterSpacing:'1px',
-              fontFamily:'var(--font-b)', margin:'12px 0 8px'
-            }}>
+            <div className="datetime-label" style={{ margin:'14px 0 8px' }}>
               O ingresa la dirección manualmente
             </div>
             <input
@@ -499,34 +434,22 @@ export default function FormReporte() {
             />
           </div>
 
-          {/* ══ PASO 4 — DESCRIPCIÓN ══ */}
-          <div style={{
-            background:'var(--surface)', border:'1px solid var(--rim)',
-            borderRadius:'16px', padding:'20px', marginBottom:'20px'
-          }}>
-            <div style={{ display:'flex', alignItems:'center', gap:'10px', marginBottom:'16px' }}>
-              <div style={{
-                width:'28px', height:'28px', borderRadius:'50%',
-                display:'flex', alignItems:'center', justifyContent:'center',
-                fontSize:'12px', fontWeight:800, fontFamily:'var(--font-d)',
-                background: form.descripcion ? 'var(--teal)' : 'var(--surface-3)',
-                color: form.descripcion ? '#041a15' : 'rgba(240,232,210,0.4)',
-                border: form.descripcion ? '1px solid var(--teal)' : '1px solid var(--rim)',
-              }}>
-                {form.descripcion ? '✓' : '4'}
+          {/* PASO 4 — DESCRIPCIÓN */}
+          <div className="form-step-card">
+            <div className="form-step-header">
+              <div className={`form-step-icon ${pasosDone[3] ? 'done' : 'pending'}`}>
+                {pasosDone[3] ? '✓' : '4'}
               </div>
-              <span style={{ fontSize:'14px', fontWeight:700, color:'var(--cream)', fontFamily:'var(--font-d)' }}>
-                Descripción del incidente *
-              </span>
+              <span className="form-step-title">Descripción del incidente *</span>
             </div>
 
             <textarea
               className="fc-textarea"
-              style={{ marginBottom:0 }}
+              style={{ marginBottom:0, minHeight:'120px' }}
               placeholder="Describe qué ocurrió, cómo sucedió y qué consecuencias tuvo..."
               value={form.descripcion}
               onChange={e => setForm({ ...form, descripcion:e.target.value })}
-              rows={4}
+              rows={5}
               required
             />
           </div>
