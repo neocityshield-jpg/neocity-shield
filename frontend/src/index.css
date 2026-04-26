@@ -444,3 +444,177 @@ html,body{
   .form-sidebar-title { font-size: 16px; }
   .sidebar-step { min-width: 100px; }
 }
+/* ══ DASHBOARD ══ */
+.dashboard {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 32px;
+}
+.dashboard h2 {
+  font-family: var(--font-d);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: -.3px;
+}
+.dashboard h3 {
+  font-family: var(--font-d);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 16px;
+}
+
+.dash-live {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(240,232,210,0.35);
+  font-family: var(--font-m);
+  margin-bottom: 28px;
+  margin-top: 6px;
+}
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 8px var(--teal);
+  animation: blink 2s ease-in-out infinite;
+}
+
+/* ── KPI cards ── */
+.kpis-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--rim);
+  border-radius: var(--r-lg);
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color .2s, transform .2s;
+}
+.kpi-card:hover {
+  border-color: var(--rim-2);
+  transform: translateY(-2px);
+}
+.kpi-card.alerta {
+  border-color: rgba(201,184,120,0.25);
+  background: var(--gold-dim);
+}
+.kpi-card.proceso {
+  border-color: rgba(62,207,181,0.2);
+  background: var(--teal-dim);
+}
+.kpi-card.ok {
+  border-color: rgba(255,255,255,0.1);
+  background: var(--surface-2);
+}
+.kpi-numero {
+  font-family: var(--font-d);
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--cream), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.kpi-card.alerta .kpi-numero {
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.kpi-card.proceso .kpi-numero {
+  background: linear-gradient(135deg, #7fffee, var(--teal));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.kpi-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(240,232,210,0.35);
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  font-family: var(--font-b);
+}
+
+/* ── Secciones de gráficas ── */
+.seccion {
+  background: var(--surface);
+  border: 1px solid var(--rim);
+  border-radius: var(--r-lg);
+  padding: 24px 24px 20px;
+  margin-bottom: 20px;
+}
+
+/* ── Barras horizontales (por tipo) ── */
+.barra-row {
+  display: grid;
+  grid-template-columns: 180px 1fr 40px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: rgba(240,232,210,0.6);
+  font-family: var(--font-b);
+}
+.barra-row:last-child { margin-bottom: 0; }
+.barra {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--gold), var(--teal));
+  min-width: 6px;
+  transition: width .6s cubic-bezier(.4,0,.2,1);
+}
+.barra-row span:last-child {
+  text-align: right;
+  font-family: var(--font-m);
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+/* ── Barras verticales (tendencia) ── */
+.chart-barras {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  height: 140px;
+  padding-top: 10px;
+}
+.chart-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+.chart-barra {
+  width: 100%;
+  max-width: 48px;
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(180deg, var(--teal), rgba(62,207,181,0.3));
+  min-height: 6px;
+  transition: height .6s cubic-bezier(.4,0,.2,1);
+}
+.chart-col span:nth-child(2) {
+  font-size: 10px;
+  color: rgba(240,232,210,0.3);
+  font-family: var(--font-m);
+  text-align: center;
+  line-height: 1.2;
+}
+.chart-col span:nth-child(3) {
+  font-size: 11px;
+  color: var(--teal);
+  font-family: var(--font-m);
+  font-weight: 500;
+}
