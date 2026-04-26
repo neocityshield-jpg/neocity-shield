@@ -618,3 +618,170 @@ html,body{
   font-family: var(--font-m);
   font-weight: 500;
 }
+
+/* ══ PANEL SGSST ══ */
+.panel-sst {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 32px;
+}
+.panel-sst h2 {
+  font-family: var(--font-d);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: -.3px;
+}
+
+.alertas-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: var(--ember-dim);
+  border: 1px solid rgba(224,92,58,0.25);
+  border-radius: 12px;
+  font-size: 14px;
+  color: rgba(240,232,210,0.75);
+  margin-bottom: 20px;
+}
+
+/* ── Chips de filtro ── */
+.fchip {
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--rim);
+  background: var(--surface);
+  color: rgba(240,232,210,0.45);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-b);
+  transition: all .2s;
+}
+.fchip:hover {
+  border-color: var(--rim-2);
+  color: var(--cream);
+}
+.fchip.on {
+  background: var(--gold-dim);
+  border-color: var(--rim-accent);
+  color: var(--gold-light);
+}
+
+/* ── Lista de incidentes ── */
+.incidentes-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.incidente-card {
+  background: var(--surface);
+  border: 1px solid var(--rim);
+  border-radius: var(--r-lg);
+  padding: 20px 22px;
+  transition: border-color .2s, transform .15s;
+  position: relative;
+}
+.incidente-card:hover {
+  transform: translateY(-1px);
+  border-color: var(--rim-2);
+}
+.incidente-card.pend {
+  border-left: 3px solid var(--gold);
+}
+.incidente-card.mgmt {
+  border-left: 3px solid var(--teal);
+}
+.incidente-card.done {
+  border-left: 3px solid rgba(255,255,255,0.12);
+  opacity: .85;
+}
+
+.incidente-card h4 {
+  font-family: var(--font-d);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 10px;
+}
+.incidente-card p {
+  font-size: 13px;
+  color: rgba(240,232,210,0.55);
+  line-height: 1.55;
+  margin-bottom: 3px;
+  font-family: var(--font-b);
+}
+.incidente-card p strong {
+  color: rgba(240,232,210,0.75);
+  font-weight: 600;
+}
+
+/* Botón gestionar dentro de la card */
+.incidente-card button[style*="flex:1"],
+.incidente-card > div > button:first-child {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  border: 1px solid var(--rim-2);
+  color: var(--cream);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-b);
+  transition: all .2s;
+}
+.incidente-card button[style*="flex:1"]:hover {
+  background: var(--surface-3);
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+/* ── Modal overlay ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5,9,22,0.85);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fade-in .2s ease;
+}
+
+.modal {
+  background: var(--ink-soft);
+  border: 1px solid var(--rim-2);
+  border-radius: var(--r-xl);
+  padding: 32px 28px;
+  width: 100%;
+  box-shadow: var(--sh-lg);
+  animation: fadeUp .25s cubic-bezier(0.16,1,0.3,1) both;
+}
+.modal h3 {
+  font-family: var(--font-d);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--cream);
+}
+.modal p {
+  font-size: 13px;
+  color: rgba(240,232,210,0.45);
+  font-family: var(--font-b);
+  margin-top: 4px;
+}
+
+/* ── Responsive panel ── */
+@media (max-width: 768px) {
+  .panel-sst {
+    padding: 20px 16px;
+  }
+  .barra-row {
+    grid-template-columns: 120px 1fr 32px;
+    font-size: 12px;
+  }
+}
