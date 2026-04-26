@@ -333,6 +333,7 @@ export default function PanelSST() {
                   <div style={{ display:'flex', gap:'8px', marginTop:'14px' }}>
                     <button
                       onClick={() => abrirDetalle(inc)}
+                      className="btn-gestionar"
                       style={{ flex:1 }}
                     >
                       Gestionar caso
