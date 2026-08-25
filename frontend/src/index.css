@@ -440,22 +440,22 @@ html,body{
   .cat-grid { grid-template-columns: 1fr; }
   .datetime-grid { grid-template-columns: 1fr; gap: 10px; }
   .login-wrap{flex-direction:column;max-width:100%;min-height:100vh;border-radius:0;border:none}
-  .login-left{display:flex;padding:28px 24px 20px;border-right:none;border-bottom:1px solid var(--rim);flex-direction:column;gap:0}
-  .ll-title{font-size:22px;margin-bottom:8px}
-  .ll-sub{font-size:12px;margin-bottom:12px}
-  .ll-stats{flex-direction:row;gap:8px}
-  .ls{padding:10px 12px}
-  .ls-num{font-size:20px}
-  .login-logo-wrap{width:52px;height:52px;margin-bottom:12px}
-  .login-logo{width:52px;height:52px;font-size:22px;border-radius:14px}
-  .login-logo-ring{inset:-10px}
-  .login-logo-ring2{inset:-18px}
+  .login-left{
+    display:flex;align-items:center;text-align:center;
+    padding:32px 24px 24px;border-right:none;border-bottom:1px solid var(--rim);
+    flex-direction:column;justify-content:center;gap:0;
+  }
+  .ll-top{display:flex;flex-direction:column;align-items:center}
+  .login-logo-wrap{width:50px;height:50px;margin:0 auto 12px}
+  .login-logo{width:50px;height:50px;font-size:21px;border-radius:14px}
+  .login-logo-ring{inset:-9px}
+  .login-logo-ring2{inset:-16px}
+  .ll-badge{font-size:9.5px;padding:6px 12px;margin-bottom:12px}
+  .ll-title{font-size:21px;margin-bottom:6px}
+  .ll-sub{font-size:12px;margin:0 auto;max-width:280px}
+  .ll-features{display:none} /* prioriza el formulario en pantallas pequeñas */
   .login-right{width:100%;padding:28px 24px 48px}
   .lr-title{font-size:26px}
-  .panel-sst{padding:0 16px}
-  .incidentes-lista{grid-template-columns:1fr}
-  .dashboard{padding:0 16px}
-  .kpis-grid{grid-template-columns:repeat(2,1fr)}
 
   /* Navbar móvil: ocultamos links de escritorio, mostramos hamburguesa */
   .navbar{padding:0 12px;gap:8px}
@@ -475,9 +475,8 @@ html,body{
 
 @media(max-width:480px){
   .login-right{padding:24px 18px 40px}
-  .ll-stats{gap:6px}
-  .ls{padding:8px 10px}
-  .ls-num{font-size:18px}
+  .login-left{padding:26px 20px 20px}
+  .ll-title{font-size:19px}
   .kpis-grid{grid-template-columns:1fr 1fr}
   .chart-barras{gap:8px}
   .chart-barra{width:30px}
@@ -485,6 +484,18 @@ html,body{
   .form-sidebar-title { font-size: 16px; }
   .sidebar-step { min-width: 100px; }
 }
+
+/* ══ DASHBOARD HEADER (responsive) ══ */
+.dash-header{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:4px}
+.dash-header h2{margin:0}
+.dash-header-actions{display:flex;gap:10px;flex-wrap:wrap}
+.dash-btn{padding:10px 20px;border-radius:12px;font-size:13px;cursor:pointer;transition:all .2s;white-space:nowrap}
+@media(max-width:640px){
+  .dash-header{flex-direction:column;align-items:stretch}
+  .dash-header-actions{width:100%}
+  .dash-btn{flex:1;text-align:center;padding:12px 14px}
+}
+
 /* ══ DASHBOARD ══ */
 .dashboard {
   max-width: 1100px;
