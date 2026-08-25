@@ -112,31 +112,28 @@ export default function Dashboard() {
   return (
     <div className="page-bg">
       <div className="dashboard">
-        <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', marginBottom:'4px' }}>
+                <div className="dash-header">
           <h2>📊 Dashboard Gerencial</h2>
           {/* ── Botones de acción ── */}
-          <div style={{ display:'flex', gap:'10px' }}>
+          <div className="dash-header-actions">
             <button
+              className="dash-btn"
               onClick={() => navigate('/mapa')}
               style={{
-                padding:'10px 20px', borderRadius:'12px',
                 background:'var(--teal-dim)', border:'1px solid rgba(62,207,181,0.25)',
-                color:'var(--teal)', fontWeight:700, fontFamily:'var(--font-d)',
-                fontSize:'13px', cursor:'pointer', transition:'all .2s'
+                color:'var(--teal)', fontWeight:700, fontFamily:'var(--font-d)'
               }}
             >
               🗺️ Ver mapa
             </button>
             <button
+              className="dash-btn"
               onClick={exportarPDF}
               disabled={exportando}
               style={{
-                padding:'10px 20px', borderRadius:'12px',
                 background:'linear-gradient(135deg,var(--gold),var(--gold-light))',
                 color:'#1a1400', border:'none', fontWeight:800,
-                fontFamily:'var(--font-d)', fontSize:'13px',
-                cursor:'pointer', transition:'all .2s',
-                letterSpacing:'.3px', whiteSpace:'nowrap',
+                fontFamily:'var(--font-d)', letterSpacing:'.3px',
                 boxShadow:'0 4px 16px rgba(201,184,120,0.3)'
               }}
             >
