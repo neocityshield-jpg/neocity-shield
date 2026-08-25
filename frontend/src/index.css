@@ -457,6 +457,15 @@ html,body{
   .login-right{width:100%;padding:28px 24px 48px}
   .lr-title{font-size:26px}
 
+  .panel-sst{padding:20px 16px 32px}
+  .incidentes-lista{grid-template-columns:1fr}
+  .dashboard{padding:20px 16px 40px}
+  .dashboard h2{font-size:22px}
+  .kpis-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .kpi-card{padding:16px 14px}
+  .kpi-numero{font-size:30px}
+  .seccion{padding:18px 16px 16px;margin-bottom:14px}
+
   /* Navbar móvil: ocultamos links de escritorio, mostramos hamburguesa */
   .navbar{padding:0 12px;gap:8px}
   .nav-links{display:none}
@@ -467,7 +476,6 @@ html,body{
   .nav-back{padding:8px 10px}
   .nav-hamburger{display:flex}
   .nav-brand{font-size:15px}
-
   .chatbot-fab{display:flex !important}
   .chatbot-ventana{width:calc(100vw - 24px);height:65vh;right:12px;left:12px;bottom:84px;border-radius:20px}
   .modal{margin:16px;max-width:calc(100vw - 32px);padding:28px 20px}
