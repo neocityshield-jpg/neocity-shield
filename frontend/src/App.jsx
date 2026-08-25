@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Login        from './components/Login';
 import Registro     from './components/Registro';
@@ -9,6 +9,7 @@ import MapaCalor    from './components/MapaCalor';
 import Notificaciones from './components/Notificaciones';
 import MiPerfil     from './components/MiPerfil';
 import Chatbot      from './components/Chatbot';
+import Navbar       from './components/Navbar';
 
 const RutaProtegida = ({ children, rolesPermitidos }) => {
   const { usuario, cargando } = useAuth();
