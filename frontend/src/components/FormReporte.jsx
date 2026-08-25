@@ -398,7 +398,8 @@ export default function FormReporte() {
 
             <div ref={mapRef} style={{
               height:'200px', borderRadius:'12px', marginBottom:'14px',
-              border:'1px solid var(--rim)', overflow:'hidden'
+              border:'1px solid var(--rim)', overflow:'hidden',
+              position:'relative', zIndex:1, isolation:'isolate'
             }} />
 
             <button type="button" className="geo-btn" onClick={captGeo} disabled={geoStatus==='loading'}>
