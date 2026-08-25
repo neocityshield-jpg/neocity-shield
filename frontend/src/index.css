@@ -115,19 +115,50 @@ html,body{
 .login-link:hover{opacity:.7}
 
 /* ══ NAVBAR ══ */
-.navbar{background:rgba(8,12,31,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--rim);padding:0 32px;height:64px;display:flex;align-items:center;position:sticky;top:0;z-index:100}
-.nav-logo{display:flex;align-items:center;gap:10px;margin-right:36px}
+.navbar{background:rgba(8,12,31,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--rim);padding:0 32px;height:64px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
 .nav-shield{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-light));display:flex;align-items:center;justify-content:center;font-size:16px;color:#1a1400}
 .nav-brand{font-family:var(--font-d);font-size:17px;font-weight:700;letter-spacing:-.1px;color:var(--cream)}
-.nav-links{display:flex;align-items:center;gap:4px;flex:1}
-.nl{padding:8px 16px;border-radius:10px;border:none;background:none;color:rgba(240,232,210,0.4);font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;font-family:var(--font-b)}
+
+/* Botón "Atrás" — navegación de regreso a la pantalla anterior */
+.nav-back{display:flex;align-items:center;gap:4px;padding:8px 12px;border-radius:10px;border:1px solid var(--rim);background:var(--surface);color:rgba(240,232,210,0.7);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--font-b);flex-shrink:0}
+.nav-back:hover{color:var(--cream);background:var(--surface-2);border-color:var(--rim-2)}
+
+/* Breadcrumb — "Inicio / Vista actual" */
+.nav-breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(240,232,210,0.35);font-family:var(--font-b);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-breadcrumb a{color:rgba(240,232,210,0.45);text-decoration:none;transition:color .2s}
+.nav-breadcrumb a:hover{color:var(--gold)}
+.nav-breadcrumb-sep{opacity:.5}
+
+.nav-links{display:flex;align-items:center;gap:4px;flex:1;justify-content:center}
+.nl{padding:8px 16px;border-radius:10px;border:none;background:none;color:rgba(240,232,210,0.4);font-size:14px;font-weight:500;cursor:pointer;transition:all .2s;font-family:var(--font-b);white-space:nowrap}
 .nl:hover{color:var(--cream);background:var(--surface)}
 .nl.active{color:var(--gold);background:var(--gold-dim)}
-.nav-right{display:flex;align-items:center;gap:12px}
-.nav-av{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;font-family:var(--font-d);border:1px solid var(--rim-accent)}
-.nav-name{font-size:13px;font-weight:500;color:var(--cream)}
-.nav-logout{padding:7px 16px;border-radius:10px;background:var(--ember-dim);border:1px solid rgba(224,92,58,0.2);color:var(--ember);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--font-b)}
+.nav-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.nav-av{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;font-family:var(--font-d);border:1px solid var(--rim-accent);flex-shrink:0}
+.nav-name{font-size:13px;font-weight:500;color:var(--cream);white-space:nowrap}
+.nav-logout{padding:7px 16px;border-radius:10px;background:var(--ember-dim);border:1px solid rgba(224,92,58,0.2);color:var(--ember);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--font-b);white-space:nowrap}
 .nav-logout:hover{background:var(--ember);color:#fff;border-color:var(--ember)}
+
+/* Botón hamburguesa — oculto en escritorio, visible solo en móvil */
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:38px;height:38px;border-radius:10px;border:1px solid var(--rim);background:var(--surface);cursor:pointer;flex-shrink:0}
+.nav-hamburger span{width:18px;height:2px;background:var(--cream);margin:0 auto;border-radius:2px;transition:all .25s}
+.nav-hamburger.abierto span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-hamburger.abierto span:nth-child(2){opacity:0}
+.nav-hamburger.abierto span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* Menú móvil (drawer) */
+.nav-drawer-overlay{position:fixed;inset:0;background:rgba(5,9,22,0.7);backdrop-filter:blur(2px);z-index:200;display:flex;justify-content:flex-end;animation:fade-in .2s ease both}
+.nav-drawer{width:min(78vw,320px);height:100%;background:var(--ink-soft);border-left:1px solid var(--rim-2);box-shadow:var(--sh-lg);padding:24px 20px;display:flex;flex-direction:column;gap:22px;animation:fadeUp .25s cubic-bezier(0.16,1,0.3,1) both;overflow-y:auto}
+.nav-drawer-user{display:flex;align-items:center;gap:12px;padding-bottom:18px;border-bottom:1px solid var(--rim)}
+.nav-drawer-nombre{font-size:14px;font-weight:600;color:var(--cream)}
+.nav-drawer-rol{font-size:11px;color:rgba(240,232,210,0.4);text-transform:uppercase;letter-spacing:.5px;font-family:var(--font-b)}
+.nav-drawer-links{display:flex;flex-direction:column;gap:4px}
+.nav-drawer-link{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:12px;border:none;background:none;color:rgba(240,232,210,0.6);font-size:15px;font-weight:500;cursor:pointer;text-align:left;transition:all .2s;font-family:var(--font-b)}
+.nav-drawer-link:hover{background:var(--surface)}
+.nav-drawer-link.active{color:var(--gold);background:var(--gold-dim)}
+.nav-drawer-logout{margin-top:auto;padding:13px;border-radius:12px;background:var(--ember-dim);border:1px solid rgba(224,92,58,0.2);color:var(--ember);font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font-b);transition:all .2s}
+.nav-drawer-logout:hover{background:var(--ember);color:#fff}
 
 /* ══ PAGE BG ══ */
 .page-bg{min-height:100vh;background:radial-gradient(ellipse at 0% 0%,rgba(201,184,120,0.05) 0%,transparent 50%),radial-gradient(ellipse at 100% 100%,rgba(62,207,181,0.04) 0%,transparent 50%),linear-gradient(135deg,#050916 0%,#0a1128 50%,#060d1e 100%)}
@@ -425,8 +456,18 @@ html,body{
   .incidentes-lista{grid-template-columns:1fr}
   .dashboard{padding:0 16px}
   .kpis-grid{grid-template-columns:repeat(2,1fr)}
-  .navbar{padding:0 16px}
+
+  /* Navbar móvil: ocultamos links de escritorio, mostramos hamburguesa */
+  .navbar{padding:0 12px;gap:8px}
   .nav-links{display:none}
+  .nav-name{display:none}
+  .nav-logout{display:none}
+  .nav-breadcrumb{display:none}
+  .nav-back-txt{display:none}
+  .nav-back{padding:8px 10px}
+  .nav-hamburger{display:flex}
+  .nav-brand{font-size:15px}
+
   .chatbot-fab{display:flex !important}
   .chatbot-ventana{width:calc(100vw - 24px);height:65vh;right:12px;left:12px;bottom:84px;border-radius:20px}
   .modal{margin:16px;max-width:calc(100vw - 32px);padding:28px 20px}
