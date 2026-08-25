@@ -44,7 +44,7 @@ export default function Login() {
       <div className="grid-lines"></div>
 
       <div className="login-wrap">
-        {/* Panel izquierdo */}
+                {/* Panel izquierdo */}
         <div className="login-left">
           <div className="ll-top">
             <div className="login-logo-wrap">
@@ -52,6 +52,7 @@ export default function Login() {
               <div className="login-logo-ring2"></div>
               <div className="login-logo">🛡️</div>
             </div>
+            <div className="ll-badge">Plataforma de seguridad corporativa</div>
             <div className="ll-title">
               Seguridad física<br /><span>inteligente</span><br />para tu equipo
             </div>
@@ -59,10 +60,19 @@ export default function Login() {
               Sistema de reporte y gestión de incidentes para Evidencia Digital S.A.S. — Bogotá, Colombia.
             </div>
           </div>
-          <div className="ll-stats">
-            <div className="ls"><div className="ls-num">83%</div><div className="ls-lbl">Tasa de reporte</div></div>
-            <div className="ls"><div className="ls-num">2.4m</div><div className="ls-lbl">Tiempo respuesta</div></div>
-            <div className="ls"><div className="ls-num">12</div><div className="ls-lbl">Incidentes 2026</div></div>
+          <div className="ll-features">
+            <div className="ll-feature">
+              <span className="ll-feature-icon">📝</span>
+              <span>Reporta un incidente en segundos, desde cualquier lugar</span>
+            </div>
+            <div className="ll-feature">
+              <span className="ll-feature-icon">🗺️</span>
+              <span>Visualiza el mapa de riesgo de la organización en tiempo real</span>
+            </div>
+            <div className="ll-feature">
+              <span className="ll-feature-icon">🤖</span>
+              <span>Orientación inmediata con NeoBot, tu asistente de seguridad</span>
+            </div>
           </div>
         </div>
 
