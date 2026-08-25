@@ -25,7 +25,45 @@ const RutaProtegida = ({ children, rolesPermitidos }) => {
   );
   if (!usuario) return <Navigate to="/login" />;
   if (rolesPermitidos && !rolesPermitidos.includes(usuario.rol)) return <Navigate to="/sin-acceso" />;
-  return <>{children}<Chatbot /></>;
+  return (
+  <>
+    <Navbar />
+    {children}
+    <Chatbot />
+  </>
+);
+};
+
+const RUTA_INICIO_POR_ROL = { funcionario: '/reportar', sgsst: '/panel-sst', gerencia: '/dashboard' };
+
+const SinAcceso = () => {
+  const { usuario, logout } = useAuth();
+  const navigate = useNavigate();
+  const rutaInicio = RUTA_INICIO_POR_ROL[usuario?.rol] || '/login';
+
+  return (
+    <div style={{
+      minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
+      gap:'20px', color:'var(--cream)', background:'linear-gradient(135deg,#050916,#0a1128)',
+      fontFamily:'var(--font-d)', fontSize:'18px', textAlign:'center', padding:'24px'
+    }}>
+      <div>No tienes permisos para esta sección.</div>
+      <div style={{ display:'flex', gap:'12px', flexWrap:'wrap', justifyContent:'center' }}>
+        <button
+          onClick={() => navigate(rutaInicio)}
+          style={{ padding:'10px 22px', borderRadius:'10px', border:'1px solid var(--rim-accent)', background:'var(--gold-dim)', color:'var(--gold)', fontFamily:'var(--font-b)', fontSize:'14px', cursor:'pointer' }}
+        >
+          Volver a mi inicio
+        </button>
+        <button
+          onClick={() => { logout(); navigate('/login'); }}
+          style={{ padding:'10px 22px', borderRadius:'10px', border:'1px solid rgba(224,92,58,0.2)', background:'var(--ember-dim)', color:'var(--ember)', fontFamily:'var(--font-b)', fontSize:'14px', cursor:'pointer' }}
+        >
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default function App() {
@@ -74,11 +112,7 @@ export default function App() {
           } />
 
           <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/sin-acceso" element={
-            <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', color:'var(--cream)', background:'linear-gradient(135deg,#050916,#0a1128)', fontFamily:'var(--font-d)', fontSize:'18px' }}>
-              No tienes permisos para esta sección.
-            </div>
-          } />
+          <Route path="/sin-acceso" element={<SinAcceso />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
