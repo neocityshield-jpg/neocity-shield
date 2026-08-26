@@ -667,6 +667,7 @@ html,body{
   gap: 14px;
   height: 140px;
   padding-top: 10px;
+  overflow: hidden; /* evita que una barra alta se salga por encima y tape el título */
 }
 .chart-col {
   display: flex;
@@ -1042,7 +1043,7 @@ html,body{
 
   .barra-row{ grid-template-columns: 110px 1fr 30px; gap: 8px; font-size: 12px; }
 
-  .chart-barras{ gap: 8px; height: 120px; }
+  .chart-barras{ gap: 8px; height: 150px; padding-top: 16px; }
   .chart-barra{ max-width: 32px; }
 
   .incidente-card{ padding: 16px 16px; }
