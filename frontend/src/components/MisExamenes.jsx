@@ -105,9 +105,9 @@ export default function MisExamenes() {
               Tipo de examen
               <select value={form.tipo_examen} onChange={e => setForm({ ...form, tipo_examen: e.target.value })}
                 style={{ display: 'block', width: '100%', marginTop: '6px', padding: '10px', borderRadius: '8px', background: 'var(--surface)', color: 'var(--cream)', border: '1px solid var(--rim)' }}>
-                <option value="ingreso">Ingreso</option>
-                <option value="periodico">Periódico</option>
-                <option value="egreso">Egreso</option>
+                <option value="ingreso" style={{ background: '#0e1424', color: '#f0e8d2' }}>Ingreso</option>
+                <option value="periodico" style={{ background: '#0e1424', color: '#f0e8d2' }}>Periódico</option>
+                <option value="egreso" style={{ background: '#0e1424', color: '#f0e8d2' }}>Egreso</option>
               </select>
             </label>
             <label style={{ fontSize: '13px', color: 'rgba(240,232,210,0.6)' }}>
