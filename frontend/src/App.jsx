@@ -113,6 +113,12 @@ export default function App() {
             </RutaProtegida>
           } />
 
+                    <Route path="/perfil" element={
+            <RutaProtegida rolesPermitidos={['funcionario','sgsst','gerencia']}>
+              <MiPerfil />
+            </RutaProtegida>
+          } />
+
           <Route path="/examenes" element={
   <RutaProtegida rolesPermitidos={['funcionario','sgsst','gerencia']}>
     <MisExamenes />
