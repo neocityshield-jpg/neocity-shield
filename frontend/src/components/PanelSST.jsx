@@ -5,7 +5,7 @@ import API from '../services/api';
 const ESTADO_COLOR = {
   pendiente:  { color:'var(--gold)',  dim:'var(--gold-dim)',  border:'var(--rim-accent)', label:'Pendiente' },
   en_gestion: { color:'var(--teal)',  dim:'var(--teal-dim)',  border:'rgba(62,207,181,0.3)', label:'En gestión' },
-  cerrado:    { color:'rgba(240,232,210,0.35)', dim:'var(--surface-2)', border:'var(--rim)', label:'Cerrado' }
+    cerrado:    { color:'var(--ember)', dim:'var(--ember-dim)', border:'rgba(224,92,58,0.35)', label:'Cerrado' }
 };
 
 export default function PanelSST() {
