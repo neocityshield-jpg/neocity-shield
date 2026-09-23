@@ -51,7 +51,7 @@ export default function Dashboard() {
     doc.setFont('helvetica', 'bold');
     doc.text('Indicadores del período', 15, 55);
 
-    const { totales, tiempo_promedio } = datos;
+    const { totales, tiempo_promedio, examenes } = datos;
     doc.autoTable({
       startY: 60,
       head: [['Indicador', 'Valor']],
@@ -62,6 +62,7 @@ export default function Dashboard() {
         ['Cerrados', totales.cerrados],
         ['Último mes', totales.ultimo_mes],
         ['Tiempo promedio de registro', `${tiempo_promedio.promedio_minutos} min`],
+        ['Personal con exámenes ocupacionales al día', `${examenes.porcentaje}% (${examenes.al_dia}/${examenes.total_personal})`],
       ],
       headStyles: { fillColor: [201, 184, 120], textColor: [26, 20, 0], fontStyle: 'bold' },
       alternateRowStyles: { fillColor: [248, 246, 240] },
@@ -80,22 +81,10 @@ export default function Dashboard() {
       styles: { fontSize: 11 }
     });
 
-    doc.setFontSize(13);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Tendencia por mes', 15, doc.lastAutoTable.finalY + 16);
-    doc.autoTable({
-      startY: doc.lastAutoTable.finalY + 20,
-      head: [['Mes', 'Incidentes']],
-      body: datos.por_mes.map(m => [m.mes, m.cantidad]),
-      headStyles: { fillColor: [79, 142, 247], textColor: [255, 255, 255], fontStyle: 'bold' },
-      alternateRowStyles: { fillColor: [240, 245, 255] },
-      styles: { fontSize: 11 }
-    });
-
     const pageCount = doc.internal.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
-      doc.setFontSize(9);
+      doc.setFontSize(8);
       doc.setTextColor(150, 150, 150);
       doc.text(`NeoCity Shield — Evidencia Digital S.A.S. — Página ${i} de ${pageCount}`, 15, 290);
     }
@@ -107,7 +96,7 @@ export default function Dashboard() {
   if (cargando) return <div style={{color:'var(--cream)',padding:'40px'}}>Cargando...</div>;
   if (!datos)   return <div style={{color:'var(--cream)',padding:'40px'}}>Error al cargar datos</div>;
 
-  const { totales, por_tipo, por_mes, tiempo_promedio } = datos;
+  const { totales, por_tipo, por_mes, tiempo_promedio, examenes } = datos;
 
   return (
     <div className="page-bg">
@@ -154,6 +143,14 @@ export default function Dashboard() {
           <div className="kpi-card ok"><span className="kpi-numero">{totales.cerrados}</span><span className="kpi-label">Cerrados</span></div>
           <div className="kpi-card"><span className="kpi-numero">{tiempo_promedio.promedio_minutos}m</span><span className="kpi-label">Tiempo promedio</span></div>
           <div className="kpi-card"><span className="kpi-numero">{totales.ultimo_mes}</span><span className="kpi-label">Último mes</span></div>
+          <div className={`kpi-card ${examenes.porcentaje >= 80 ? 'ok' : examenes.porcentaje >= 50 ? 'proceso' : 'alerta'}`}>
+            <span className="kpi-numero">{examenes.porcentaje}%</span>
+            <span className="kpi-label">Exámenes al día ({examenes.al_dia}/{examenes.total_personal})</span>
+          </div>
+          <div className="kpi-card alerta">
+            <span className="kpi-numero">{examenes.vencidos}</span>
+            <span className="kpi-label">Exámenes vencidos</span>
+          </div>
         </div>
 
         <div className="seccion">
