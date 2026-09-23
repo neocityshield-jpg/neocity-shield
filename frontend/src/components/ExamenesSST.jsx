@@ -138,12 +138,12 @@ export default function ExamenesSST() {
               background: 'var(--surface-2)', border: '1px solid var(--rim)', color: 'var(--cream)'
             }}
           >
-            <option value="all">Todos los estados</option>
-            <option value="pendiente_validacion">Pendiente de validación</option>
-            <option value="vigente">Vigente</option>
-            <option value="proximo_a_vencer">Próximo a vencer</option>
-            <option value="vencido">Vencido</option>
-            <option value="rechazado">Rechazado</option>
+            <option value="all" style={{ background: '#0e1424', color: '#f0e8d2' }}>Todos los estados</option>
+            <option value="pendiente_validacion" style={{ background: '#0e1424', color: '#f0e8d2' }}>Pendiente de validación</option>
+            <option value="vigente" style={{ background: '#0e1424', color: '#f0e8d2' }}>Vigente</option>
+            <option value="proximo_a_vencer" style={{ background: '#0e1424', color: '#f0e8d2' }}>Próximo a vencer</option>
+            <option value="vencido" style={{ background: '#0e1424', color: '#f0e8d2' }}>Vencido</option>
+            <option value="rechazado" style={{ background: '#0e1424', color: '#f0e8d2' }}>Rechazado</option>
           </select>
         </div>
 
@@ -220,7 +220,7 @@ export default function ExamenesSST() {
 
               <label style={{ fontSize: '13px', color: 'rgba(240,232,210,0.6)', display: 'block', marginBottom: '18px' }}>
                 Resultado del examen
-                <select
+                                <select
                   value={resultado}
                   onChange={e => setResultado(e.target.value)}
                   style={{
@@ -228,9 +228,9 @@ export default function ExamenesSST() {
                     background: 'var(--surface-2)', color: 'var(--cream)', border: '1px solid var(--rim)'
                   }}
                 >
-                  <option value="apto">Apto</option>
-                  <option value="apto_con_recomendaciones">Apto con recomendaciones</option>
-                  <option value="no_apto">No apto</option>
+                  <option value="apto" style={{ background: '#0e1424', color: '#f0e8d2' }}>Apto</option>
+                  <option value="apto_con_recomendaciones" style={{ background: '#0e1424', color: '#f0e8d2' }}>Apto con recomendaciones</option>
+                  <option value="no_apto" style={{ background: '#0e1424', color: '#f0e8d2' }}>No apto</option>
                 </select>
               </label>
 
