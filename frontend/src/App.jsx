@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Login        from './components/Login';
 import Registro     from './components/Registro';
 import FormReporte  from './components/FormReporte';
+import MisExamenes  from './components/MisExamenes';
 import PanelSST     from './components/PanelSST';
 import Dashboard    from './components/Dashboard';
 import MapaCalor    from './components/MapaCalor';
