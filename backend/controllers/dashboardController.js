@@ -40,11 +40,51 @@ const dashboardController = {
         WHERE fecha_registro >= NOW() - INTERVAL '30 days'
       `);
 
+      // Personal con exámenes ocupacionales al día
+      const examenes = await pool.query(`
+        SELECT
+          COUNT(*) AS total_personal,
+          COUNT(*) FILTER (
+            WHERE EXISTS (
+              SELECT 1 FROM examenes_ocupacionales e
+              WHERE e.usuario_id = u.id
+                AND e.estado = 'vigente'
+                AND e.fecha_proximo >= CURRENT_DATE
+            )
+          ) AS al_dia,
+          COUNT(*) FILTER (
+            WHERE EXISTS (
+              SELECT 1 FROM examenes_ocupacionales e
+              WHERE e.usuario_id = u.id
+                AND e.fecha_proximo < CURRENT_DATE
+            )
+            AND NOT EXISTS (
+              SELECT 1 FROM examenes_ocupacionales e2
+              WHERE e2.usuario_id = u.id
+                AND e2.estado = 'vigente'
+                AND e2.fecha_proximo >= CURRENT_DATE
+            )
+          ) AS vencidos
+        FROM usuarios u
+        WHERE u.activo = TRUE
+      `);
+
+      const examRow = examenes.rows[0];
+      const porcentaje = examRow.total_personal > 0
+        ? Math.round((examRow.al_dia / examRow.total_personal) * 100)
+        : 0;
+
       res.json({
         totales:         totales.rows[0],
         por_tipo:        porTipo.rows,
         por_mes:         porMes.rows,
-        tiempo_promedio: tiempoPromedio.rows[0]
+        tiempo_promedio: tiempoPromedio.rows[0],
+        examenes: {
+          total_personal: Number(examRow.total_personal),
+          al_dia:         Number(examRow.al_dia),
+          vencidos:       Number(examRow.vencidos),
+          porcentaje
+        }
       });
 
     } catch (error) {
