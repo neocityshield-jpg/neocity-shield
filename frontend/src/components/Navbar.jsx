@@ -13,6 +13,7 @@ const RUTA_INICIO_POR_ROL = {
 const LINKS_POR_ROL = {
   funcionario: [
     { path: '/reportar',       label: 'Reportar',       icon: '📝' },
+    { path: '/examenes',       label: 'Exámenes',       icon: '🩺' },
     { path: '/notificaciones', label: 'Notificaciones', icon: '🔔' },
     { path: '/perfil',         label: 'Mi Perfil',      icon: '👤' },
   ],
@@ -20,12 +21,14 @@ const LINKS_POR_ROL = {
     { path: '/panel-sst',      label: 'Panel SST',      icon: '🔒' },
     { path: '/dashboard',      label: 'Dashboard',      icon: '📊' },
     { path: '/mapa',           label: 'Mapa',           icon: '🗺️' },
+    { path: '/examenes',       label: 'Exámenes',       icon: '🩺' },
     { path: '/notificaciones', label: 'Notificaciones', icon: '🔔' },
     { path: '/perfil',         label: 'Mi Perfil',      icon: '👤' },
   ],
   gerencia: [
     { path: '/dashboard',      label: 'Dashboard',      icon: '📊' },
     { path: '/mapa',           label: 'Mapa',           icon: '🗺️' },
+    { path: '/examenes',       label: 'Exámenes',       icon: '🩺' },
     { path: '/notificaciones', label: 'Notificaciones', icon: '🔔' },
     { path: '/perfil',         label: 'Mi Perfil',      icon: '👤' },
   ],
