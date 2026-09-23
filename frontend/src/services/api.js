@@ -35,6 +35,14 @@ export const incidenteService = {
   sinSeguimiento: ()       => API.get('/incidentes/alertas/sin-seguimiento')
 };
 
+export const examenService = {
+  crear:            (data) => API.post('/examenes', data),
+  misExamenes:      ()     => API.get('/examenes/mis-examenes'),
+  listarTodos:      (params) => API.get('/examenes', { params }),
+  validar:          (id, data) => API.put(`/examenes/${id}/validar`, data),
+  proximosAVencer:  ()     => API.get('/examenes/alertas/por-vencer')
+};
+
 export const sstService = {
   registrarSeguimiento: (data) => API.post('/sst/seguimiento', data),
   historial:            (id)   => API.get(`/sst/historial/${id}`)
