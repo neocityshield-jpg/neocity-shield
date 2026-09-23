@@ -1,6 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const cors    = require('cors');
+const cron    = require('node-cron');
+const { ejecutarRecordatorioExamenes } = require('./jobs/recordatorioExamenes');
+const { verificarToken, verificarRol } = require('./middleware/authMiddleware');
 const app     = express();
 
 app.use(cors({
@@ -28,6 +31,21 @@ app.use('/api/chatbot',        require('./routes/chatbotRoutes'));
 app.use('/api/notificaciones', require('./routes/notificacionRoutes'));
 
 app.get('/api/health', (req, res) => res.json({ status: 'OK', app: 'NeoCity Shield' }));
+
+// Recordatorio automático de exámenes ocupacionales — todos los días a las 8:00 AM hora Colombia
+cron.schedule('0 8 * * *', () => {
+  ejecutarRecordatorioExamenes().catch(err => console.error('Error en recordatorio de exámenes:', err));
+}, { timezone: 'America/Bogota' });
+
+// Endpoint para disparar el recordatorio manualmente (útil para pruebas y sustentación)
+app.post('/api/examenes/recordatorios/ejecutar', verificarToken, verificarRol('sgsst'), async (req, res) => {
+  try {
+    const resultado = await ejecutarRecordatorioExamenes();
+    res.json({ mensaje: 'Recordatorio ejecutado', ...resultado });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al ejecutar recordatorio' });
+  }
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
