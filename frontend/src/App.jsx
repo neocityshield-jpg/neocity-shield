@@ -89,6 +89,12 @@ export default function App() {
             </RutaProtegida>
           } />
 
+          <Route path="/examenes-sst" element={
+  <RutaProtegida rolesPermitidos={['sgsst']}>
+    <ExamenesSST />
+  </RutaProtegida>
+} />
+
           <Route path="/dashboard" element={
             <RutaProtegida rolesPermitidos={['gerencia','sgsst']}>
               <Dashboard />
