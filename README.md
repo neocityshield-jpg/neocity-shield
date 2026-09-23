@@ -29,6 +29,7 @@ NeoCity Shield reemplaza los procesos manuales e informales de reporte de incide
 - Información fragmentada en WhatsApp y Excel sin trazabilidad
 - Ausencia de procesos estandarizados
 - Incumplimiento del Decreto 1072 de 2015
+- Falta de control sobre los exámenes médicos ocupacionales del personal (ingreso, periódicos y de egreso)
 
 ---
 
@@ -42,6 +43,7 @@ NeoCity Shield reemplaza los procesos manuales e informales de reporte de incide
 | Inteligencia Artificial | OpenAI GPT-4o | API externa |
 | Mapas | Leaflet.js + OpenStreetMap | — |
 | Autenticación | JWT + bcryptjs | — |
+| Tareas programadas | node-cron | — |
 | Exportación | jsPDF + AutoTable | — |
 | Arquitectura | MVC | — |
 
@@ -71,12 +73,22 @@ NeoCity Shield reemplaza los procesos manuales e informales de reporte de incide
 - Exportar caso individual a PDF
 - Módulo de investigación: causa raíz + acciones correctivas y preventivas
 
+### Exámenes ocupacionales
+- Auto-reporte del funcionario: fecha de realización, tipo de examen (ingreso, periódico, egreso) y soporte/certificado
+- Cálculo automático de la próxima fecha de vencimiento según la periodicidad del cargo
+- Validación por parte de SGSST (aprobar como vigente o rechazar el reporte), con registro del resultado (apto, apto con recomendaciones, no apto)
+- Panel dedicado para SGSST (`/examenes-sst`) con buscador, filtros por estado y semáforo visual (vigente / próximo a vencer / vencido / pendiente de validación)
+- Recordatorio automático diario (cron a las 8:00 a.m. hora Colombia) que notifica al empleado cuando su examen está por vencer o ya venció, y envía un resumen diario al equipo SGSST
+- Endpoint de disparo manual del recordatorio para pruebas y sustentación
+- Indicador de "% de personal con exámenes al día" y total de exámenes vencidos en el Dashboard gerencial
+
 ### Dashboard gerencial
 - KPIs en tiempo real: total, pendientes, en gestión, cerrados
 - Gráfica de tendencia por mes
 - Distribución por tipo de incidente
 - Mapa de calor de incidentes en Bogotá
-- Exportar reporte mensual a PDF
+- KPI de personal con exámenes ocupacionales al día y exámenes vencidos
+- Exportar reporte mensual a PDF (incluye indicador de exámenes al día)
 
 ### NeoBot — Chatbot IA
 - Asistente conversacional powered by OpenAI GPT-4o
@@ -93,6 +105,7 @@ NeoCity Shield reemplaza los procesos manuales e informales de reporte de incide
 ### Notificaciones
 - Sistema de notificaciones internas
 - Alertas cuando hay nuevos incidentes o cambios de estado
+- Alertas automáticas de exámenes ocupacionales próximos a vencer o vencidos
 
 ### Modo offline
 - Service Worker para funcionamiento sin conexión
@@ -110,17 +123,22 @@ neocity-shield/
 │   ├── config/
 │   │   └── db.js                  # Conexión PostgreSQL con SSL
 │   │
+│   ├── jobs/
+│   │   └── recordatorioExamenes.js # Cron diario de recordatorio de exámenes ocupacionales
+│   │
 │   ├── models/
 │   │   ├── Usuario.js
 │   │   ├── Incidente.js
-│   │   └── Seguimiento.js
+│   │   ├── Seguimiento.js
+│   │   └── ExamenOcupacional.js
 │   │
 │   ├── controllers/
 │   │   ├── authController.js
 │   │   ├── incidenteController.js
 │   │   ├── sstController.js
 │   │   ├── dashboardController.js
-│   │   └── chatbotController.js
+│   │   ├── chatbotController.js
+│   │   └── examenController.js
 │   │
 │   ├── middleware/
 │   │   └── authMiddleware.js
@@ -132,7 +150,8 @@ neocity-shield/
 │   │   ├── dashboardRoutes.js
 │   │   ├── chatbotRoutes.js
 │   │   ├── notificacionRoutes.js
-│   │   └── investigacionRoutes.js
+│   │   ├── investigacionRoutes.js
+│   │   └── examenRoutes.js
 │   │
 │   ├── server.js
 │   └── package.json
@@ -163,7 +182,9 @@ neocity-shield/
             ├── Chatbot.jsx
             ├── Notificaciones.jsx
             ├── MiPerfil.jsx
-            └── Investigacion.jsx
+            ├── Investigacion.jsx
+            ├── MisExamenes.jsx
+            └── ExamenesSST.jsx
 ```
 
 ## Variables de entorno
@@ -231,6 +252,7 @@ npm start
 | `notificaciones` | Alertas internas del sistema |
 | `chatbot_sesiones` | Historial de conversaciones con NeoBot |
 | `push_suscripciones` | Suscripciones a notificaciones push |
+| `examenes_ocupacionales` | Exámenes de ingreso, periódicos y de egreso: fecha de realización, próximo vencimiento, resultado, estado de validación y último recordatorio enviado |
 
 ---
 
@@ -239,6 +261,7 @@ npm start
 | Norma | Aplicación |
 |---|---|
 | Decreto 1072 de 2015 | SG-SST Colombia — registro y seguimiento de incidentes |
+| Resolución 2346 de 2007 | Práctica de evaluaciones médicas ocupacionales |
 | ISO 45001:2022 | Sistema de gestión de seguridad y salud en el trabajo |
 | ISO/IEC 27001:2022 | Seguridad de la información y control de accesos |
 | IEEE 830 | Especificación de requerimientos de software |
@@ -267,9 +290,15 @@ El sistema **NeoCity Shield** se encuentra en un entorno productivo, con los sig
 - Panel SGSST con buscador, filtros e historial
 - Módulo de investigación de incidentes
 
+### Exámenes Ocupacionales
+- Auto-reporte y validación de exámenes de ingreso, periódicos y de egreso
+- Cálculo automático de vigencia y próximo vencimiento
+- Recordatorio automático diario vía cron con notificaciones internas
+
 ### Analítica y Visualización
 - Dashboard con KPIs y exportación a PDF
 - Mapa de calor de incidentes en Bogotá
+- Indicador de personal con exámenes ocupacionales al día
 
 ### Inteligencia Artificial
 - Chatbot NeoBot integrado con OpenAI (GPT-4o)
