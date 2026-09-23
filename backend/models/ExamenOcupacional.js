@@ -62,9 +62,17 @@ const ExamenOcupacional = {
       JOIN usuarios u ON e.usuario_id = u.id
       WHERE e.estado != 'pendiente_validacion'
         AND e.fecha_proximo <= CURRENT_DATE + INTERVAL '30 days'
+        AND (e.ultimo_recordatorio_enviado IS NULL OR e.ultimo_recordatorio_enviado < CURRENT_DATE)
       ORDER BY e.fecha_proximo ASC
     `);
     return result.rows;
+  },
+
+  async marcarRecordatorioEnviado(id) {
+    await pool.query(
+      `UPDATE examenes_ocupacionales SET ultimo_recordatorio_enviado = CURRENT_DATE WHERE id = $1`,
+      [id]
+    );
   }
 };
 
