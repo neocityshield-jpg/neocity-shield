@@ -1,9 +1,15 @@
-const CACHE = 'neocity-v1';
-const OFFLINE_URLS = ['/', '/reportar', '/login'];
+const CACHE = 'neocity-v2';
+const OFFLINE_URLS = [
+  '/', '/reportar', '/login', '/perfil', '/examenes', '/examenes-sst',
+  '/panel-sst', '/dashboard', '/mapa', '/notificaciones'
+];
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(cache => cache.addAll(OFFLINE_URLS))
+    caches.open(CACHE).then(cache =>
+      // Si alguna URL falla al precachear, no se cae toda la instalación
+      Promise.allSettled(OFFLINE_URLS.map(url => cache.add(url)))
+    )
   );
   self.skipWaiting();
 });
@@ -28,7 +34,6 @@ self.addEventListener('fetch', e => {
     e.respondWith(
       fetch(e.request.clone()).catch(async () => {
         const body = await e.request.json();
-        // Guardar en localStorage via postMessage
         self.clients.matchAll().then(clients => {
           clients.forEach(c => c.postMessage({
             type: 'SAVE_OFFLINE',
@@ -45,8 +50,21 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  // Para el resto: network first, cache fallback
+  // Para el resto: network first, cache fallback, y si tampoco hay caché
+  // para esa ruta exacta, cae al "app shell" (la página raíz) para que
+  // React Router pueda tomar el control en vez de dejar la pantalla en blanco.
   e.respondWith(
-    fetch(e.request).catch(() => caches.match(e.request))
+    fetch(e.request).catch(async () => {
+      const cachedResponse = await caches.match(e.request);
+      if (cachedResponse) return cachedResponse;
+
+      const shell = await caches.match('/');
+      if (shell) return shell;
+
+      return new Response('Sin conexión y sin datos guardados.', {
+        status: 503,
+        headers: { 'Content-Type': 'text/plain' }
+      });
+    })
   );
 });
