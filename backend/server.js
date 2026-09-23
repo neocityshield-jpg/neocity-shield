@@ -21,6 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth',           require('./routes/authRoutes'));
 app.use('/api/investigaciones', require('./routes/investigacionRoutes'));
 app.use('/api/incidentes',     require('./routes/incidenteRoutes'));
+app.use('/api/examenes',       require('./routes/examenRoutes'));
 app.use('/api/sst',            require('./routes/sstRoutes'));
 app.use('/api/dashboard',      require('./routes/dashboardRoutes'));
 app.use('/api/chatbot',        require('./routes/chatbotRoutes'));
