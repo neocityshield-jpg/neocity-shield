@@ -31,6 +31,14 @@ const Usuario = {
 
   async verificarPassword(passwordPlano, passwordHash) {
     return bcrypt.compare(passwordPlano, passwordHash);
+  },
+
+  async listarPorRol(rol) {
+    const result = await pool.query(
+      'SELECT id, nombre, email FROM usuarios WHERE rol = $1 AND activo = TRUE',
+      [rol]
+    );
+    return result.rows;
   }
 };
 
