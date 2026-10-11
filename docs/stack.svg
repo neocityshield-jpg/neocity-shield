@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="560" viewBox="0 0 1280 560" role="img" aria-label="Stack tecnológico de NeoCity Shield">
+
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#050916"/><stop offset=".5" stop-color="#0a1128"/><stop offset="1" stop-color="#060d1e"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#c9b878"/><stop offset="1" stop-color="#e8d89a"/>
+  </linearGradient>
+  <linearGradient id="goldteal" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#c9b878"/><stop offset="1" stop-color="#3ecfb5"/>
+  </linearGradient>
+  <linearGradient id="tealv" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#3ecfb5"/><stop offset="1" stop-color="#3ecfb5" stop-opacity=".25"/>
+  </linearGradient>
+  <radialGradient id="orbGold" cx=".5" cy=".5" r=".5">
+    <stop offset="0" stop-color="#c9b878" stop-opacity=".22"/><stop offset="1" stop-color="#c9b878" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="orbTeal" cx=".5" cy=".5" r=".5">
+    <stop offset="0" stop-color="#3ecfb5" stop-opacity=".18"/><stop offset="1" stop-color="#3ecfb5" stop-opacity="0"/>
+  </radialGradient>
+  <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+    <path d="M28 0H0V28" fill="none" stroke="#c9b878" stroke-opacity=".055" stroke-width="1"/>
+  </pattern>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+    <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000" flood-opacity=".5"/>
+  </filter>
+  <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10Z" fill="#c9b878"/>
+  </marker>
+  <marker id="arrT" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10Z" fill="#3ecfb5"/>
+  </marker>
+</defs>
+<rect width="1280" height="560" rx="24" fill="url(#bg)"/>
+<rect width="1280" height="560" rx="24" fill="url(#grid)"/>
+<circle cx="0" cy="0" r="320" fill="url(#orbGold)"/>
+<circle cx="1280" cy="560" r="320" fill="url(#orbTeal)"/>
+<rect x=".5" y=".5" width="1279" height="559" rx="24" fill="none" stroke="#fff" stroke-opacity=".1"/>
+<text x="40" y="58" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="30" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">Stack tecnológico</text><rect x="40" y="70" width="64" height="3" rx="1.5" fill="url(#goldteal)"/><text x="40" y="98" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#f0e8d2" fill-opacity="0.55" text-anchor="start">Un solo lenguaje —JavaScript— de punta a punta: del navegador al servidor.</text><g transform="translate(40 130)">
+      <rect width="186" height="196" rx="18" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="184" height="4" rx="2" fill="#3ecfb5" fill-opacity=".55"/>
+      <rect x="18" y="22" width="60" height="60" rx="16" fill="#3ecfb5" fill-opacity=".09" stroke="#3ecfb5" stroke-opacity=".28"/>
+      <g transform="translate(48 52) scale(1)"><g fill="none" stroke="#3ecfb5" stroke-width="2.2"><ellipse rx="21" ry="8"/><ellipse rx="21" ry="8" transform="rotate(60)"/><ellipse rx="21" ry="8" transform="rotate(120)"/></g><circle r="3.6" fill="#3ecfb5"/></g>
+      <text x="18" y="114" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="17" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">React.js 18</text>
+      <text x="18" y="136" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">Interfaz reactiva con</text>
+      <text x="18" y="152" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">React Router 6</text>
+      <rect x="18" y="164" width="85.6" height="20" rx="10" fill="#3ecfb5" fill-opacity=".14" stroke="#3ecfb5" stroke-opacity=".4"/><text x="60.8" y="177.42" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="9.5" font-weight="700" fill="#3ecfb5" fill-opacity="1" text-anchor="middle" letter-spacing="1.2">FRONTEND</text>
+    </g><g transform="translate(242.8 130)">
+      <rect width="186" height="196" rx="18" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="184" height="4" rx="2" fill="#6cc24a" fill-opacity=".55"/>
+      <rect x="18" y="22" width="60" height="60" rx="16" fill="#6cc24a" fill-opacity=".09" stroke="#6cc24a" stroke-opacity=".28"/>
+      <g transform="translate(48 52) scale(1)"><polygon points="0,-22 19,-11 19,11 0,22 -19,11 -19,-11" fill="#6cc24a" fill-fill-opacity=".14" fill-opacity=".14" stroke="#6cc24a" stroke-width="2.2"/><text y="5.5" text-anchor="middle" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="15" font-weight="800" fill="#8fdc74">JS</text></g>
+      <text x="18" y="114" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="17" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">Node.js</text>
+      <text x="18" y="136" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">Entorno de ejecución</text>
+      <text x="18" y="152" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">JavaScript en el servidor</text>
+      <rect x="18" y="164" width="77.39999999999999" height="20" rx="10" fill="#6cc24a" fill-opacity=".14" stroke="#6cc24a" stroke-opacity=".4"/><text x="56.699999999999996" y="177.42" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="9.5" font-weight="700" fill="#6cc24a" fill-opacity="1" text-anchor="middle" letter-spacing="1.2">BACKEND</text>
+    </g><g transform="translate(445.6 130)">
+      <rect width="186" height="196" rx="18" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="184" height="4" rx="2" fill="#f0e8d2" fill-opacity=".55"/>
+      <rect x="18" y="22" width="60" height="60" rx="16" fill="#f0e8d2" fill-opacity=".09" stroke="#f0e8d2" stroke-opacity=".28"/>
+      <g transform="translate(48 52) scale(1)"><rect x="-21" y="-15" width="42" height="30" rx="8" fill="#f0e8d2" fill-opacity=".06" stroke="#f0e8d2" stroke-opacity=".7" stroke-width="2"/><text y="6" text-anchor="middle" font-family="'SFMono-Regular', Consolas, 'DejaVu Sans Mono', monospace" font-size="17" font-weight="700" fill="#f0e8d2">ex</text></g>
+      <text x="18" y="114" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="17" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">Express.js</text>
+      <text x="18" y="136" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">API REST con patrón</text>
+      <text x="18" y="152" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">MVC en capas</text>
+      <rect x="18" y="164" width="77.39999999999999" height="20" rx="10" fill="#f0e8d2" fill-opacity=".14" stroke="#f0e8d2" stroke-opacity=".4"/><text x="56.699999999999996" y="177.42" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="9.5" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="middle" letter-spacing="1.2">BACKEND</text>
+    </g><g transform="translate(648.4000000000001 130)">
+      <rect width="186" height="196" rx="18" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="184" height="4" rx="2" fill="#4f8ef7" fill-opacity=".55"/>
+      <rect x="18" y="22" width="60" height="60" rx="16" fill="#4f8ef7" fill-opacity=".09" stroke="#4f8ef7" stroke-opacity=".28"/>
+      <g transform="translate(48 52) scale(1)"><g stroke="#4f8ef7" stroke-width="2.2" fill="#4f8ef7" fill-opacity=".12"><path d="M-17 -14V14A17 6 0 0 0 17 14V-14"/><ellipse cy="-14" rx="17" ry="6"/></g><g stroke="#4f8ef7" stroke-width="2" fill="none"><path d="M-17 -1A17 6 0 0 0 17 -1"/><path d="M-17 6A17 6 0 0 0 17 6" opacity=".0"/></g></g>
+      <text x="18" y="114" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="17" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">PostgreSQL 17</text>
+      <text x="18" y="136" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">Base de datos relacional</text>
+      <text x="18" y="152" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">transaccional (SSL)</text>
+      <rect x="18" y="164" width="61" height="20" rx="10" fill="#4f8ef7" fill-opacity=".14" stroke="#4f8ef7" stroke-opacity=".4"/><text x="48.5" y="177.42" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="9.5" font-weight="700" fill="#4f8ef7" fill-opacity="1" text-anchor="middle" letter-spacing="1.2">DATOS</text>
+    </g><g transform="translate(851.2 130)">
+      <rect width="186" height="196" rx="18" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="184" height="4" rx="2" fill="#7fffee" fill-opacity=".55"/>
+      <rect x="18" y="22" width="60" height="60" rx="16" fill="#7fffee" fill-opacity=".09" stroke="#7fffee" stroke-opacity=".28"/>
+      <g transform="translate(48 52) scale(1)"><g stroke="#7fffee" stroke-width="1.8" fill="none"><ellipse cy="-10" rx="6" ry="11" transform="rotate(0)"/><ellipse cy="-10" rx="6" ry="11" transform="rotate(60)"/><ellipse cy="-10" rx="6" ry="11" transform="rotate(120)"/><ellipse cy="-10" rx="6" ry="11" transform="rotate(180)"/><ellipse cy="-10" rx="6" ry="11" transform="rotate(240)"/><ellipse cy="-10" rx="6" ry="11" transform="rotate(300)"/></g></g>
+      <text x="18" y="114" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="17" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">OpenAI</text>
+      <text x="18" y="136" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">NeoBot, asistente</text>
+      <text x="18" y="152" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">conversacional (IA)</text>
+      <rect x="18" y="164" width="36.4" height="20" rx="10" fill="#7fffee" fill-opacity=".14" stroke="#7fffee" stroke-opacity=".4"/><text x="36.2" y="177.42" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="9.5" font-weight="700" fill="#7fffee" fill-opacity="1" text-anchor="middle" letter-spacing="1.2">IA</text>
+    </g><g transform="translate(1054 130)">
+      <rect width="186" height="196" rx="18" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="184" height="4" rx="2" fill="#6cc24a" fill-opacity=".55"/>
+      <rect x="18" y="22" width="60" height="60" rx="16" fill="#6cc24a" fill-opacity=".09" stroke="#6cc24a" stroke-opacity=".28"/>
+      <g transform="translate(48 52) scale(1)"><path d="M-18 16C-18 -8 0 -20 18 -18C20 2 6 18 -18 16Z" fill="#6cc24a" fill-opacity=".18" stroke="#6cc24a" stroke-width="2.2"/><path d="M-16 14L10 -10" stroke="#6cc24a" stroke-width="2" fill="none"/></g>
+      <text x="18" y="114" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="17" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">Leaflet.js</text>
+      <text x="18" y="136" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">Mapas interactivos con</text>
+      <text x="18" y="152" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">OpenStreetMap</text>
+      <rect x="18" y="164" width="61" height="20" rx="10" fill="#6cc24a" fill-opacity=".14" stroke="#6cc24a" stroke-opacity=".4"/><text x="48.5" y="177.42" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="9.5" font-weight="700" fill="#6cc24a" fill-opacity="1" text-anchor="middle" letter-spacing="1.2">MAPAS</text>
+    </g><g transform="translate(40 344)">
+      <rect width="186" height="196" rx="18" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="184" height="4" rx="2" fill="#e05c3a" fill-opacity=".55"/>
+      <rect x="18" y="22" width="60" height="60" rx="16" fill="#e05c3a" fill-opacity=".09" stroke="#e05c3a" stroke-opacity=".28"/>
+      <g transform="translate(48 52) scale(1)"><rect x="-14" y="-3" width="28" height="22" rx="5" fill="#e05c3a" fill-opacity=".14" stroke="#e05c3a" stroke-width="2.2"/><path d="M-8 -3V-9A8 8 0 0 1 8 -9V-3" fill="none" stroke="#e05c3a" stroke-width="2.2"/><circle cy="8" r="3" fill="#e05c3a"/></g>
+      <text x="18" y="114" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="17" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">JWT + bcryptjs</text>
+      <text x="18" y="136" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">Sesión de 8 horas y</text>
+      <text x="18" y="152" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">contraseñas con hash</text>
+      <rect x="18" y="164" width="93.8" height="20" rx="10" fill="#e05c3a" fill-opacity=".14" stroke="#e05c3a" stroke-opacity=".4"/><text x="64.9" y="177.42" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="9.5" font-weight="700" fill="#e05c3a" fill-opacity="1" text-anchor="middle" letter-spacing="1.2">SEGURIDAD</text>
+    </g><g transform="translate(242.8 344)">
+      <rect width="186" height="196" rx="18" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="184" height="4" rx="2" fill="#c9b878" fill-opacity=".55"/>
+      <rect x="18" y="22" width="60" height="60" rx="16" fill="#c9b878" fill-opacity=".09" stroke="#c9b878" stroke-opacity=".28"/>
+      <g transform="translate(48 52) scale(1)"><circle r="19" fill="#c9b878" fill-opacity=".1" stroke="#c9b878" stroke-width="2.2"/><path d="M0 -10V0L8 5" fill="none" stroke="#e8d89a" stroke-width="2.4" stroke-linecap="round"/><g stroke="#c9b878" stroke-width="2"><path d="M0 -17V-14M17 0H14M0 17V14M-17 0H-14"/></g></g>
+      <text x="18" y="114" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="17" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">node-cron</text>
+      <text x="18" y="136" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">Recordatorio diario de</text>
+      <text x="18" y="152" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">exámenes · 8:00 a.m.</text>
+      <rect x="18" y="164" width="69.19999999999999" height="20" rx="10" fill="#c9b878" fill-opacity=".14" stroke="#c9b878" stroke-opacity=".4"/><text x="52.599999999999994" y="177.42" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="9.5" font-weight="700" fill="#c9b878" fill-opacity="1" text-anchor="middle" letter-spacing="1.2">TAREAS</text>
+    </g><g transform="translate(445.6 344)">
+      <rect width="186" height="196" rx="18" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="184" height="4" rx="2" fill="#e05c3a" fill-opacity=".55"/>
+      <rect x="18" y="22" width="60" height="60" rx="16" fill="#e05c3a" fill-opacity=".09" stroke="#e05c3a" stroke-opacity=".28"/>
+      <g transform="translate(48 52) scale(1)"><path d="M-13 -20H5L15 -10V20H-13Z" fill="#e05c3a" fill-opacity=".12" stroke="#e05c3a" stroke-width="2.2" stroke-linejoin="round"/><path d="M5 -20V-10H15" fill="none" stroke="#e05c3a" stroke-width="2"/><text x="1" y="11" text-anchor="middle" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="9" font-weight="800" fill="#f09080">PDF</text></g>
+      <text x="18" y="114" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="17" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">jsPDF</text>
+      <text x="18" y="136" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">Exportación de casos</text>
+      <text x="18" y="152" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">y reportes mensuales</text>
+      <rect x="18" y="164" width="85.6" height="20" rx="10" fill="#e05c3a" fill-opacity=".14" stroke="#e05c3a" stroke-opacity=".4"/><text x="60.8" y="177.42" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="9.5" font-weight="700" fill="#e05c3a" fill-opacity="1" text-anchor="middle" letter-spacing="1.2">REPORTES</text>
+    </g><g transform="translate(648.4000000000001 344)">
+      <rect width="186" height="196" rx="18" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="184" height="4" rx="2" fill="#3ecfb5" fill-opacity=".55"/>
+      <rect x="18" y="22" width="60" height="60" rx="16" fill="#3ecfb5" fill-opacity=".09" stroke="#3ecfb5" stroke-opacity=".28"/>
+      <g transform="translate(48 52) scale(1)"><g fill="none" stroke="#3ecfb5" stroke-width="2.4" stroke-linecap="round"><path d="M-18 -6Q0 -22 18 -6"/><path d="M-11 1Q0 -10 11 1"/><path d="M-5 8Q0 3 5 8"/></g><circle cy="15" r="2.6" fill="#3ecfb5"/></g>
+      <text x="18" y="114" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="17" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">Service Worker</text>
+      <text x="18" y="136" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">Modo offline (PWA) con</text>
+      <text x="18" y="152" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">sincronización automática</text>
+      <rect x="18" y="164" width="44.599999999999994" height="20" rx="10" fill="#3ecfb5" fill-opacity=".14" stroke="#3ecfb5" stroke-opacity=".4"/><text x="40.3" y="177.42" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="9.5" font-weight="700" fill="#3ecfb5" fill-opacity="1" text-anchor="middle" letter-spacing="1.2">PWA</text>
+    </g><g transform="translate(851.2 344)">
+      <rect width="186" height="196" rx="18" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="184" height="4" rx="2" fill="#f0e8d2" fill-opacity=".55"/>
+      <rect x="18" y="22" width="60" height="60" rx="16" fill="#f0e8d2" fill-opacity=".09" stroke="#f0e8d2" stroke-opacity=".28"/>
+      <g transform="translate(48 52) scale(1)"><polygon points="0,-18 20,16 -20,16" fill="#f0e8d2"/></g>
+      <text x="18" y="114" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="17" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">Vercel</text>
+      <text x="18" y="136" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">Despliegue y hosting</text>
+      <text x="18" y="152" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">del frontend React</text>
+      <rect x="18" y="164" width="61" height="20" rx="10" fill="#f0e8d2" fill-opacity=".14" stroke="#f0e8d2" stroke-opacity=".4"/><text x="48.5" y="177.42" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="9.5" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="middle" letter-spacing="1.2">CLOUD</text>
+    </g><g transform="translate(1054 344)">
+      <rect width="186" height="196" rx="18" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="184" height="4" rx="2" fill="#a78bfa" fill-opacity=".55"/>
+      <rect x="18" y="22" width="60" height="60" rx="16" fill="#a78bfa" fill-opacity=".09" stroke="#a78bfa" stroke-opacity=".28"/>
+      <g transform="translate(48 52) scale(1)"><circle r="19" fill="#a78bfa" fill-opacity=".1" stroke="#a78bfa" stroke-width="2.2"/><g fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"><path d="M-12 -8Q0 -14 12 -8"/><path d="M-15 0Q0 -6 15 0"/><path d="M-12 8Q0 2 12 8"/></g></g>
+      <text x="18" y="114" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="17" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">Railway</text>
+      <text x="18" y="136" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">Despliegue del backend</text>
+      <text x="18" y="152" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="12" font-weight="400" fill="#f0e8d2" fill-opacity="0.6" text-anchor="start">y la base de datos</text>
+      <rect x="18" y="164" width="61" height="20" rx="10" fill="#a78bfa" fill-opacity=".14" stroke="#a78bfa" stroke-opacity=".4"/><text x="48.5" y="177.42" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="9.5" font-weight="700" fill="#a78bfa" fill-opacity="1" text-anchor="middle" letter-spacing="1.2">CLOUD</text>
+    </g>
+</svg>
