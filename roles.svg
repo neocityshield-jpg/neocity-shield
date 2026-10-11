@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-label="Roles de NeoCity Shield">
+
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#050916"/><stop offset=".5" stop-color="#0a1128"/><stop offset="1" stop-color="#060d1e"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#c9b878"/><stop offset="1" stop-color="#e8d89a"/>
+  </linearGradient>
+  <linearGradient id="goldteal" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#c9b878"/><stop offset="1" stop-color="#3ecfb5"/>
+  </linearGradient>
+  <linearGradient id="tealv" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#3ecfb5"/><stop offset="1" stop-color="#3ecfb5" stop-opacity=".25"/>
+  </linearGradient>
+  <radialGradient id="orbGold" cx=".5" cy=".5" r=".5">
+    <stop offset="0" stop-color="#c9b878" stop-opacity=".22"/><stop offset="1" stop-color="#c9b878" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="orbTeal" cx=".5" cy=".5" r=".5">
+    <stop offset="0" stop-color="#3ecfb5" stop-opacity=".18"/><stop offset="1" stop-color="#3ecfb5" stop-opacity="0"/>
+  </radialGradient>
+  <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+    <path d="M28 0H0V28" fill="none" stroke="#c9b878" stroke-opacity=".055" stroke-width="1"/>
+  </pattern>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+    <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#000" flood-opacity=".5"/>
+  </filter>
+  <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10Z" fill="#c9b878"/>
+  </marker>
+  <marker id="arrT" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+    <path d="M0 0L10 5L0 10Z" fill="#3ecfb5"/>
+  </marker>
+</defs>
+<rect width="1280" height="420" rx="24" fill="url(#bg)"/>
+<rect width="1280" height="420" rx="24" fill="url(#grid)"/>
+<circle cx="0" cy="0" r="320" fill="url(#orbGold)"/>
+<circle cx="1280" cy="420" r="320" fill="url(#orbTeal)"/>
+<rect x=".5" y=".5" width="1279" height="419" rx="24" fill="none" stroke="#fff" stroke-opacity=".1"/>
+<text x="40" y="58" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="30" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">Tres roles, tres experiencias</text><rect x="40" y="70" width="64" height="3" rx="1.5" fill="url(#goldteal)"/><text x="40" y="98" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#f0e8d2" fill-opacity="0.55" text-anchor="start">Las vistas y los endpoints sensibles verifican el rol: nadie accede a más de lo que le corresponde.</text><g transform="translate(40 126)">
+      <rect width="380" height="262" rx="20" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="378" height="5" rx="2.5" fill="#3ecfb5" fill-opacity=".7"/>
+      <rect x="24" y="26" width="58" height="58" rx="18" fill="#3ecfb5" fill-opacity=".1" stroke="#3ecfb5" stroke-opacity=".35"/>
+      <g style="color:#3ecfb5"><g transform="translate(53 55) scale(0.95)"><circle cy="-8" r="9" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2.2"/><path d="M-17 19C-17 8-9 4 0 4S17 8 17 19" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></g></g>
+      <text x="98" y="54" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="26" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">Funcionario</text>
+      <rect x="98" y="64" width="93.60000000000001" height="22" rx="11" fill="#3ecfb5" fill-opacity=".13" stroke="#3ecfb5" stroke-opacity=".4"/>
+      <text x="107" y="79.5" font-family="'SFMono-Regular', Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="600" fill="#3ecfb5" fill-opacity="1" text-anchor="start">/reportar</text>
+      <circle cx="34" cy="126" r="4" fill="#3ecfb5"/><text x="48" y="130.5" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#f0e8d2" fill-opacity="0.82" text-anchor="start">Reporta incidentes en 4 pasos con GPS</text><circle cx="34" cy="158" r="4" fill="#3ecfb5"/><text x="48" y="162.5" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#f0e8d2" fill-opacity="0.82" text-anchor="start">Registra sus exámenes ocupacionales</text><circle cx="34" cy="190" r="4" fill="#3ecfb5"/><text x="48" y="194.5" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#f0e8d2" fill-opacity="0.82" text-anchor="start">Consulta a NeoBot en cualquier pantalla</text><circle cx="34" cy="222" r="4" fill="#3ecfb5"/><text x="48" y="226.5" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#f0e8d2" fill-opacity="0.82" text-anchor="start">Ve sus notificaciones y su historial</text>
+    </g><g transform="translate(450 126)">
+      <rect width="380" height="262" rx="20" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="378" height="5" rx="2.5" fill="#c9b878" fill-opacity=".7"/>
+      <rect x="24" y="26" width="58" height="58" rx="18" fill="#c9b878" fill-opacity=".1" stroke="#c9b878" stroke-opacity=".35"/>
+      <g style="color:#c9b878"><g transform="translate(53 55) scale(0.95)"><circle cy="-8" r="9" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2.2"/><path d="M-17 19C-17 8-9 4 0 4S17 8 17 19" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></g></g>
+      <text x="98" y="54" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="26" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">SGSST</text>
+      <rect x="98" y="64" width="102" height="22" rx="11" fill="#c9b878" fill-opacity=".13" stroke="#c9b878" stroke-opacity=".4"/>
+      <text x="107" y="79.5" font-family="'SFMono-Regular', Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="600" fill="#c9b878" fill-opacity="1" text-anchor="start">/panel-sst</text>
+      <circle cx="34" cy="126" r="4" fill="#c9b878"/><text x="48" y="130.5" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#f0e8d2" fill-opacity="0.82" text-anchor="start">Gestiona y da seguimiento a cada caso</text><circle cx="34" cy="158" r="4" fill="#c9b878"/><text x="48" y="162.5" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#f0e8d2" fill-opacity="0.82" text-anchor="start">Abre investigaciones (causa raíz)</text><circle cx="34" cy="190" r="4" fill="#c9b878"/><text x="48" y="194.5" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#f0e8d2" fill-opacity="0.82" text-anchor="start">Valida exámenes y recibe alertas</text><circle cx="34" cy="222" r="4" fill="#c9b878"/><text x="48" y="226.5" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#f0e8d2" fill-opacity="0.82" text-anchor="start">Accede a dashboard, mapa y PDF</text>
+    </g><g transform="translate(860 126)">
+      <rect width="380" height="262" rx="20" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".1"/>
+      <rect x="1" y="1" width="378" height="5" rx="2.5" fill="#4f8ef7" fill-opacity=".7"/>
+      <rect x="24" y="26" width="58" height="58" rx="18" fill="#4f8ef7" fill-opacity=".1" stroke="#4f8ef7" stroke-opacity=".35"/>
+      <g style="color:#4f8ef7"><g transform="translate(53 55) scale(0.95)"><circle cy="-8" r="9" fill="currentColor" fill-opacity=".18" stroke="currentColor" stroke-width="2.2"/><path d="M-17 19C-17 8-9 4 0 4S17 8 17 19" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></g></g>
+      <text x="98" y="54" font-family="Georgia, 'Times New Roman', 'DejaVu Serif', serif" font-size="26" font-weight="700" fill="#f0e8d2" fill-opacity="1" text-anchor="start">Gerencia</text>
+      <rect x="98" y="64" width="102" height="22" rx="11" fill="#4f8ef7" fill-opacity=".13" stroke="#4f8ef7" stroke-opacity=".4"/>
+      <text x="107" y="79.5" font-family="'SFMono-Regular', Consolas, 'DejaVu Sans Mono', monospace" font-size="12" font-weight="600" fill="#4f8ef7" fill-opacity="1" text-anchor="start">/dashboard</text>
+      <circle cx="34" cy="126" r="4" fill="#4f8ef7"/><text x="48" y="130.5" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#f0e8d2" fill-opacity="0.82" text-anchor="start">Indicadores en tiempo real (KPIs)</text><circle cx="34" cy="158" r="4" fill="#4f8ef7"/><text x="48" y="162.5" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#f0e8d2" fill-opacity="0.82" text-anchor="start">Mapa de calor de incidentes</text><circle cx="34" cy="190" r="4" fill="#4f8ef7"/><text x="48" y="194.5" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#f0e8d2" fill-opacity="0.82" text-anchor="start">Exporta el reporte mensual a PDF</text><circle cx="34" cy="222" r="4" fill="#4f8ef7"/><text x="48" y="226.5" font-family="'Segoe UI', 'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-size="14" font-weight="400" fill="#f0e8d2" fill-opacity="0.82" text-anchor="start">Registra nuevos usuarios</text>
+    </g>
+</svg>
