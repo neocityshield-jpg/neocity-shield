@@ -1,137 +1,167 @@
-# NeoCity Shield
+<p align="center">
+  <img src="docs/assets/banner.svg" alt="NeoCity Shield — Reporte y gestión de incidentes de seguridad física ocupacional" width="100%">
+</p>
 
-> Sistema de información web para el reporte, gestión e investigación de incidentes de seguridad física ocupacional — **en producción**.
+<p align="center">
+  <a href="https://neocity-shield.vercel.app"><img alt="App en producción" src="https://img.shields.io/badge/App-en%20producci%C3%B3n-3ecfb5?style=for-the-badge&labelColor=080c1f"></a>
+  <a href="https://neocity-shield-production.up.railway.app/api/health"><img alt="API" src="https://img.shields.io/badge/API-Railway-c9b878?style=for-the-badge&labelColor=080c1f"></a>
+  <a href="https://neocity-shield.vercel.app/mapa"><img alt="Mapa de incidentes" src="https://img.shields.io/badge/Mapa-de%20incidentes-4f8ef7?style=for-the-badge&labelColor=080c1f"></a>
+</p>
 
-**Beneficiario:** Evidencia Digital S.A.S.
-**Universidad:** El Bosque · Trabajo de grado 2025–2026
-**Equipo:** Daniel Moreno · Ricardo De León · Christiam Caita
-**Director:** Cesar Ramiro Beltrán Hernández
+<p align="center">
+  <b>Beneficiario:</b> Evidencia Digital S.A.S. &nbsp;·&nbsp;
+  <b>Universidad:</b> El Bosque — Trabajo de grado 2025–2026<br>
+  <b>Equipo:</b> Daniel Moreno · Ricardo De León · Christiam Caita &nbsp;·&nbsp;
+  <b>Director:</b> Cesar Ramiro Beltrán Hernández
+</p>
 
 ---
 
-## Links del sistema
+## ✨ ¿Qué es NeoCity Shield?
 
-| | URL |
+Un sistema de información web que reemplaza el reporte informal de incidentes de seguridad física (WhatsApp, correos y hojas de Excel) por un **canal institucional único, trazable y accesible desde el celular o el computador**, sin instalar nada.
+
+| Antes | Con NeoCity Shield |
 |---|---|
-| **App en producción** | https://neocity-shield.vercel.app |
-| **Backend API** | https://neocity-shield-production.up.railway.app |
+| Tasa de reporte al SGSST cercana al 50 % | Reporte formal en 4 pasos, con GPS y mapa |
+| Información dispersa en WhatsApp y Excel | Una sola base de datos con historial de seguimiento |
+| Sin procesos estandarizados | Ciclo de vida definido: reporte → gestión → investigación → cierre |
+| Cumplimiento parcial del Decreto 1072 de 2015 | Trazabilidad, investigación de causa raíz y control de exámenes ocupacionales |
+
+---
+
+## 🔗 Enlaces
+
+| Recurso | URL |
+|---|---|
+| **Aplicación web** | https://neocity-shield.vercel.app |
+| **API (backend)** | https://neocity-shield-production.up.railway.app |
 | **Mapa de incidentes** | https://neocity-shield.vercel.app/mapa |
 | **Repositorio** | https://github.com/neocityshield-jpg/neocity-shield |
 
 ---
 
-## Descripción
+## 👥 Roles
 
-NeoCity Shield reemplaza los procesos manuales e informales de reporte de incidentes de seguridad física en Evidencia Digital S.A.S. por un canal institucional centralizado, trazable y accesible desde cualquier dispositivo con navegador web.
+<p align="center">
+  <img src="docs/assets/roles.svg" alt="Roles: Funcionario, SGSST y Gerencia" width="100%">
+</p>
 
-**Problemática atendida:**
-- Tasa de reporte al SGSST del 50%
-- Información fragmentada en WhatsApp y Excel sin trazabilidad
-- Ausencia de procesos estandarizados
-- Incumplimiento del Decreto 1072 de 2015
-- Falta de control sobre los exámenes médicos ocupacionales del personal (ingreso, periódicos y de egreso)
+El registro de cuentas está restringido a correos `@evidenciadigital.com` y solo el rol **Gerencia** puede crear usuarios nuevos.
 
 ---
 
-## Tecnologías
+## 🧩 Módulos
+
+<p align="center">
+  <img src="docs/assets/modules.svg" alt="Módulos del sistema" width="100%">
+</p>
+
+<details>
+<summary><b>Ver el detalle de cada módulo</b></summary>
+
+### Autenticación y roles
+- Login con JWT de 8 horas y contraseñas con hash bcrypt
+- Tres roles diferenciados: **Funcionario**, **SGSST** y **Gerencia**
+- Rutas protegidas en el frontend y verificación de rol en el backend
+
+### Reporte de incidentes (Funcionario)
+- Formulario de 4 pasos con barra de progreso
+- 20 tipos de incidente en 4 categorías (ARL Sura / ISO 45001)
+- Captura GPS con validación de perímetro de 100 metros
+- Dirección exacta por geocodificación inversa (Nominatim)
+- Mapa interactivo en tiempo real (Leaflet)
+
+### Panel SGSST
+- Vista centralizada de todos los incidentes con buscador y filtros por estado y fechas
+- Historial de seguimientos con línea de tiempo e indicador de tiempo de respuesta
+- Alerta automática para casos sin atención en 48 horas
+- Exportación del caso individual a PDF
+- **Investigación:** causa raíz, acciones correctivas y preventivas, y cierre
+
+### Exámenes ocupacionales
+- Auto-reporte del funcionario: fecha, tipo (ingreso, periódico, egreso) y soporte
+- Próximo vencimiento calculado según la periodicidad del cargo
+- Validación por SGSST (vigente o rechazado) con resultado: apto, apto con recomendaciones o no apto
+- Panel `/examenes-sst` con buscador, filtros y semáforo (vigente · próximo a vencer · vencido · pendiente)
+- Recordatorio automático diario a las 8:00 a.m. (hora Colombia) y resumen diario para SGSST
+- Disparo manual del recordatorio para pruebas y sustentación
+
+### Dashboard gerencial
+- KPIs en tiempo real: total, pendientes, en gestión y cerrados
+- Tendencia mensual y distribución por tipo de incidente
+- Mapa de calor de incidentes en Bogotá
+- Porcentaje de personal con exámenes al día y exámenes vencidos
+- Exportación del reporte mensual a PDF
+
+### NeoBot — asistente con IA
+- Orientación inmediata ante hurtos, caídas, agresiones y amenazas
+- Sugerencias rápidas y disponibilidad en todas las pantallas
+- Historial de conversaciones en base de datos
+
+### Perfil y notificaciones
+- Estadísticas e historial de reportes propios
+- Alertas internas por cambios de estado y por exámenes próximos a vencer
+
+### Navegación, responsividad y modo offline
+- Barra de navegación en todas las vistas: enlaces por rol, botón **Atrás**, ruta *Inicio / sección* y **Cerrar sesión** siempre visible
+- Menú lateral en celular; diseño responsivo para móvil y escritorio
+- Service Worker (PWA) para funcionar sin conexión y sincronizar al recuperar internet
+
+</details>
+
+---
+
+## 🔄 Ciclo de vida de un incidente
+
+<p align="center">
+  <img src="docs/assets/flow.svg" alt="Ciclo de vida de un incidente: reporte, pendiente, en gestión, investigación y cerrado" width="100%">
+</p>
+
+---
+
+## 🛠️ Stack tecnológico
+
+<p align="center">
+  <img src="docs/assets/stack.svg" alt="Stack tecnológico: React, Node.js, Express, PostgreSQL, OpenAI, Leaflet, JWT, node-cron, jsPDF, Service Worker, Vercel y Railway" width="100%">
+</p>
 
 | Capa | Tecnología | Plataforma |
 |---|---|---|
 | Frontend | React.js 18 + React Router 6 | Vercel |
-| Backend | Node.js + Express.js | Railway |
+| Backend | Node.js + Express.js (MVC) | Railway |
 | Base de datos | PostgreSQL 17 | Railway |
-| Inteligencia Artificial | OpenAI GPT-4o | API externa |
-| Mapas | Leaflet.js + OpenStreetMap | — |
+| Inteligencia artificial | OpenAI (`gpt-4o-mini`) | API externa |
+| Mapas | Leaflet.js + OpenStreetMap / Nominatim | — |
 | Autenticación | JWT + bcryptjs | — |
 | Tareas programadas | node-cron | — |
 | Exportación | jsPDF + AutoTable | — |
-| Arquitectura | MVC | — |
 
 ---
 
-## Módulos del sistema
+## 🏗️ Arquitectura
 
-### Autenticación y roles
-- Login seguro con JWT de 8 horas
-- Tres roles diferenciados: **Funcionario**, **SGSST**, **Gerencia**
-- Registro restringido a correos `@evidenciadigital.com`
+<p align="center">
+  <img src="docs/assets/architecture.svg" alt="Arquitectura: usuarios, frontend en Vercel, backend en Railway, PostgreSQL y servicios externos" width="100%">
+</p>
 
-### Reporte de incidentes (Funcionario)
-- Formulario en 4 pasos con barra de progreso visual
-- 20 tipos de incidente en 4 categorías (ARL Sura / ISO 45001)
-- Captura GPS con validación de perímetro de 100 metros
-- Dirección exacta vía reverse geocoding (Nominatim)
-- Mapa interactivo en tiempo real (Leaflet)
+El backend sigue el patrón **MVC**: las rutas reciben la petición y aplican los middlewares de autenticación y rol; los controladores contienen la lógica y los modelos encapsulan las consultas SQL. El frontend consume la API desde un cliente HTTP central que inyecta el token JWT en cada petición.
 
-### Panel SGSST
-- Vista centralizada de todos los incidentes
-- Buscador por funcionario, tipo o descripción
-- Filtros por estado y rango de fechas
-- Historial completo de seguimientos con línea de tiempo
-- Indicador de tiempo de respuesta por caso
-- Alerta automática para casos sin atención en 48 horas
-- Exportar caso individual a PDF
-- Módulo de investigación: causa raíz + acciones correctivas y preventivas
-
-### Exámenes ocupacionales
-- Auto-reporte del funcionario: fecha de realización, tipo de examen (ingreso, periódico, egreso) y soporte/certificado
-- Cálculo automático de la próxima fecha de vencimiento según la periodicidad del cargo
-- Validación por parte de SGSST (aprobar como vigente o rechazar el reporte), con registro del resultado (apto, apto con recomendaciones, no apto)
-- Panel dedicado para SGSST (`/examenes-sst`) con buscador, filtros por estado y semáforo visual (vigente / próximo a vencer / vencido / pendiente de validación)
-- Recordatorio automático diario (cron a las 8:00 a.m. hora Colombia) que notifica al empleado cuando su examen está por vencer o ya venció, y envía un resumen diario al equipo SGSST
-- Endpoint de disparo manual del recordatorio para pruebas y sustentación
-- Indicador de "% de personal con exámenes al día" y total de exámenes vencidos en el Dashboard gerencial
-
-### Dashboard gerencial
-- KPIs en tiempo real: total, pendientes, en gestión, cerrados
-- Gráfica de tendencia por mes
-- Distribución por tipo de incidente
-- Mapa de calor de incidentes en Bogotá
-- KPI de personal con exámenes ocupacionales al día y exámenes vencidos
-- Exportar reporte mensual a PDF (incluye indicador de exámenes al día)
-
-### NeoBot — Chatbot IA
-- Asistente conversacional powered by OpenAI GPT-4o
-- Orientación inmediata ante hurtos, caídas, agresiones y amenazas
-- Sugerencias rápidas predefinidas
-- Disponible en todas las pantallas del sistema
-- Historial de conversaciones en base de datos
-
-### Perfil del funcionario
-- Estadísticas personales de reportes
-- Historial completo de incidentes propios
-- Configuración de notificaciones
-
-### Notificaciones
-- Sistema de notificaciones internas
-- Alertas cuando hay nuevos incidentes o cambios de estado
-- Alertas automáticas de exámenes ocupacionales próximos a vencer o vencidos
-
-### Modo offline
-- Service Worker para funcionamiento sin conexión
-- Sincronización automática al recuperar internet
-
----
-
-## Estructura del repositorio
-
-## 📁 Estructura del Repositorio - NeoCity Shield
+<details>
+<summary><b>📁 Estructura del repositorio</b></summary>
 
 ```bash
 neocity-shield/
 ├── backend/
 │   ├── config/
-│   │   └── db.js                  # Conexión PostgreSQL con SSL
-│   │
+│   │   └── db.js                      # Conexión PostgreSQL con SSL
 │   ├── jobs/
-│   │   └── recordatorioExamenes.js # Cron diario de recordatorio de exámenes ocupacionales
-│   │
+│   │   └── recordatorioExamenes.js    # Cron diario de exámenes ocupacionales
 │   ├── models/
 │   │   ├── Usuario.js
 │   │   ├── Incidente.js
 │   │   ├── Seguimiento.js
 │   │   └── ExamenOcupacional.js
-│   │
 │   ├── controllers/
 │   │   ├── authController.js
 │   │   ├── incidenteController.js
@@ -139,10 +169,8 @@ neocity-shield/
 │   │   ├── dashboardController.js
 │   │   ├── chatbotController.js
 │   │   └── examenController.js
-│   │
 │   ├── middleware/
-│   │   └── authMiddleware.js
-│   │
+│   │   └── authMiddleware.js          # verificarToken · verificarRol
 │   ├── routes/
 │   │   ├── authRoutes.js
 │   │   ├── incidenteRoutes.js
@@ -152,111 +180,146 @@ neocity-shield/
 │   │   ├── notificacionRoutes.js
 │   │   ├── investigacionRoutes.js
 │   │   └── examenRoutes.js
-│   │
 │   ├── server.js
 │   └── package.json
 │
-└── frontend/
-    ├── public/
-    │   ├── index.html
-    │   └── sw.js                  # Service Worker (modo offline)
-    │
-    └── src/
-        ├── index.js
-        ├── index.css              # Sistema de diseño completo
-        ├── App.jsx                # Rutas y control de acceso
-        │
-        ├── context/
-        │   └── AuthContext.jsx
-        │
-        ├── services/
-        │   └── api.js
-        │
-        └── components/
-            ├── Login.jsx
-            ├── Registro.jsx
-            ├── FormReporte.jsx
-            ├── PanelSST.jsx
-            ├── Dashboard.jsx
-            ├── MapaCalor.jsx
-            ├── Chatbot.jsx
-            ├── Notificaciones.jsx
-            ├── MiPerfil.jsx
-            ├── Investigacion.jsx
-            ├── MisExamenes.jsx
-            └── ExamenesSST.jsx
+├── frontend/
+│   ├── public/
+│   │   ├── index.html
+│   │   └── sw.js                      # Service Worker (modo offline)
+│   └── src/
+│       ├── index.js
+│       ├── index.css                  # Sistema de diseño completo
+│       ├── App.jsx                    # Rutas y control de acceso por rol
+│       ├── context/AuthContext.jsx
+│       ├── services/api.js
+│       └── components/
+│           ├── Login.jsx · Registro.jsx · Navbar.jsx
+│           ├── FormReporte.jsx · PanelSST.jsx · Investigacion.jsx
+│           ├── MisExamenes.jsx · ExamenesSST.jsx
+│           ├── Dashboard.jsx · MapaCalor.jsx
+│           └── Chatbot.jsx · Notificaciones.jsx · MiPerfil.jsx
+│
+└── docs/
+    └── assets/                        # Imágenes de este README
 ```
 
-## Variables de entorno
+</details>
 
-### Backend (Railway)
-```env
-DB_HOST       = postgres.railway.internal
-DB_USER       = postgres
-DB_PASSWORD   = **********
-DB_NAME       = railway
-DB_PORT       = 5432
-JWT_SECRET    = **********
-PORT          = 3001
-OPENAI_API_KEY = **********
-```
-
-### Frontend (Vercel)
-```env
-REACT_APP_API_URL = https://neocity-shield-production.up.railway.app/api
-```
-
----
-
-## Cómo ejecutar localmente
-
-### Backend
-```bash
-cd backend
-npm install
-cp .env.example .env  
-npm start
-```
-
-### Frontend
-```bash
-cd frontend
-npm install
-npm start
-```
-
----
-
-## Cronograma
-
-| Sprint | Fase | Fechas | Estado |
-|---|---|---|---|
-| Sprint 1 | Análisis | 02/02/2026 – 01/03/2026 | ✅ Completado |
-| Sprint 2 | Análisis y Diseño | 02/03/2026 – 29/03/2026 | ✅ Completado |
-| — | Receso | 30/03/2026 – 04/04/2026 | — |
-| Sprint 3 | Diseño y Primer Incremento | 05/04/2026 – 03/05/2026 | 🔧 En curso |
-| Sprint 4 ⭐ | Construcción — **HITO P1** | 04/05/2026 | ⏳ Próximo |
-| Sprint 5 | Pruebas e Implementación | 04/05/2026 – 07/06/2026 | ⏳ |
-| Sprint 6 ⭐ | Cierre — **HITO P2** | 08/06/2026 – 13/07/2026 | ⏳ |
-
----
-
-## Modelo de datos
+<details>
+<summary><b>🗄️ Modelo de datos</b></summary>
 
 | Tabla | Descripción |
 |---|---|
 | `usuarios` | Funcionarios con rol y credenciales |
 | `incidentes` | Reportes con geolocalización y estado |
 | `seguimientos` | Historial de gestión por caso |
-| `investigaciones` | Causa raíz y acciones correctivas |
+| `investigaciones` | Causa raíz y acciones correctivas / preventivas |
 | `notificaciones` | Alertas internas del sistema |
 | `chatbot_sesiones` | Historial de conversaciones con NeoBot |
 | `push_suscripciones` | Suscripciones a notificaciones push |
-| `examenes_ocupacionales` | Exámenes de ingreso, periódicos y de egreso: fecha de realización, próximo vencimiento, resultado, estado de validación y último recordatorio enviado |
+| `examenes_ocupacionales` | Exámenes de ingreso, periódicos y de egreso: fechas, resultado, estado de validación y último recordatorio |
+
+</details>
+
+<details>
+<summary><b>🔌 Endpoints de la API</b></summary>
+
+Todas las rutas cuelgan de `/api`. Salvo `login` y el chatbot, requieren `Authorization: Bearer <token>`.
+
+| Método | Ruta | Rol | Descripción |
+|---|---|---|---|
+| POST | `/auth/login` | Público | Inicia sesión y devuelve el JWT |
+| POST | `/auth/registro` | Gerencia | Crea un usuario (solo `@evidenciadigital.com`) |
+| GET | `/auth/perfil` | Autenticado | Datos del usuario actual |
+| POST | `/incidentes` | Autenticado | Registra un incidente |
+| GET | `/incidentes/mis-reportes` | Autenticado | Incidentes del usuario actual |
+| GET | `/incidentes` | SGSST, Gerencia | Lista con filtros por estado y fechas |
+| GET | `/incidentes/alertas/sin-seguimiento` | SGSST | Casos con más de 48 h sin atención |
+| GET | `/incidentes/:id` | SGSST, Gerencia | Detalle de un incidente |
+| POST | `/sst/seguimiento` | SGSST | Registra seguimiento y cambia el estado |
+| GET | `/sst/historial/:incidente_id` | SGSST, Gerencia | Línea de tiempo del caso |
+| POST | `/investigaciones` | SGSST | Abre una investigación |
+| GET | `/investigaciones/:incidente_id` | SGSST, Gerencia | Investigaciones de un incidente |
+| PUT | `/investigaciones/:id/cerrar` | SGSST | Cierra una investigación |
+| POST | `/examenes` | Autenticado | Reporta un examen ocupacional |
+| GET | `/examenes/mis-examenes` | Autenticado | Exámenes del usuario actual |
+| GET | `/examenes` | SGSST, Gerencia | Lista de exámenes con filtros |
+| GET | `/examenes/alertas/por-vencer` | SGSST | Exámenes próximos a vencer |
+| PUT | `/examenes/:id/validar` | SGSST | Valida o rechaza un examen |
+| POST | `/examenes/recordatorios/ejecutar` | SGSST | Dispara el recordatorio manualmente |
+| GET | `/dashboard/indicadores` | SGSST, Gerencia | KPIs, distribución y tendencia |
+| GET | `/dashboard/mapa` | SGSST, Gerencia | Incidentes con coordenadas |
+| POST | `/notificaciones/suscribir` | Autenticado | Guarda la suscripción push |
+| POST | `/notificaciones/enviar` | SGSST, Gerencia | Envía una notificación interna |
+| GET | `/notificaciones/mis-notificaciones` | Autenticado | Últimas notificaciones del usuario |
+| PUT | `/notificaciones/:id/leer` | Autenticado | Marca una notificación como leída |
+| POST | `/chatbot/mensaje` | Público | Mensaje a NeoBot |
+| GET | `/health` | Público | Verifica que el backend esté activo |
+
+</details>
 
 ---
 
-## Normas y estándares aplicados
+## ⚙️ Variables de entorno
+
+<details>
+<summary><b>Backend (Railway)</b></summary>
+
+```env
+DB_HOST        = postgres.railway.internal
+DB_USER        = postgres
+DB_PASSWORD    = **********
+DB_NAME        = railway
+DB_PORT        = 5432
+JWT_SECRET     = **********
+PORT           = 3001
+OPENAI_API_KEY = **********
+```
+
+</details>
+
+<details>
+<summary><b>Frontend (Vercel)</b></summary>
+
+```env
+REACT_APP_API_URL = https://neocity-shield-production.up.railway.app/api
+```
+
+</details>
+
+> Las credenciales reales **no** se publican en el repositorio: se administran en los paneles de Railway y Vercel y en un `.env` local excluido del control de versiones.
+
+---
+
+## 🚀 Cómo ejecutarlo localmente
+
+```bash
+# Backend
+cd backend
+npm install
+cp .env.example .env     # completar las variables
+npm start
+
+# Frontend (en otra terminal)
+cd frontend
+npm install
+npm start
+```
+
+Si `REACT_APP_API_URL` no está definida, el frontend usa `http://localhost:3001/api`.
+
+---
+
+## 📅 Cronograma
+
+<p align="center">
+  <img src="docs/assets/timeline.svg" alt="Cronograma: seis sprints y piloto, todos completados" width="100%">
+</p>
+
+---
+
+## 📜 Normas y estándares aplicados
 
 | Norma | Aplicación |
 |---|---|
@@ -272,40 +335,6 @@ npm start
 
 ---
 
-## Estado Actual del Sistema
-
-El sistema **NeoCity Shield** se encuentra en un entorno productivo, con los siguientes módulos implementados:
-
-### Infraestructura y Despliegue
-- Backend desplegado en Railway
-- Base de datos PostgreSQL en producción (con datos de prueba)
-- Frontend desplegado en Vercel
-
-### Autenticación y Usuarios
-- Sistema de login con 3 roles funcionales
-- Perfil personalizado del funcionario
-
-### Gestión de Incidentes
-- Formulario de reporte con GPS y mapa interactivo
-- Panel SGSST con buscador, filtros e historial
-- Módulo de investigación de incidentes
-
-### Exámenes Ocupacionales
-- Auto-reporte y validación de exámenes de ingreso, periódicos y de egreso
-- Cálculo automático de vigencia y próximo vencimiento
-- Recordatorio automático diario vía cron con notificaciones internas
-
-### Analítica y Visualización
-- Dashboard con KPIs y exportación a PDF
-- Mapa de calor de incidentes en Bogotá
-- Indicador de personal con exámenes ocupacionales al día
-
-### Inteligencia Artificial
-- Chatbot NeoBot integrado con OpenAI (GPT-4o)
-
-### Experiencia de Usuario
-- Modo offline (Service Worker - PWA)
-- Diseño responsivo (móvil y desktop)
----
-
-*NeoCity Shield — Evidencia Digital S.A.S. — Universidad El Bosque — 2026*
+<p align="center">
+  <sub><b>NeoCity Shield</b> · Evidencia Digital S.A.S. · Universidad El Bosque · 2026</sub>
+</p>
