@@ -4,9 +4,13 @@ const cors    = require('cors');
 const cron    = require('node-cron');
 const { ejecutarRecordatorioExamenes } = require('./jobs/recordatorioExamenes');
 const { verificarToken, verificarRol } = require('./middleware/authMiddleware');
+const { limitadorGeneral } = require('./middleware/rateLimiter');
 const app     = express();
 
-app.use(cors({
+// Necesario detrás del proxy de Render/Railway/Vercel para que el rate limit use la IP real
+app.set('trust proxy', 1);
+
+const corsOptions = {
   origin: [
     'https://neocity-shield.vercel.app',
     'https://neocity-shield-git-main-neocityshield-jpgs-projects.vercel.app',
@@ -15,20 +19,22 @@ app.use(cors({
   credentials: true,
   methods: ['GET','POST','PUT','DELETE','OPTIONS'],
   allowedHeaders: ['Content-Type','Authorization']
-}));
-app.options('*', cors());
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/auth',           require('./routes/authRoutes'));
+app.use('/api/auth',            require('./routes/authRoutes'));
 app.use('/api/investigaciones', require('./routes/investigacionRoutes'));
-app.use('/api/incidentes',     require('./routes/incidenteRoutes'));
-app.use('/api/examenes',       require('./routes/examenRoutes'));
-app.use('/api/sst',            require('./routes/sstRoutes'));
-app.use('/api/dashboard',      require('./routes/dashboardRoutes'));
-app.use('/api/chatbot',        require('./routes/chatbotRoutes'));
-app.use('/api/notificaciones', require('./routes/notificacionRoutes'));
+app.use('/api/incidentes',      require('./routes/incidenteRoutes'));
+app.use('/api/examenes',        require('./routes/examenRoutes'));
+app.use('/api/sst',             require('./routes/sstRoutes'));
+app.use('/api/dashboard',       require('./routes/dashboardRoutes'));
+app.use('/api/chatbot',         require('./routes/chatbotRoutes'));
+app.use('/api/notificaciones',  require('./routes/notificacionRoutes'));
 
 app.get('/api/health', (req, res) => res.json({ status: 'OK', app: 'NeoCity Shield' }));
 
@@ -38,7 +44,7 @@ cron.schedule('0 8 * * *', () => {
 }, { timezone: 'America/Bogota' });
 
 // Endpoint para disparar el recordatorio manualmente (útil para pruebas y sustentación)
-app.post('/api/examenes/recordatorios/ejecutar', verificarToken, verificarRol('sgsst'), async (req, res) => {
+app.post('/api/examenes/recordatorios/ejecutar', limitadorGeneral, verificarToken, verificarRol('sgsst'), async (req, res) => {
   try {
     const resultado = await ejecutarRecordatorioExamenes();
     res.json({ mensaje: 'Recordatorio ejecutado', ...resultado });
