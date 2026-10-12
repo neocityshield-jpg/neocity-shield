@@ -1,7 +1,10 @@
 const express = require('express');
 const router  = express.Router();
 const { verificarToken, verificarRol } = require('../middleware/authMiddleware');
+const { limitadorGeneral } = require('../middleware/rateLimiter');
 const pool = require('../config/db');
+
+router.use(limitadorGeneral);
 
 // Guardar suscripción push
 router.post('/suscribir', verificarToken, async (req, res) => {
