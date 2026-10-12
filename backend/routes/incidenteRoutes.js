@@ -2,6 +2,9 @@ const express       = require('express');
 const router        = express.Router();
 const incidenteCtrl = require('../controllers/incidenteController');
 const { verificarToken, verificarRol } = require('../middleware/authMiddleware');
+const { limitadorGeneral } = require('../middleware/rateLimiter');
+
+router.use(limitadorGeneral);
 
 router.post('/',                        verificarToken, incidenteCtrl.crear);
 router.get('/mis-reportes',             verificarToken, incidenteCtrl.misReportes);
