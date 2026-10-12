@@ -2,6 +2,9 @@ const express     = require('express');
 const router      = express.Router();
 const examenCtrl  = require('../controllers/examenController');
 const { verificarToken, verificarRol } = require('../middleware/authMiddleware');
+const { limitadorGeneral } = require('../middleware/rateLimiter');
+
+router.use(limitadorGeneral);
 
 router.post('/',                    verificarToken, examenCtrl.crear);
 router.get('/mis-examenes',         verificarToken, examenCtrl.misExamenes);
