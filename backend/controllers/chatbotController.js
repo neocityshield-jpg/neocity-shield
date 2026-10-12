@@ -15,6 +15,9 @@ No diagnostiques lesiones ni brindes asesoría legal o médica especializada.
 Si el funcionario está en peligro inmediato, indícale que llame al 123 primero.
 `;
 
+const MAX_LONGITUD_MENSAJE = 1000;
+const MAX_HISTORIAL = 10;
+
 const chatbotController = {
 
   async enviarMensaje(req, res) {
@@ -22,13 +25,23 @@ const chatbotController = {
       const { mensaje, historial = [] } = req.body;
 
       // 🔒 Validación
-      if (!mensaje) {
+      if (typeof mensaje !== "string" || !mensaje.trim()) {
         return res.status(400).json({ error: "El mensaje es obligatorio" });
       }
+      if (mensaje.length > MAX_LONGITUD_MENSAJE) {
+        return res.status(400).json({ error: "El mensaje es demasiado largo" });
+      }
+
+      // 🔒 Solo se aceptan mensajes de usuario o asistente (nunca "system")
+      const historialSeguro = Array.isArray(historial)
+        ? historial
+            .filter(m => m && ["user", "assistant"].includes(m.role) && typeof m.content === "string")
+            .slice(-MAX_HISTORIAL)
+        : [];
 
       const mensajes = [
         { role: "system", content: SYSTEM_PROMPT },
-        ...historial,
+        ...historialSeguro,
         { role: "user", content: mensaje }
       ];
 
@@ -42,20 +55,16 @@ const chatbotController = {
 
       const textoRespuesta = respuesta?.choices?.[0]?.message?.content || "No se pudo generar respuesta.";
 
-      // 💾 Guardar en BD SOLO si hay usuario
+      // 💾 Guardar la conversación (la ruta ya exige token, por eso hay req.usuario)
       try {
-        if (req.usuario && req.usuario.id) {
-          await pool.query(
-            `INSERT INTO chatbot_sesiones (usuario_id, mensaje, respuesta)
-             VALUES ($1, $2, $3)`,
-            [req.usuario.id, mensaje, textoRespuesta]
-          );
-        } else {
-          console.warn("⚠️ No hay usuario autenticado, no se guarda en BD");
-        }
+        await pool.query(
+          `INSERT INTO chatbot_sesiones (usuario_id, mensaje, respuesta)
+           VALUES ($1, $2, $3)`,
+          [req.usuario.id, mensaje, textoRespuesta]
+        );
       } catch (dbError) {
         console.error("🔥 ERROR BD:", dbError.message);
-        // 👉 No rompemos la app si falla la BD
+        // No rompemos la app si falla la BD
       }
 
       res.json({ respuesta: textoRespuesta });
@@ -64,8 +73,7 @@ const chatbotController = {
       console.error("🔥 ERROR OPENAI:", error);
 
       res.status(500).json({
-        error: "Error al procesar mensaje del chatbot",
-        detalle: error.message
+        error: "Error al procesar mensaje del chatbot"
       });
     }
   }
