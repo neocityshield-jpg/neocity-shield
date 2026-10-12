@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const chatbotCtrl = require('../controllers/chatbotController');
+const { verificarToken } = require('../middleware/authMiddleware');
+const { limitadorChatbot } = require('../middleware/rateLimiter');
 
-// 🔥 SIN TOKEN (solo para probar)
-router.post('/mensaje', chatbotCtrl.enviarMensaje);
+router.use(limitadorChatbot);
+
+router.post('/mensaje', verificarToken, chatbotCtrl.enviarMensaje);
 
 module.exports = router;
