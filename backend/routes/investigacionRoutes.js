@@ -2,6 +2,9 @@ const express = require('express');
 const router  = express.Router();
 const pool    = require('../config/db');
 const { verificarToken, verificarRol } = require('../middleware/authMiddleware');
+const { limitadorGeneral } = require('../middleware/rateLimiter');
+
+router.use(limitadorGeneral);
 
 router.post('/', verificarToken, verificarRol('sgsst'), async (req, res) => {
   try {
