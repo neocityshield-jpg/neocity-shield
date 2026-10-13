@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Login        from './components/Login';
@@ -12,6 +13,7 @@ import Notificaciones from './components/Notificaciones';
 import MiPerfil     from './components/MiPerfil';
 import Chatbot      from './components/Chatbot';
 import Navbar       from './components/Navbar';
+import { sincronizarPendientes } from './services/colaOffline';
 
 const RutaProtegida = ({ children, rolesPermitidos }) => {
   const { usuario, cargando } = useAuth();
@@ -69,6 +71,12 @@ const SinAcceso = () => {
 };
 
 export default function App() {
+  useEffect(() => {
+    sincronizarPendientes();
+    window.addEventListener('online', sincronizarPendientes);
+    return () => window.removeEventListener('online', sincronizarPendientes);
+  }, []);
+
   return (
     <AuthProvider>
       <BrowserRouter>
@@ -138,4 +146,3 @@ export default function App() {
   </AuthProvider>
 );
 }
-
