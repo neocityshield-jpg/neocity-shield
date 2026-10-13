@@ -119,16 +119,23 @@ export default function App() {
             </RutaProtegida>
           } />
 
-          <Route path="/examenes" element={
-  <RutaProtegida rolesPermitidos={['funcionario','sgsst','gerencia']}>
-    <MisExamenes />
-  </RutaProtegida>
-} />
+          
+        <Route path="/examenes" element={
+          <RutaProtegida rolesPermitidos={['funcionario', 'sgsst', 'gerencia']}>
+            <MisExamenes />
+          </RutaProtegida>
+        } />
 
-          <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/sin-acceso" element={<SinAcceso />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
-  );
+        <Route path="/" element={<Navigate to="/login" />} />
+
+        <Route path="/sin-acceso" element={<SinAcceso />} />
+
+        {/* Ruta 404: redirige las rutas inexistentes al login */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
+
+      </Routes>
+    </BrowserRouter>
+  </AuthProvider>
+);
 }
+
