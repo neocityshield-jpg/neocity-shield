@@ -28,15 +28,37 @@ const authController = {
     }
   },
 
-  async registro(req, res) {
+    async registro(req, res) {
     try {
       const { nombre, email, password, rol } = req.body;
-      const usuario = await Usuario.crear({ nombre, email, password, rol });
+
+      const ROLES = ['funcionario', 'sgsst', 'gerencia'];
+
+      if (typeof nombre !== 'string' || !nombre.trim()) {
+        return res.status(400).json({ error: 'El nombre es obligatorio' });
+      }
+      if (typeof email !== 'string' || !email.trim().toLowerCase().endsWith('@evidenciadigital.com')) {
+        return res.status(400).json({ error: 'Solo se permiten correos @evidenciadigital.com' });
+      }
+      if (typeof password !== 'string' || password.length < 8) {
+        return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres' });
+      }
+      if (!ROLES.includes(rol)) {
+        return res.status(400).json({ error: 'Rol inválido' });
+      }
+
+      const usuario = await Usuario.crear({
+        nombre: nombre.trim(),
+        email: email.trim().toLowerCase(),
+        password,
+        rol
+      });
       res.status(201).json({ mensaje: 'Usuario creado exitosamente', usuario });
     } catch (error) {
       if (error.code === '23505') {
         return res.status(400).json({ error: 'El correo ya está registrado' });
       }
+      console.error('Error en registro:', error);
       res.status(500).json({ error: 'Error al crear usuario' });
     }
   },
