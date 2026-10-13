@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { incidenteService, sstService } from '../services/api';
 import API from '../services/api';
+import Investigacion from './Investigacion';
 
 const ESTADO_COLOR = {
   pendiente:  { color:'var(--gold)',  dim:'var(--gold-dim)',  border:'var(--rim-accent)', label:'Pendiente' },
@@ -18,7 +19,7 @@ export default function PanelSST() {
   const [fechaHasta, setFechaHasta]     = useState('');
   const [seleccionado, setSeleccionado] = useState(null);
   const [historial, setHistorial]       = useState([]);
-  const [tab, setTab]                   = useState('seguimiento'); // seguimiento | historial
+  const [tab, setTab]                   = useState('seguimiento'); // seguimiento | historial | investigacion
   const [seguimiento, setSeguimiento]   = useState({ observacion:'', estado_nuevo:'' });
   const [guardando, setGuardando]       = useState(false);
   const [exportando, setExportando]     = useState(false);
@@ -376,7 +377,7 @@ export default function PanelSST() {
 
             {/* Tabs */}
             <div style={{ display:'flex', gap:'6px', marginBottom:'20px', borderBottom:'1px solid var(--rim)', paddingBottom:'12px' }}>
-              {['seguimiento','historial'].map(t => (
+              {['seguimiento','historial','investigacion'].map(t => (
                 <button
                   key={t}
                   onClick={() => setTab(t)}
@@ -389,7 +390,9 @@ export default function PanelSST() {
                     borderBottom: tab===t ? '2px solid var(--gold)' : '2px solid transparent'
                   }}
                 >
-                  {t==='seguimiento' ? '📝 Nuevo seguimiento' : `📋 Historial (${historial.length})`}
+                  {t==='seguimiento' ? '📝 Nuevo seguimiento'
+                    : t==='historial' ? `📋 Historial (${historial.length})`
+                    : '🔍 Investigación'}
                 </button>
               ))}
             </div>
@@ -507,6 +510,14 @@ export default function PanelSST() {
                   })
                 )}
               </div>
+            )}
+
+            {/* Tab: investigación */}
+            {tab==='investigacion' && (
+              <Investigacion
+                incidenteId={seleccionado.id}
+                onCerrar={() => setTab('seguimiento')}
+              />
             )}
           </div>
         </div>
