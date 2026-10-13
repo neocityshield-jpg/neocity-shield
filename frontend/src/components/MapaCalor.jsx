@@ -25,8 +25,10 @@ export default function MapaCalor() {
       if (mapInstanceRef.current || !mapRef.current) return;
       const L   = window.L;
       const map = L.map(mapRef.current).setView([4.6590, -74.0930], 12);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '© OpenStreetMap © CartoDB'
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 19,
+        className: 'mapa-oscuro'
       }).addTo(map);
       mapInstanceRef.current = map;
 
