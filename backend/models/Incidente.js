@@ -69,14 +69,18 @@ const Incidente = {
     return result.rows[0];
   },
 
-  async obtenerSinSeguimiento() {
+    async obtenerSinSeguimiento() {
     const result = await pool.query(`
       SELECT i.*, u.nombre AS funcionario
       FROM incidentes i
       JOIN usuarios u ON i.usuario_id = u.id
-      LEFT JOIN seguimientos s ON i.id = s.incidente_id
+      LEFT JOIN (
+        SELECT incidente_id, MAX(fecha_accion) AS ultima_accion
+        FROM seguimientos
+        GROUP BY incidente_id
+      ) s ON s.incidente_id = i.id
       WHERE i.estado != 'cerrado'
-        AND (s.id IS NULL OR s.fecha_accion < NOW() - INTERVAL '48 hours')
+        AND (s.ultima_accion IS NULL OR s.ultima_accion < NOW() - INTERVAL '48 hours')
       ORDER BY i.fecha_registro ASC
     `);
     return result.rows;
