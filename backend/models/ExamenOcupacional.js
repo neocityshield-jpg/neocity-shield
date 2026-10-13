@@ -49,7 +49,6 @@ const ExamenOcupacional = {
     return result.rows[0];
   },
 
-  // Igual en espíritu a Incidente.obtenerSinSeguimiento(): detecta vencidos o por vencer en 30 días
   async obtenerProximosAVencer() {
     const result = await pool.query(`
       SELECT e.*, u.nombre AS funcionario, u.email,
@@ -60,7 +59,7 @@ const ExamenOcupacional = {
         END AS estado_vigencia
       FROM examenes_ocupacionales e
       JOIN usuarios u ON e.usuario_id = u.id
-      WHERE e.estado != 'pendiente_validacion'
+            WHERE e.estado = 'vigente'
         AND e.fecha_proximo <= CURRENT_DATE + INTERVAL '30 days'
         AND (e.ultimo_recordatorio_enviado IS NULL OR e.ultimo_recordatorio_enviado < CURRENT_DATE)
       ORDER BY e.fecha_proximo ASC
