@@ -13,7 +13,11 @@ API.interceptors.request.use(config => {
 API.interceptors.response.use(
   response => response,
   error => {
-    if (error.response?.status === 403) {
+    const status  = error.response?.status;
+    const mensaje = error.response?.data?.error;
+
+    // Solo cerramos sesión si el token es inválido o expiró
+    if (status === 403 && mensaje === 'Token inválido o expirado') {
       localStorage.clear();
       window.location.href = '/login';
     }
