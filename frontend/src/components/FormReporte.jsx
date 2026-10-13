@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { incidenteService } from '../services/api';
+import { guardarPendiente } from '../services/colaOffline';
 
 const CATEGORIAS = [
   {
@@ -173,19 +174,26 @@ export default function FormReporte() {
     );
   };
 
-  const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
     e.preventDefault();
     setEnviando(true); setError('');
     try {
       await incidenteService.crear(form);
       setExito(true);
-      setForm({ tipo_incidente:'', descripcion:'', fecha_ocurrencia:'', direccion_manual:'', latitud:null, longitud:null });
-      setDireccionGPS(''); setGeoStatus('idle');
-    } catch {
-      setError('Error al enviar el reporte. Intenta de nuevo.');
-    } finally {
-      setEnviando(false);
+    } catch (err) {
+      if (!err.response) {
+        // Sin conexión: se guarda y se enviará al volver internet
+        guardarPendiente(form);
+        setError('Sin conexión: tu reporte quedó guardado en este dispositivo y se enviará automáticamente cuando vuelva internet.');
+      } else {
+        setError('Error al enviar el reporte. Intenta de nuevo.');
+        setEnviando(false);
+        return;
+      }
     }
+    setForm({ tipo_incidente:'', descripcion:'', fecha_ocurrencia:'', direccion_manual:'', latitud:null, longitud:null });
+    setDireccionGPS(''); setGeoStatus('idle');
+    setEnviando(false);
   };
 
   if (exito) return (
