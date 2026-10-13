@@ -1,4 +1,4 @@
-const CACHE = 'neocity-v2';
+const CACHE = 'neocity-v3';
 const OFFLINE_URLS = [
   '/', '/reportar', '/login', '/perfil', '/examenes', '/examenes-sst',
   '/panel-sst', '/dashboard', '/mapa', '/notificaciones'
@@ -23,32 +23,11 @@ self.addEventListener('activate', e => {
   self.clients.claim();
 });
 
-// Guardar reportes offline
-const PENDING_KEY = 'pending-reports';
-
+// Los reportes offline NO se manejan aquí: la cola vive en el cliente
+// (services/colaOffline.js, basada en localStorage). Solo reenvía mientras
+// la app esté abierta o al reabrirla; este SW ya no simula respuestas.
 self.addEventListener('fetch', e => {
-  const url = new URL(e.request.url);
-
-  // Si es POST a /api/incidentes y no hay internet → guardar en IndexedDB
-  if (e.request.method === 'POST' && url.pathname === '/api/incidentes') {
-    e.respondWith(
-      fetch(e.request.clone()).catch(async () => {
-        const body = await e.request.json();
-        self.clients.matchAll().then(clients => {
-          clients.forEach(c => c.postMessage({
-            type: 'SAVE_OFFLINE',
-            payload: body
-          }));
-        });
-        return new Response(JSON.stringify({
-          ok: false,
-          offline: true,
-          mensaje: 'Reporte guardado offline. Se enviará cuando tengas conexión.'
-        }), { headers: { 'Content-Type': 'application/json' } });
-      })
-    );
-    return;
-  }
+  if (e.request.method !== 'GET') return;   // deja pasar POST/PUT y que falle de verdad
 
   // Para el resto: network first, cache fallback, y si tampoco hay caché
   // para esa ruta exacta, cae al "app shell" (la página raíz) para que
